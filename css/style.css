@@ -274,4 +274,9 @@ footer h5 {
     padding:5px;
     margin: 20px;
     background-color:#f9faf9;
+    width: 500px;
+}
+
+.row .col.col.span-12 .result {
+    display: flex;
 }
