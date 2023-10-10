@@ -242,3 +242,36 @@ footer h5 {
     display: inline-block;
     color: var(--link-color);
 }
+
+/* レース詳細ボックス
+------------------------------------ */
+
+.row .col.span-4 {
+    border:3px solid #131413;
+    padding:5px;
+    margin: 20px;
+    background-color:#f9faf9;
+    border-radius:10px;
+    transition: all 0.3s ease; /* アニメーションの設定 */
+}
+
+.row .col.span-4:hover {
+    transform: scale(1.05); /* クリック時のアニメーション（1.05倍の拡大） */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* 影の追加 */
+}
+
+.row .col.span-13 {
+    flex: 0 0 30.6666666667%;
+    max-width: 30.6666666667%;
+}
+
+.row .col.col.span-12 {
+    float: left;
+}
+
+.row .col.span-12 .rank_result {
+    border:3px solid #131413;
+    padding:5px;
+    margin: 20px;
+    background-color:#f9faf9;
+}
