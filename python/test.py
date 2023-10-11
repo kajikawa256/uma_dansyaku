@@ -11,7 +11,8 @@ soup = BeautifulSoup(res.text, 'html.parser')
 list = soup.find_all("title")
 list = list[0].text
 
-print(list)
+print(list.split())
+print(list[])
 
 # list = list[0].text
 # list = list.split()
