@@ -4,7 +4,10 @@ CREATE DATABASE umadan;
 
 -- データベース選択
 USE umadan;
-
+DROP USER IF EXISTS 'umadan'@'localhost';
+CREATE USER 'umadan'@'localhost' IDENTIFIED BY 'umadan';
+GRANT SELECT, INSERT ON umadan.* TO umadan@localhost;
+SHOW GRANTS FOR 'umadan'@'localhost';
 
 /*---------------テーブル作成----------------------*/
 CREATE TABLE HIT (
