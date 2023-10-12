@@ -14,8 +14,20 @@ def get(soup):
   rd02 = soup.find("div",class_="RaceData02").text.split()    #第何回,開催場,何日目,[],[],[],[],何頭,[]
   day = soup.find("dd",class_="Active").text                  #x月x日(x曜日)
   
-  #race_list順番(データベース定義書の順番)
-  order = [day,racename[0],rd01[1],rd01[2][2:7],race_num[0],rd02[7],rd01[2][1:2],rd02[1],rd01[4][4:5],rd01[2][9:10],rd01[6][4:5]]
+  #race_list順番(データベース定義書通りの順番)
+  order = [
+    day,
+    racename[0],
+    rd01[1],
+    rd01[2][2:7],
+    race_num[0],
+    rd02[7],
+    rd01[2][1:2],
+    rd02[1],
+    rd01[4][4:5],
+    rd01[2][9:10],
+    rd01[6][4:5]
+  ]
 
   #race_listに格納
   for x in order:

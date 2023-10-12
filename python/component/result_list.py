@@ -3,6 +3,7 @@ import constant as con
 
 #全馬の全データを返す関数
 def get(soup):
+  #return用のリスト
   result_list = []
 
   table = soup.find_all("tr",class_="HorseList")
@@ -24,7 +25,7 @@ def get_only(soup):
   for x in range(5):
     datas = table[x].text.split()
     
-    #馬枠、馬番、馬名の順
+    #馬枠、馬番、馬名の順にresult_listに格納
     result_list.append(datas[con.HORSE_FRAME])
     result_list.append(datas[con.HORSE_NUM])
     result_list.append(datas[con.HORSE_NAME])

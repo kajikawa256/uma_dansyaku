@@ -1,12 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
-import re
 import time
-from datetime import datetime, timedelta
 import constant as con
 import component.result_list as rl
 import component.race_info as ri
-
+import component.pay_list as pl
 
 
 #変数宣言
@@ -45,13 +43,13 @@ for where in con.race_venue_list:
         soup = BeautifulSoup(res.text, "html.parser")
         
         list = soup.find_all("table")
-        title = soup.find_all("title")
 
         #正常にスクレイピングが行われた場合（ここの条件式は変更の余地あり）
         if list != []:
 
-          result_list = rl.get_only(soup) #上位５馬の馬枠、馬番、馬名を取得
-          race_list = ri.get(soup)        #レース情報を取得
+          result_list = rl.get_only(soup) #上位５馬の馬枠、馬番、馬名を取得しresult_listに格納
+          race_list = ri.get(soup)        #レース情報を取得しrace_listに格納
+          pay_list = pl.get(soup)         #払い戻し情報を取得しpay_listに格納
 
           #1秒待つ
           time.sleep(1)
@@ -60,12 +58,6 @@ for where in con.race_venue_list:
           result_ranking[race_id] = result_list
           race_info[race_id] = race_list
           resulut_pay[race_id] = pay_list
-
-          print(result_list)
-          print(race_list)
-
-          # print(result_ranking)
-          # print(race_info)
 
         else:
           error = "false"
@@ -84,6 +76,8 @@ for where in con.race_venue_list:
 total_info.append(result_ranking)
 total_info.append(race_info)
 total_info.append(resulut_pay)
+
+print(total_info)
 
 
 
