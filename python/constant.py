@@ -3,6 +3,7 @@ HOWDAYS = 12      #１開催につき何日目
 RACENUM = 12      #１日何レースか
 
 #各データのindex値
+HORSE_ARRIVAL = 0
 HORSE_FRAME = 1
 HORSE_NUM = 2
 HORSE_NAME = 3

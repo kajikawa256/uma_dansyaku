@@ -25,9 +25,10 @@ def get_only(soup):
   for x in range(5):
     datas = table[x].text.split()
     
-    #馬枠、馬番、馬名の順にresult_listに格納
-    result_list.append(datas[con.HORSE_FRAME])
-    result_list.append(datas[con.HORSE_NUM])
+    #馬名、馬番、馬枠の順にresult_listに格納
     result_list.append(datas[con.HORSE_NAME])
+    result_list.append(datas[con.HORSE_NUM])
+    result_list.append(datas[con.HORSE_FRAME])
+    result_list.append(datas[con.HORSE_ARRIVAL])
   
   return result_list
