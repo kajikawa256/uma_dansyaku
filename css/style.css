@@ -54,9 +54,10 @@ a img:hover {
 }
 
 .snsbox {
+    display: flex;
     margin-left: auto;
     font-size: 3.0rem;
-    padding: 1rem 0 0 0;
+    padding: 3rem 1rem;
 }
 
 nav ul {
