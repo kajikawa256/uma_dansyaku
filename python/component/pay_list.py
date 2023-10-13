@@ -1,10 +1,11 @@
-#呼び出すときにBeautifulSoupで整形したhtmlを引数として渡す
+#呼び出すときにBeautifulSoupで整形したhtmlとレースID引数として渡す
 
 #レースの払い戻し結果を返す関数
-def get(soup):
+def get(soup,race_id):
   #return用のリスト
   pay_list = []
 
+  pay_list.append(race_id)
   tables = soup.find_all("table",class_="Payout_Detail_Table")
   
   #pay_listに格納

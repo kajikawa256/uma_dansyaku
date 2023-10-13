@@ -1,9 +1,12 @@
-#呼び出すときにBeautifulSoupで整形したhtmlを引数として渡す
+#呼び出すときにBeautifulSoupで整形したhtmlとレースID引数として渡す
 import re
 
-def get(soup):
+def get(soup,race_id):
   #return用のリスト
   race_list = []
+
+
+  race_list.append(race_id)
 
   #レース情報のスクレイピング
   racename = soup.find("div",class_="RaceName").text.split()  #レース名
