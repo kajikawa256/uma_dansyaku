@@ -10,7 +10,7 @@ function db_connect()
     $db = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $db -> setAttribute(PDO::ERRMODE_SILENT ,false);
     $db->beginTransaction();
-    echo "接続成功";
+    // echo "接続成功";
     return $db;
   } catch (PDOException $e) {
     echo "接続エラー: " . $e->getMessage();
