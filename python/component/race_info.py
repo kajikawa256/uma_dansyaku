@@ -5,9 +5,6 @@ def get(soup,race_id):
   #return用のリスト
   race_list = []
 
-
-  race_list.append(race_id)
-
   #レース情報のスクレイピング
   racename = soup.find("div",class_="RaceName").text.split()  #レース名
   race_num = soup.find("div",class_="RaceNumWrap")            #レース番号
@@ -19,9 +16,10 @@ def get(soup,race_id):
   
   #race_list順番(データベース定義書通りの順番)
   order = [
+    race_id,
     day,
     racename[0],
-    rd01[1],
+    rd01[1][0:5],
     rd01[2][2:7],
     race_num[0],
     rd02[7],

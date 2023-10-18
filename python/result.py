@@ -1,5 +1,5 @@
 import json
 import scrayping as sc
 
-# とりあえず札幌の１開催分（６日目まで）
+# とりあえず12レース分の情報のみを取得（phpとデータベースデバッグ用）
 print(json.dumps(sc.scrayping()))
