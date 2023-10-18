@@ -5,7 +5,7 @@ try {
     // テスト用データ
     $table = "HIT_DETAIL";
     $columns = ['RACE_ID','KINDS','HORSENUMBER','HORSEFRAME','BETBACK','POPULAR'];
-    $values =['2003090910','単勝',1,12,5400,10];
+    $values =['2003090901','単勝',1,12,5400,10];
 
     // insert() 関数を呼び出す
     $result = INSERT($table, $columns, $values);
