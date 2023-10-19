@@ -3,30 +3,22 @@ $command = "C:/Users/2220200/AppData/Local/Programs/Python/Python312/python ../p
 exec($command, $output);
 
 $json = mb_convert_encoding($output, 'UTF8', 'ASCII,JIS,UTF-8,EUC-JP,SJIS-WIN');
-$result_list = json_decode($json[0], true);
-$result_raceid = array_keys($result_list);
-// var_dump($result_list[0]);
+
 /*
-  配列メモ
   １開催ずつ取れる
   $result_list[何日目][何レース目][0がレース結果,0+1がレース情報,0+2が払い戻し][詳細]
 */
+$result_list = json_decode($json[0], true);
 
-var_dump($result_list[1]);
+$result_race = [];    // レース結果
+$result_info = [];    // レース情報
+$result_pay = [];     // 払い戻し
 
-// 結果情報テーブル
-// $result_information = [];
-// for ($i = 0; $i < count($result_raceid); $i++) {
-//   foreach ($result_list as $id) {
-//     for ($j = 0; $j = count($id); $j += 45) {
-//       // $result_information[$i] = "('" . $result_raceid[$i] . "','" . $id[$j] . "'," . $id[$j + 1] . "," . $id[$j + 2] . "," . $id[$j + 3] . ")";
-//       echo $result_raceid[$i];
-//       // echo $id[$j];
-//       // echo $id[$j + 1];
-//       // echo $id[$j + 2];
-//       // echo $id[$j + 3];
-//     };
-//   }
-// }
-
-// echo $result_information;
+// $result_listの中身をレース結果、レース情報、払い戻しごとにわける
+for ($i = 0; $i < count($result_list); $i++) {    // $i = 何日目か
+  for ($j = 0; $j < count($result_list); $j++) {
+    $result_race[] = $result_list[$i][$j][0];
+    $result_info[] = $result_list[$i][$j][1];
+    $result_pay[] = $result_list[$i][$j][2];
+  }
+}
