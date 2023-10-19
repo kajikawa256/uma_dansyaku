@@ -22,3 +22,4 @@ for ($i = 0; $i < count($result_list); $i++) {    // $i = 何日目か
     $result_pay[] = $result_list[$i][$j][2];
   }
 }
+
