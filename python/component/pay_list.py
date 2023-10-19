@@ -5,8 +5,11 @@ def get(soup,race_id):
   #return用のリスト
   pay_list = []
 
-  pay_list.append(race_id)
+  
   tables = soup.find_all("table",class_="Payout_Detail_Table")
+
+  #レースIDを追加
+  pay_list.append(race_id)
   
   #pay_listに格納
   for table in tables:

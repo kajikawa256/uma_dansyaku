@@ -16,11 +16,6 @@ def scrayping():
     result_list = []  # result_rankingの子要素
     race_list = []  # race_infoの子要素
     pay_list = []  # result_payの子要素
-    result_ranking = []  # total_infoの子要素
-    race_info = []  # total_infoの子要素
-    resulut_pay = []  # total_infoの子要素
-    race_total = []
-    total_info = []  # すべてまとめたリスト
     one_race = []    # 1レースごと
     one_day = []     # 一日のレース情報
     one_open_day = []  # 開催ごと
@@ -66,12 +61,8 @@ def scrayping():
                         one_race.append(pay_list)
 
                         # 1秒待つ
-                        # time.sleep(1)
+                        time.sleep(1)
 
-                        # 親要素に追加したら初期化
-                        result_list = []
-                        race_list = []
-                        pay_list = []
 
                     else:
                         error = "false"
@@ -84,6 +75,7 @@ def scrayping():
                 # -----howdays-----
 
                 one_open_day.append(one_day)
+                return one_day
                 one_day = []      # one_dayを初期化
 
                 # return(one_open_day)
