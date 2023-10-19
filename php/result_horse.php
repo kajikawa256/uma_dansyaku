@@ -5,7 +5,10 @@ try {
     // テスト用データ
     $table = "RESULT_HORSE";
     $columns = ['RACE_ID','HNAME','HORSENUMBER','HORSEFRAME','RANKING'];
-    $values =['2003090901','ディープインパクト',1,2,1];
+    $values =[
+        ['2003090901','ディープインパクト',1,2,1],
+        ['2003090901','キタサンブラック',2,2,2]
+    ];
 
     // INSERT() 関数を呼び出す
     $result = INSERT($table, $columns, $values);

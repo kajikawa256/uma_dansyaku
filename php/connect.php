@@ -19,9 +19,7 @@ function INSERT($table,$column,$value){
             // SQL を実行
             $stmt = $db->prepare($sql);
             $stmt->execute();
-
-          
-            
+            echo "実行成功";
         }
         $db->commit();
     }catch(PDOException $p){
