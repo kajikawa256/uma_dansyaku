@@ -1,6 +1,7 @@
 <?php
 function db_connect()
 {
+
   $host = 'localhost';
   $dbname = 'umadan';
   $username = 'umadan';
@@ -12,6 +13,7 @@ function db_connect()
     $db->beginTransaction();
     // echo "接続成功";
     return $db;
+
   } catch (PDOException $e) {
     echo "接続エラー: " . $e->getMessage();
   }
