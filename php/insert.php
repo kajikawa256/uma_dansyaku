@@ -1,9 +1,13 @@
 <?php
-$command = "C:/Users/2220077/AppData/Local/Programs/Python/Python311/python ../python/result.py";
+
+// $command = "C:/Users/2220077/AppData/Local/Programs/Python/Python311/python ../python/result.py";
+// $command = "C:/Users/2220200/AppData/Local/Programs/Python/Python312/python ../python/result.py";
+
 exec($command, $output);
 
 $json = mb_convert_encoding($output, 'UTF8', 'ASCII,JIS,UTF-8,EUC-JP,SJIS-WIN');
 $result_list = json_decode($json[0], true);
+
 // var_dump($result_list[0]);
 /*
   配列メモ
@@ -29,3 +33,4 @@ var_dump($result_list);
 // }
 
 // echo $result_information;
+
