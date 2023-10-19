@@ -16,18 +16,18 @@ def get(soup,race_id):
   
   #race_list順番(データベース定義書通りの順番)
   order = [
-    race_id,
-    day,
-    racename[0],
-    rd01[1][0:5],
-    rd01[2][2:7],
-    race_num[0],
-    rd02[7],
-    rd01[2][1:2],
-    rd02[1],
-    rd01[4][4:5],
-    rd01[2][9:10],
-    rd01[6][4:5]
+    race_id,      #レースID
+    day,          #日付
+    racename[0],  #レース名
+    int(race_num[0].replace('R','')),  #レース番号
+    rd01[1][0:5], #時刻
+    int(rd01[2][2:6]), #距離
+    int(rd02[7].replace('頭','')),      #頭数
+    rd01[2][1:2], #馬場
+    rd02[1],      #開催場
+    rd01[4][4:5], #天気
+    rd01[2][9:10],#回り方
+    rd01[6][4:5]  #馬場状態
   ]
 
   #race_listに格納
