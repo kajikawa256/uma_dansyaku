@@ -1,4 +1,9 @@
 <?php
+//pythonパス 定数化しているのでユーザに合わせて変更してください
+define("KITADE","C:/Users/2220054/AppData/Local/Programs/Python/Python312/python ../python/result.py");
+define("KAJIKAWA","C:/Users/2220077/AppData/Local/Programs/Python/Python311/python ../python/result.py");
+define("SHIBATA","C:/Users/2220200/AppData/Local/Programs/Python/Python312/python ../python/result.py");
+
 //テーブルの配列
 $table = ['HIT','RACE','RESULT_HORSE','PREDICTION_HORSE','HIT_DETAIL'];
 $columns = [

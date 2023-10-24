@@ -4,6 +4,7 @@
 
 //与えられた値をinsert文に挿入する
 function INSERT($table,$column,$value){
+    $sql = "";
     try{
         //DB接続
         $db = db_connect();
@@ -24,12 +25,12 @@ function INSERT($table,$column,$value){
                     $insertData = $insertData."'". $item . "'" . ", ";
                 } 
 
-                if (($table == "RESULT_HORSE" and $count % 5 == 0) or ($table == "RACE" and $count == $race_count)){
+                if (($table == "RESULT_HORSE" and $count % 5 == 0) or ($table == "RACE" and $count == $race_count) or ($table == "HIT_DETAIL" and $count % 6 == 0)){
                     $insertData= substr($insertData, 0, -2); // 最後の文字を削除
            
                     //INSERT 文を生成
                     $sql = "INSERT INTO $table VALUES ($insertData);";
-                    echo $sql;
+                    // echo $sql;
                 
                     // SQL を実行
                     $stmt = $db->prepare($sql);
@@ -41,6 +42,7 @@ function INSERT($table,$column,$value){
         $db->commit();
     }catch(PDOException $p){
         $db->rollBack();
+        print($sql);
         exit("DBエラー".$p->getMessage());
     }
 }   

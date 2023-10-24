@@ -18,7 +18,8 @@ def get(soup,race_id):
   for data in rows:
     data_list = []
     data_list.append(race_id)
-    data_list.extend(data.get_text(separator=" ").split())
+    x = data.get_text(separator=" ").replace(",","").split()
+    data_list.extend(x)
 
     if(data_list[1] == "単勝"):
       data_list.insert(3,"")
