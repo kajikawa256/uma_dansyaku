@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 import time
-import tqdm
 import constant as con
 import component.result_list as rl
 import component.race_info as ri
@@ -37,7 +36,8 @@ def scrayping():
                         '0' + hd if len(hd) != 2 else hd) + ('0' + rn if len(rn) != 2 else rn)
 
                     # URLを作成
-                    url = f"https://race.netkeiba.com/race/result.html?race_id={race_id}&rf=race_list"
+                    # url = f"https://race.netkeiba.com/race/result.html?race_id={race_id}&rf=race_list"
+                    url = f"https://db.netkeiba.com/race/{race_id}"
 
                     # スクレイピング
                     res = requests.get(url)
@@ -62,7 +62,6 @@ def scrayping():
 
                         # 1秒待つ
                         time.sleep(1)
-
 
                     else:
                         error = "false"
