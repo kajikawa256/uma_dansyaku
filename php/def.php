@@ -1,4 +1,9 @@
 <?php
+
+/*
+    定数を定義
+*/
+
 //テーブルの配列
 $table = ['HIT','RACE','RESULT_HORSE','PREDICTION_HORSE','HIT_DETAIL'];
 $columns = [
@@ -16,5 +21,11 @@ $RACE = 1;
 $RESULT_HORSE = 2;
 $PREDICTION_HORSE = 3;
 $HIT_DETAIL = 4;
+
+/*
+
+*/
+
+define("race","RACE");
 
 ?>
