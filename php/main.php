@@ -3,9 +3,8 @@
 include("connect.php");
 include("def.php");
 
-
-$command = "C:/Users/2220054/AppData/Local/Programs/Python/Python312/python ../python/result.py";
-// $command = "C:/Users/2220200/AppData/Local/Programs/Python/Python312/python ../python/result.py";
+#使用者の苗字を入力（詳しくはdef.php）
+$command = KAJIKAWA;
 
 exec($command, $output);
 
@@ -16,7 +15,6 @@ $json = mb_convert_encoding($output, 'UTF8', 'ASCII,JIS,UTF-8,EUC-JP,SJIS-WIN');
   $result_list[何日目][何レース目][0がレース結果,0+1がレース情報,0+2が払い戻し][詳細]
 */
 $result_list = json_decode($json[0], true);
-
 
 $result_race = [];    // レース結果
 $result_info = [];    // レース情報
@@ -39,5 +37,9 @@ for ($j = 0; $j < count($result_list); $j++) {
 //   INSERT($table[$i],$columns[$i],);
 // }
 
+INSERT($table[$RESULT_HORSE],$columns[$RESULT_HORSE],$result_list);
 INSERT($table[$RACE],$columns[$RACE],$result_info);
+INSERT($table[$HIT_DETAIL],$columns[$HIT_DETAIL],$result_pay);
+
+
 
