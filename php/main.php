@@ -41,5 +41,3 @@ INSERT($table[$RESULT_HORSE],$columns[$RESULT_HORSE],$result_list);
 INSERT($table[$RACE],$columns[$RACE],$result_info);
 INSERT($table[$HIT_DETAIL],$columns[$HIT_DETAIL],$result_pay);
 
-
-

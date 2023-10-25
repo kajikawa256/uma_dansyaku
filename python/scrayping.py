@@ -44,10 +44,9 @@ def scrayping():
                     res.encoding = "EUC-JP"
                     soup = BeautifulSoup(res.text, "html.parser")
 
-                    list = soup.find_all("table")
 
                     # 正常にスクレイピングが行われた場合（ここの条件式は変更の余地あり）
-                    if list != []:
+                    if "レース結果" in soup.text:
 
                         # 上位５馬の馬枠、馬番、馬名を取得しresult_listに格納
                         result_list = rl.get_only(soup, race_id)
@@ -59,6 +58,7 @@ def scrayping():
                         one_race.append(result_list)
                         one_race.append(race_list)
                         one_race.append(pay_list)
+                        print(race_id)
 
                         # 1秒待つ
                         time.sleep(1)
@@ -74,18 +74,14 @@ def scrayping():
                 # -----howdays-----
 
                 one_open_day.append(one_day)
-                return one_day
+
                 one_day = []      # one_dayを初期化
 
-                # return(one_open_day)
-                # print(one_open_day)
-
-            return(one_open_day)
             if error == "false":
                 break
 
             # １開催分
-            return(one_open_day)
+            # return(one_open_day)
             # -----howtime-----
 
         # 1開催場分
