@@ -2,5 +2,5 @@ import json
 import scrayping as sc
 
 
-print(sc.scrayping())
+sc.scrayping()
 # print(json.dumps(sc.scrayping()))

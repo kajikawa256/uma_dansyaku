@@ -1,4 +1,4 @@
-import constant as con
+import data.constant as con
 import mysql.connector as db
 
 def insert(table, datalist:list) :

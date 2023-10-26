@@ -1,8 +1,8 @@
 #呼び出すときにBeautifulSoupで整形したhtmlとレースID引数として渡す
 import re
-import function.count_horse_num as count
+import component.count_horse_num as count
 import db.insert as insert
-import constant as con
+import data.constant as con
 
 def insert_race(soup,race_id):
   race_list = []
@@ -21,12 +21,12 @@ def insert_race(soup,race_id):
     race_info2[2],          #レース名
     int(race_num),          #レース番号
     race_info[3][3:8],      #時刻
-    int(race_info[0][2:6]), #距離
+    int(race_info[0][-5:-1]), #距離
     horse_num,              #頭数
     race_info[0][0:1],      #馬場
     race_place,             #開催場
     race_info[1][3:4],      #天気
-    ("" if "障害" in race_info[2] else race_info[0][1:2]),      #回り方 (障害レースの場合直線)
+    ("" if "障害" in race_info2[2] else race_info[0][1:2]),      #回り方 (障害レースの場合例外が発生する)
     race_info[2][-1]        #馬場状態
   ]
 

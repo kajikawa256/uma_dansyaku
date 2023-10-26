@@ -1,7 +1,7 @@
 #呼び出すときにBeautifulSoupで整形したhtmlとレースID引数として渡す
-import constant as con
+import data.constant as con
 import db.insert as insert
-import constant as con
+
 
 #上位５馬の馬枠と馬番と馬名,着順を返す関数
 def insert_result_horse(soup,race_id):
@@ -20,6 +20,6 @@ def insert_result_horse(soup,race_id):
     result_list.append(datas[con.HORSE_NAME])
     result_list.append(int(datas[con.HORSE_NUM]))
     result_list.append(int(datas[con.HORSE_FRAME]))
-    result_list.append(int(datas[con.HORSE_ARRIVAL]))
+    result_list.append(int(datas[con.HORSE_ARRIVAL][0:1]))
 
   insert.insert(con.TABLE[con.RESULT_HORSE],result_list)

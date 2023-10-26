@@ -1,9 +1,9 @@
 #呼び出すときにBeautifulSoupで整形したhtmlとレースID引数として渡す
-import function.count_horse_num as count
-import function.count_paylist_index as index_count
-import function.connect_words as cw
+import component.count_horse_num as count
+import component.count_paylist_index as index_count
+import component.connect_words as cw
 import db.insert as insert
-import constant as con
+import data.constant as con
 
 
 #レースの払い戻し結果を返す関数
