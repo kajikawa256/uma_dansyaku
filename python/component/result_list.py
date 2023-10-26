@@ -1,8 +1,10 @@
 #呼び出すときにBeautifulSoupで整形したhtmlとレースID引数として渡す
 import constant as con
+import db.insert as insert
+import constant as con
 
 #上位５馬の馬枠と馬番と馬名,着順を返す関数
-def get_only(soup,race_id):
+def insert_result_horse(soup,race_id):
   result_list = []
 
   # 馬テーブルを行ごとに分解してリスト化
@@ -20,4 +22,4 @@ def get_only(soup,race_id):
     result_list.append(int(datas[con.HORSE_FRAME]))
     result_list.append(int(datas[con.HORSE_ARRIVAL]))
 
-  return result_list
+  insert.insert(con.TABLE[con.RESULT_HORSE],result_list)

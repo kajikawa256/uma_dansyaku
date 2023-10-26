@@ -1,12 +1,14 @@
 #呼び出すときにBeautifulSoupで整形したhtmlとレースID引数として渡す
 import function.count_horse_num as count
+import function.count_paylist_index as index_count
+import function.connect_words as cw
+import db.insert as insert
+import constant as con
+
 
 #レースの払い戻し結果を返す関数
-def get(soup,race_id):
+def insert_hit_detail(soup,race_id):
   pay_list = []
-
-  #出馬数取得し変数horse_numに格納
-  horse_num = count.get(soup)
   
   #払い戻しテーブルを取得し、行ごとに分解、リスト化
   table = soup.find("dd",class_="fc")
@@ -14,58 +16,33 @@ def get(soup,race_id):
   
   # それぞれの識別に対応したデータの整形しpay_listに格納
   for data in rows:
+    #変数宣言
+
+    sublist = []
     data_list = []
+
+    # hit_detailテーブルへinsertする情報を作成
     data_list.append(race_id)
     x = data.get_text(separator=" ").replace(",","").split()
     data_list.extend(x)
-
-    if(data_list[1] == "単勝"):
-      data_list.insert(3,"")
-      pay_list.extend(data_list)
-
-    elif(data_list[1] == "複勝"):
-      #出馬頭数が7以下の場合は複勝は２着までが的中となる
-      index = 3 if horse_num > 7 else 2
-      for i in range(index):
-          sublist = data_list[0:2] + [data_list[j] for j in range(2 + i, len(data_list), index)]
-          sublist.insert(3, "")
-          pay_list.extend(sublist)
-
-    elif(data_list[1] == "枠連"):
-      num = "".join(data_list[2:5])
-      data_list[2:5] = []
-      data_list.insert(2,"")
-      data_list.insert(3,num)
-      pay_list.extend(data_list)
-      
-    elif(data_list[1] == "馬連" or data_list[1] == "馬単"):
-      num = "".join(data_list[2:5])
-      data_list[2:5] = []
-      data_list.insert(2,num)
-      data_list.insert(3,"")
-      pay_list.extend(data_list)
-
-    elif(data_list[1] == "ワイド"):
-      num = [data_list[i:i+3] for i in range(2,len(data_list),3)]
-      data_list[2:11] = []
-      for i in range(3):
-        data_list.insert(i+2,"".join(num[i]))
-      for i in range(index):
-          sublist = data_list[0:2] + [data_list[j] for j in range(2 + i, len(data_list), 3)]
-          sublist.insert(3, "")
-          pay_list.extend(sublist)
-
-    elif(data_list[1] == "三連複" or data_list[1] == "三連単"):
-      num = "".join(data_list[2:7])
-      data_list[2:7] = []
-      data_list.insert(2,num)
-      data_list.insert(3,"")
-      pay_list.extend(data_list)
     
-    else:
-      #例外処理
-      print(f"例外発生：{data_list}")
+    # レコード数取得
+    index = index_count.get_index(data_list)
 
-  return pay_list
+    # 区切る位置取得
+    separator = index_count.get_separator(data_list)
+
+    # データの整形
+    data_list = cw.connect(data_list,index,separator)
+
+    for j in range(index):
+      sublist = data_list[0:2]
+      for i in range(3):
+        sublist.append(data_list[2 + i*index + j ])
+      insert_index = 2 if data_list[1] == "枠連" else 3
+      sublist.insert(insert_index,"")
+      pay_list.extend(sublist)
+
+  insert.insert(con.TABLE[con.HIT_DETAIL],pay_list)
             
 
