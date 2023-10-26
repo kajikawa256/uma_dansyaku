@@ -38,6 +38,11 @@ race_venue_list = [
 '''
 -----------------------以下データベース-----------------------
 '''
+#データベース接続情報
+USER = "umadan"
+PASSWORD = "umadan"
+HOST = "localhost"
+DB = "umadan"
 
 # テーブル情報をまとめたリスト
 TABLE = ['HIT','RACE','RESULT_HORSE','PREDICTION_HORSE','HIT_DETAIL']

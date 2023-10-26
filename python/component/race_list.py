@@ -1,8 +1,10 @@
 #呼び出すときにBeautifulSoupで整形したhtmlとレースID引数として渡す
 import re
 import function.count_horse_num as count
+import db.insert as insert
+import constant as con
 
-def get(soup,race_id):
+def insert_race(soup,race_id):
   race_list = []
 
   #レース情報のスクレイピング
@@ -24,12 +26,14 @@ def get(soup,race_id):
     race_info[0][0:1],      #馬場
     race_place,             #開催場
     race_info[1][3:4],      #天気
-    race_info[0][1:2],      #回り方
+    ("" if "障害" in race_info[2] else race_info[0][1:2]),      #回り方 (障害レースの場合直線)
     race_info[2][-1]        #馬場状態
   ]
+
+  
 
   #race_listに格納
   for x in order:
     race_list.append(x)
   
-  return race_list
+  insert.insert(con.TABLE[con.RACE],race_list)

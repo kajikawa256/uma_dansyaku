@@ -4,7 +4,7 @@ import time
 import os
 import pandas as pd
 import component.result_list as rl
-import component.race_info as ri
+import component.race_list as ri
 import component.pay_list as pl
 import create_raceID as cr
 from tqdm import tqdm
@@ -27,7 +27,6 @@ def scrayping():
 
     for race_id in tqdm(raceIdList):
         # URLを作成
-
         url = f"https://db.netkeiba.com/race/{race_id}"
 
         # レースIDが除外リストに含まれていればスキップ
@@ -41,12 +40,10 @@ def scrayping():
         soup = BeautifulSoup(res.text, "html.parser")
 
         if "レース結果" in soup.text:
-        # 上位５馬の馬枠、馬番、馬名を取得しresult_listに格納
-            result_list = rl.get_only(soup, race_id)
-            # レース情報を取得しrace_listに格納
-            race_list = ri.get(soup, race_id)
-            # 払い戻し情報を取得しpay_listに格納
-            pay_list = pl.get(soup, race_id)
+            # 各テーブルに対応したデータをinsertする
+            rl.insert_result_horse(soup, race_id)
+            ri.insert_race(soup, race_id)
+            pl.insert_hit_detail(soup, race_id)
 
         else:
             # スクレイピングをしてページが存在しなかった場合、そのIDを除外リストに追加する
