@@ -2,7 +2,7 @@
 import constant as cons
 
 # module呼び出し
-import MySQLdb as db
+import mysql.connector as db
 
 def insert(table, datalist:list) :
 
