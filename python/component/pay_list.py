@@ -1,14 +1,12 @@
 #呼び出すときにBeautifulSoupで整形したhtmlとレースID引数として渡す
+import function.count_horse_num as count
 
 #レースの払い戻し結果を返す関数
 def get(soup,race_id):
-  #return用のリスト
   pay_list = []
 
   #出馬数取得し変数horse_numに格納
-  table = soup.find("table",class_="race_table_01 nk_tb_common")
-  colomuns = table.find_all("tr")
-  horse_num = len(colomuns) - 1
+  horse_num = count.get(soup)
   
   #払い戻しテーブルを取得し、行ごとに分解、リスト化
   table = soup.find("dd",class_="fc")
