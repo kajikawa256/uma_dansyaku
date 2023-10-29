@@ -1,4 +1,4 @@
-#馬の頭数をカウントして値を返す関数
+#レースに出馬する馬の数をカウントして値を返す関数
 
 def get(soup):
   table = soup.find("table",class_="race_table_01 nk_tb_common")              

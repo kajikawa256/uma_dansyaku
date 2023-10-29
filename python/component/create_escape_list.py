@@ -1,4 +1,5 @@
-# 除外リスト生成関数
+# 除外race_idを生成してリスト化する関数
+
 def addEscapeList(id :str, ll :list):
     #raceIdを分解してlist化
     idAry = [id[0:4], id[4:6], id[6:8], id[8:10],id[10:12]]
