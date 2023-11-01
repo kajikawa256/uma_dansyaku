@@ -4,7 +4,7 @@ include("connect.php");
 include("def.php");
 
 #使用者の苗字を入力（詳しくはdef.php）
-$command = KAJIKAWA;
+$command = KITADE;
 
 exec($command, $output);
 
@@ -29,14 +29,8 @@ for ($j = 0; $j < count($result_list); $j++) {
   $result_info[] = array($result_list[$j][1]);
   $result_pay[] =  array($result_list[$j][2]);
 }
-//}
 
-// insert() 関数を呼び出す
-// $result = INSERT($table, $columns, $result_info);
-// for($i = 0; $i < $table_size; $i++){
-//   INSERT($table[$i],$columns[$i],);
-// }
-
+// insert関数を呼び出す
 INSERT($table[$RESULT_HORSE],$columns[$RESULT_HORSE],$result_list);
 INSERT($table[$RACE],$columns[$RACE],$result_info);
 INSERT($table[$HIT_DETAIL],$columns[$HIT_DETAIL],$result_pay);

@@ -19,7 +19,6 @@ $columns = [
     ['RACE_ID','KINDS','HORSENUMBER','HORSEFRAME','BETBACK','POPULAR']
 ];
 
-$table_size = 0;
 
 $HIT = 0;
 $RACE = 1;
@@ -31,6 +30,5 @@ $HIT_DETAIL = 4;
 
 */
 
-define("race","RACE");
 
 ?>

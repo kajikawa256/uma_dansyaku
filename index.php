@@ -1,12 +1,9 @@
 <?php
-require_once('db.php');
+include('php/index_call.php');
+$count = 0;
 
 
 ?>
-
-
-
-
 
 <!doctype html>
 <html lang="ja">
@@ -55,88 +52,37 @@ require_once('db.php');
             </div>
         </div>
     </header>
-    <div class="mainimg">
-        <img src="img/uma_main.jpg" alt="メイン画像">
+    <div class = 'top-mainimg'>
+        <div class="mainimg">
+            <h3>Let's try predicting horse racing using the uma_dansyaku!</h3>
+            <p>開発者4人で力を合わせ競馬予想AIシステムを作りました!</p>
+            <p>競馬初心者や競馬予想の参考が欲しい人におすすめ!</p>
+        </div>
     </div>
     <main>
         <section>
             <div class="container">
                 <h2 class="catch">～競馬予想～</h2>
-                <div class="row">
-                    
-                    <div class="col span-4">
-                        <a href="subpage.html">        
-                            <h5>１０月７日  １レース</h5>
-                            <p>芝１８００ｍ    １０時３５分   １４頭</p>
-                        </a>
-                    </div>
-                    <div class="col span-4">
-                        <figure>
-                            <!-- <img src="img/catch.jpg" alt="画像"> -->
-                            <figcaption>２レース</figcaption>
-                        </figure>
-                    </div>
-                    <div class="col span-4">
-                        <figure>
-                            <!-- <img src="img/catch.jpg" alt="画像"> -->
-                            <figcaption>３レース</figcaption>
-                        </figure>
-                    </div>
+                <div class = 'race_head'>
+                    <h3><span><?= $result_race[$count]["RACEDATE"] ?></span> 開催場：
+                        <?php for ($i = 0; $i < count($result_race_place); $i++) : ?>
+                            <a href="index.php?place=<?= $result_race_place[$i]["PLACE"] ?>"><?= $result_race_place[$i]["PLACE"] ?></a>
+                        <?php endfor ?>
+                    </h3>
                 </div>
-                <div class="row">
-                    <div class="col span-4">
-                        <a href="subpage.html">        
-                            <h5>１０月７日  １レース</h5>
-                            <p>芝１８００ｍ    １０時３５分   １４頭</p>
-                        </a>
+                <?php for($i = 0; $i < count($result_race) / 3; $i++):?>
+                    <div class="row">
+                        <?php for($j = 0; $j < 3; $j++) :?> <!-- 3は横並びにする数 -->
+                            <div class="col span-4">
+                            <a href="subpage.php?race_id=<?= $result_race[$count]["RACE_ID"] ?>">
+                                    <h5>第<?= $result_race[$count]["RACENUMBER"]?>レース<br><?= $result_race[$count]["RNAME"]?></h5>
+                                    <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気：<?= $result_race[$count]["WEATHER"] ?></p>
+                                </a>
+                            </div> 
+                            <?php $count++; ?> 
+                        <?php endfor ?>           
                     </div>
-                    <div class="col span-4">
-                        <figure>
-                            <figcaption>５レース</figcaption>
-                        </figure>
-                    </div>
-                    <div class="col span-4">
-                        <figure>
-                            <figcaption>６レース</figcaption>
-                        </figure>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col span-4">
-                        <a href="subpage.html">        
-                            <h5>１０月７日  １レース</h5>
-                            <p>芝１８００ｍ    １０時３５分   １４頭</p>
-                        </a>
-                    </div>
-                    <div class="col span-4">
-                        <figure>
-                            <figcaption>８レース</figcaption>
-                        </figure>
-                    </div>
-                    <div class="col span-4">
-                        <figure>
-                            <figcaption>９レース</figcaption>
-                        </figure>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col span-4">
-                        <a href="subpage.html">        
-                            <h5>１０月７日  １レース</h5>
-                            <p>芝１８００ｍ    １０時３５分   １４頭</p>
-                        </a>
-                    </div>
-                    <div class="col span-4">
-                        <figure>
-                            <figcaption>１１レース</figcaption>
-                        </figure>
-                    </div>
-                    <div class="col span-4">
-                        <figure>
-                            <figcaption>１２レース</figcaption>
-                        </figure>
-                    </div>      
-                </div>
+                <?php endfor ?>   
                 <p class="center"><button>過去の予想結果</button></p>
             </div>
         </section>
@@ -150,11 +96,11 @@ require_once('db.php');
                 </div>
                 <div class="col span-13">
                     <h5>10月7日の回収率</h5>
-                    <p>ここにSNSやテキストなどが入ります。SNSやテキストなどが入ります。</p>
+                    <h6><?= $result_hit[0]["COLLECT_PR"] ?>%</h6>
                 </div>
                 <div class="col span-13">
                     <h5>10月7日の的中率</h5>
-                    <p>ここにSNSやテキストなどが入ります。SNSやテキストなどが入ります。</p>
+                    <h6><?= $result_hit[0]["HIT_PR"]?>%</h6>
                 </div>
             </div>
         </div>
