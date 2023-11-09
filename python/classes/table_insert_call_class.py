@@ -19,7 +19,7 @@ class Main():
     self._insert_hit_detail()
 
 
-  # raceテーブル
+  #---------- raceテーブル ----------#
   def _insert_race(self):
     race_list = []
 
@@ -50,7 +50,7 @@ class Main():
 
     #race_list順番(データベース定義書通りの順番)
     order = [
-      self.race_id,                  #レースID
+      self.race_id,             #レースID
       date,                     #日付
       title[1].text,            #レース名
       int(race_num),            #レース番号
@@ -72,7 +72,7 @@ class Main():
     self.db.insert(con.TABLE[con.RACE],race_list)
 
     
-  # result_horseテーブル
+  #---------- result_horseテーブル ----------#
   def _insert_result_horse(self):
     result_list = []
 
@@ -97,7 +97,7 @@ class Main():
       self.db.insert(con.TABLE[con.RESULT_HORSE],result_list)
 
 
-  # hit_detailテーブル
+  #---------- hit_detailテーブル ----------#
   def _insert_hit_detail(self):
     pay_list = []
     
