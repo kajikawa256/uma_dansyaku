@@ -45,6 +45,7 @@ a img:hover {
     display: flex;
     flex-direction: row;
     padding: 1rem 0 0 0;
+    margin: 15px auto;
 }
 
 .head h1 {
@@ -258,7 +259,7 @@ footer h5 {
 
 .row .col.span-4:hover {
     transform: scale(1.05); /* クリック時のアニメーション（1.05倍の拡大） */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* 影の追加 */
+    box-shadow: 0 0 10px rgba(71, 31, 31, 0.2); /* 影の追加 */
 }
 
 .row .col.span-13 {
@@ -280,4 +281,36 @@ footer h5 {
 
 .row .col.col.span-12 .result {
     display: flex;
+    padding-left: 45px;
 }
+
+.race_head {
+  border-bottom: 3px solid black;
+}
+/* 
+.race_head span {
+    padding-right: 640px;
+    text-align: left;
+}
+
+.race_head p {
+    border: 3px solid #C0C0C0;
+    border-bottom: 0;
+    text-align: center;
+    margin: 1px; */
+/* } */
+.mainimg {
+    width:1170px;
+    padding:0 15px;
+    padding:0 auto;
+  }
+  
+  .top-mainimg {
+    padding:180px 0 100px 0;
+    background-image:url('../img/main_head2.jpg');
+    color: white;
+    background-size:cover;
+    letter-spacing:5px;
+  }
+
+  

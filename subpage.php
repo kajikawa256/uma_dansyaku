@@ -1,3 +1,85 @@
+<?php 
+//もしrace_idが存在しなければ、index.phpに戻る
+if (isset($_GET['race_id'])) {
+    $race_id = $_GET['race_id'];
+} else {
+    header("Location: index.php"); 
+}
+
+//db.phpに接続
+include('php/db.php');
+
+try{
+    //データベース接続
+    $db = db_connect();
+
+/*
+    race_idを参照して、結果の馬名と馬番を表示するデータ
+*/
+    //race_idを使って、RNAME(馬名)を取得
+    $sql_horse = "SELECT HNAME,HORSENUMBER,HORSEFRAME FROM RESULT_HORSE WHERE RACE_ID = :race_id";
+    $stmt = $db->prepare($sql_horse);
+    $stmt->bindParam('race_id', $race_id);
+    $stmt->execute();
+
+    $result_horsename = [];
+     while($rows = $stmt->fetch(PDO::FETCH_ASSOC)){
+        $result_horsename[] = $rows;
+     }
+    $stmt = null;
+
+/*
+    race_idを参照して、払い戻しを詳細を表示するデータ
+*/
+
+     $sql_hit_detail = "SELECT * FROM HIT_DETAIL WHERE RACE_ID = :race_id";
+     $stmt = $db->prepare($sql_hit_detail);
+     $stmt->bindParam("race_id", $race_id);
+     $stmt->execute();
+
+     $result_hit_detail = [];
+     while($rows = $stmt->fetch(PDO::FETCH_ASSOC)){
+        $result_hit_detail[] = $rows;
+     }
+     $stmt = null;
+
+ /*
+    race_idを参照して、レース情報を表示するデータ
+*/
+    $sql_race = "SELECT 
+                    RACEDATE,
+                    RNAME,
+                    RACENUMBER,
+                    TIME,
+                    DISTANCE,
+                    HORSE_TOTAL,
+                    GROUND,
+                    PLACE,
+                    WEATHER,
+                    SPIN,
+                    SITUATION
+    FROM RACE
+    WHERE RACE_ID = :race_id";
+    $stmt = $db->prepare($sql_race);
+    $stmt->bindParam("race_id", $race_id);
+    $stmt->execute();
+
+    $result_race_detail = [];
+    while($rows = $stmt->fetch(PDO::FETCH_ASSOC)){
+       $result_race_detail[] = $rows;
+    }
+
+    var_dump($result_race_detail);
+}catch (Exception $e){
+    exit("DBエラー :" . $e->getMessage());
+}finally{
+    $stmt = null;
+    $db = null;
+}
+?>
+
+
+
 <!doctype html>
 <html lang="ja">
 
@@ -11,7 +93,7 @@
     <script src="js/style.js"></script>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="img/favicon.png">
+   <link rel="icon" type="image/png" href="img/favicon.png"> 
 
 </head>
 
@@ -21,11 +103,7 @@
             <div class="row">
                 <div class="col span-12">
                     <div class="head">
-                        <h1><a href="index.html">ウマ男爵</a></h1>
-                        <div class="snsbox">
-                            <a href="https://instagram.com/shousei._.xx?igshid=NGVhN2U2NjQ0Yg%3D%3D&utm_source=qr"><img src="img/in-icon.png" alt="Instagram"></a>
-                            <a><img src="img/fb-icon.png" alt="Facebook"></a>
-                        </div>
+                        <h1><a href="">ウマ男爵</a></h1>
                     </div>
                 </div>
             </div>
@@ -35,19 +113,23 @@
                         <div id="open"></div>
                         <div id="close"></div>
                         <div id="navi">
-                            <ul>
+                            <!-- <ul>
                                 <li><a href="index.html">ホーム</a></li>
                                 <li><a href="subpage.html">競馬予想</a></li> 
                                 <li><a href="subpage.html">お問い合わせ</a></li>
-                            </ul>
+                            </ul> -->
                         </div>
                     </nav>
                 </div>
             </div>
         </div>
     </header>
-    <div class="mainimg">
-        <img src="img/uma_main.jpg" alt="サブページ画像">
+    <div class = 'top-mainimg'>
+        <div class="mainimg">
+            <h3>Let's try predicting horse racing using the uma_dansyaku!</h3>
+            <p>開発者4人で力を合わせ競馬予想AIシステムを作りました!</p>
+            <p>競馬初心者や競馬予想の参考が欲しい人におすすめ!</p>
+        </div>
     </div>
     <main>
         <article>
@@ -56,20 +138,58 @@
                     <div class="col span-12">
                         <div class="breadcrumb">
                             <ul>
-                                <li><a href="index.html">ホーム</a> > サブページ</li>
+                                <li><a href="index.php">ホーム</a> > サブページ</li>
                             </ul>
+                            <div class = 'race_detail'>
+                                <?php foreach($result_race_detail as $race_detail) :?>
+                                    <h1>
+                                      <?= $race_detail['RACEDATE']?>
+                                      第<?= $race_detail['RACENUMBER']?>レース
+                                      <?= $race_detail['RNAME']?>
+                                    </h1>
+                                    <h4>
+                                      <?=$race_detail['PLACE'] ?> /
+                                      <?=$race_detail['TIME'] ?>発走 /
+                                      天気：<?= $race_detail['WEATHER']?> /
+                                      <?= $race_detail['GROUND']?><?= $race_detail['DISTANCE']?>m (<?= $race_detail['SPIN']?>) /
+                                      頭数：<?= $race_detail['HORSE_TOTAL']?>頭 /
+                                      馬場：<?= $race_detail['SITUATION']?> 
+
+                                    </h4>
+                                <?php endforeach ?>
+                            </div>
                         </div>
                         <div class = "result"> 
                             <div class = "rank_result">
-                                <h2 class = "underline">予想</h2>
-                                <h3>１着：１２３４５６７８９</h3>
-                                <h3>２着：</h3>
-                                <h3>３着：</h3>
-                                <h3>４着：</h3>
-                                <h3>５着：</h3>
+                                <h2 class = "underline">レース結果</h2>
+                                <?php for($i = 0; $i < count($result_horsename); $i++) :?>
+                                    <?php 
+                                        $horseframe = $result_horsename[$i]["HORSEFRAME"];
+                                        $bgclass = ""; //初期クラス
+
+                                        if($horseframe == 1){
+                                            $bgclass = 'bg-white';//白
+                                        }elseif($horseframe == 2){
+                                            $bgclass = 'bg-black';//黒
+                                        }elseif($horseframe == 3){
+                                            $bgclass = 'bg-red';//赤
+                                        }elseif($horseframe == 4){
+                                            $bgclass = 'bg-blue';//青
+                                        }elseif($horseframe == 5){
+                                            $bgclass = 'bg-yellow';//黄色
+                                        }elseif($horseframe == 6){
+                                            $bgclass = 'bg-green';//緑
+                                        }elseif($horseframe == 7){
+                                            $bgclass = 'bg-orange';//橙
+                                        }elseif($horseframe == 8){
+                                            $bgclass = 'bg-pink';//桃
+                                        }
+                                    ?>
+                                    <h3><?= $i+1 ?>着：<span class="bg-all" id="<?=$bgclass?>"><?= $result_horsename[$i]["HORSENUMBER"] ?></span><?= $result_horsename[$i]["HNAME"]?></h3>
+                                <?php  endfor ?>
                              </div>
                              <div class = "rank_result">
-                                <h2 class="underline">１０月７日の予想結果</h2>
+                                <h2 class="underline">AI予想</h2>
                                 <h3>１着：１位</h3>
                                 <h3>２着：２位</h3>
                                 <h3>３着：３位</h3>
@@ -77,159 +197,40 @@
                                 <h3>５着：５位</h3>
                             </div>  
                         </div>
-                       
-                       
-                        <!-- <h2 class="underline">カラム</h2>
-                        <p>シンプルなカラムのみ制作しています。横幅が12の数字になるように、レイアウトを組みます。</p>
-                        <div class="row">
-                            <div style="background-color: #F1F1F1; padding:1rem 0; margin-bottom: 1em;"
-                                class="col span-1">カラム1</div>
-                            <div style="background-color: #F1F1F1; padding:1rem 0; margin-bottom: 1em;"
-                                class="col span-11">カラム11</div>
-                        </div>
-                        <div class="row">
-                            <div style="background-color: #F1F1F1; padding:1rem 0; margin-bottom: 1em;"
-                                class="col span-2">カラム2</div>
-                            <div style="background-color: #F1F1F1; padding:1rem 0; margin-bottom: 1em;"
-                                class="col span-10">カラム10</div>
-                        </div>
-                        <div class="row">
-                            <div style="background-color: #F1F1F1; padding:1rem 0;  margin-bottom: 1rem;"
-                                class="col span-3">カラム3</div>
-                            <div style="background-color: #F1F1F1; padding:1rem 0;  margin-bottom: 1rem;"
-                                class="col span-9">カラム9</div>
-                        </div>
-                        <div class="row">
-                            <div style="background-color: #F1F1F1; padding:1rem 0;  margin-bottom: 1rem;"
-                                class="col span-4">カラム4</div>
-                            <div style="background-color: #F1F1F1; padding:1rem 0;  margin-bottom: 1rem;"
-                                class="col span-8">カラム8</div>
-                        </div>
-                        <div class="row">
-                            <div style="background-color: #F1F1F1; padding:1rem 0;  margin-bottom: 1rem;"
-                                class="col span-5">カラム5</div>
-                            <div style="background-color: #F1F1F1; padding:1rem 0;  margin-bottom: 1rem;"
-                                class="col span-7">カラム7</div>
-                        </div>
-                        <div class="row">
-                            <div style="background-color: #F1F1F1; padding:1rem 0;  margin-bottom: 1rem;"
-                                class="col span-6">カラム6</div>
-                            <div style="background-color: #F1F1F1; padding:1rem 0;  margin-bottom: 1rem;"
-                                class="col span-6">カラム6</div>
-                        </div>
-                        <div class="row">
-                            <div style="background-color: #F1F1F1; padding:1rem 0;  margin-bottom: 1rem;"
-                                class="col span-7">カラム7</div>
-                            <div style="background-color: #F1F1F1; padding:1rem 0;  margin-bottom: 1rem;"
-                                class="col span-5">カラム5</div>
-                        </div>
-                        <div class="row">
-                            <div style="background-color: #F1F1F1; padding:1rem 0;  margin-bottom: 1rem;"
-                                class="col span-8">カラム8</div>
-                            <div style="background-color: #F1F1F1; padding:1rem 0;  margin-bottom: 1rem;"
-                                class="col span-4">カラム4</div>
-                        </div>
-                        <div class="row">
-                            <div style="background-color: #F1F1F1; padding:1rem 0;  margin-bottom: 1rem;"
-                                class="col span-9">カラム9</div>
-                            <div style="background-color: #F1F1F1; padding:1rem 0;  margin-bottom: 1rem;"
-                                class="col span-3">カラム3</div>
-                        </div>
-                        <div class="row">
-                            <div style="background-color: #F1F1F1; padding:1rem 0;  margin-bottom: 1rem;"
-                                class="col span-10">カラム10</div>
-                            <div style="background-color: #F1F1F1; padding:1rem 0;  margin-bottom: 1rem;"
-                                class="col span-2">カラム2</div>
-                        </div>
-                        <div class="row">
-                            <div style="background-color: #F1F1F1; padding:1rem 0;  margin-bottom: 1rem;"
-                                class="col span-11">カラム11</div>
-                            <div style="background-color: #F1F1F1; padding:1rem 0;  margin-bottom: 1rem;"
-                                class="col span-1">カラム1</div>
-                        </div>
-                        <div class="row">
-                            <div style="background-color: #F1F1F1; padding:1rem 0;  margin-bottom: 1rem;"
-                                class="col span-12">カラム12</div>
-                        </div>
-
-                        <h2 class="underline">ボタン</h2>
-                        <p><a href="" class="button">ボタン</a><a href="" class="button">ボタン</a><a href=""
-                                class="button">ボタン</a><a href="" class="button">ボタン</a><a href=""
-                                class="button">ボタン</a><a href="" class="button">ボタン</a><a href=""
-                                class="button">ボタン</a><a href="" class="button">ボタン</a><a href=""
-                                class="button">ボタン</a><a href="" class="button">ボタン</a></p>
-
-                        <h2 class="underline">フォーム</h2>
-                        <form action="" method="post">
-                            <p>
-                                <label for="name">お名前</label>
-                                <input class="full-width" type="text" id="name" name="name">
-                            </p>
-                            <p>
-                                <label for="email">メールアドレス</label>
-                                <input class="full-width" type="email" id="email" name="email">
-                            </p>
-                            <p>
-                                <label for="message">お問い合わせ内容</label>
-                                <textarea class="full-width" id="textarea" name="textarea"></textarea>
-                            </p>
-                            <p>
-                                <input class="button" type="submit" value="送信">
-                            </p>
-                        </form>
-
-                        <h2 class="underline">リスト</h2>
-                        <ul>
-                            <li>リストスタイル</li>
-                            <li>リストスタイル</li>
-                            <li>リストスタイル</li>
-                        </ul>
-                        <ol>
-                            <li>番号付きのリスト</li>
-                            <li>番号付きのリスト</li>
-                            <li>番号付きのリスト</li>
-                        </ol>
-
-                        <h2 class="underline">テーブル</h2>
-                        <table class="full-width">
-                            <thead>
-                                <tr>
-                                    <th>タイトル</th>
-                                    <th>タイトル</th>
-                                    <th>タイトル</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>文章</td>
-                                    <td>文章</td>
-                                    <td>文章</td>
-                                </tr>
-                                <tr>
-                                    <td>文章</td>
-                                    <td>文章</td>
-                                    <td>文章</td>
-                                </tr>
-                                <tr>
-                                    <td>文章</td>
-                                    <td>文章</td>
-                                    <td>文章</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <h2 class="underline">コード</h2>
-                        <pre><code>.test-class {
-background-color: F1F1F1;
-font-size: 16px;}</code></pre> -->
-
                     </div>
                 </div>
             </div>
         </article>
+        <div class = 'top_hit_detail'>
+
+            <div class = 'hit_detail'>
+
+                <div id = 'null'></div>
+                <h3>式別</h3>
+                <h3></h3>
+                <h3></h3>
+                <h3></h3>
+                <?php foreach($result_hit_detail as $hit_detail) : ?>
+
+                    <div class = 'summarize_element'>
+
+                        <h3 class = 'K kinds'><?= $hit_detail['KINDS'] ?></h3>
+                        <h3 class = 'K horsenumber'><?=$hit_detail['KINDS'] == 'ワイド' ? $hit_detail['HORSEFRAME'] : $hit_detail['HORSENUMBER'] ;?></h3>
+                        <h3 class = 'K betback'><?= $hit_detail['BETBACK'] ?>円</h3>
+                        <h3 class = 'K popular_betback'><?= $hit_detail['POPULAR'] ?>人気</h3>
+
+                    </div>
+
+                <?php endforeach ?>  
+
+            </div>
+
+        </div>
+
     </main>
     <footer>
         <div class="container">
+            
             <div class="row">
                 <div class="col span-4">
                     <h5>フッター１</h5>
