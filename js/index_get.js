@@ -17,7 +17,4 @@
 // };
 // xhr.send(params);
 
-function buttonClick(){
-    console.log("test");
-    params.delete('raceplace');
-}
+

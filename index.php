@@ -3,7 +3,17 @@ include('php/index_call.php');
 $count = 0;
 $flag = true;
 
+if(strcmp($_GET["racedate"],"")){
+    $position = 680;
+}else{
+    $position = 0;
+}
+
 ?>
+<!-- ページの自動スクロール -->
+<script>
+    window.onload = function (){	$(window).scrollTop(<?php echo $position; ?>);}
+</script>
 
 <!doctype html>
 <html lang="ja">
@@ -60,9 +70,13 @@ $flag = true;
         <section>
             <div class="container">
                 <h2 id=race class="catch">～競馬予想～</h2>
+                
+
+
                 <div class = 'race_head'>
                     <form action="index.php" id = "myform" method = "GET">
-                        <h3>
+                        <div id = "select_tab">
+                        <label class="selectbox-001">
                             <select id = 'pulldown_racedate' name = 'racedate' onchange = "submit(this.form)" onclick="buttonClick()" >
                                 <?php foreach($result_race_date as $x) :?>
 
@@ -75,7 +89,11 @@ $flag = true;
                                     ?>
                                 <?php endforeach ?>
                             </select>
+                        </label>
+                        </div>
 
+                        <div id = "select_tab">
+                        <label class="selectbox-001">
                             <select id = 'pulldown_raceplace' name = 'raceplace' onchange = "submit(this.form)" >
                                 <?php foreach($result_race_place as $x) :?>
                                     <!-- 開催場所のプルダウンを表示 選択した開催場所をデフォルトとして表示 -->
@@ -87,14 +105,14 @@ $flag = true;
                                     ?>
                                 <?php endforeach ?>
                             </select>
+                        </label>
+                        </div>
 
-                            <!-- <?php for ($i = 0; $i < count($result_race_place); $i++) : ?>
-                                <a href="index.php?place=<?= $result_race_place[$i]["PLACE"] ?>"><?= $result_race_place[$i]["PLACE"] ?></a>
-                            <?php endfor ?> -->
-
-                        </h3>
                     </form>
                 </div>
+                                    
+            </div>
+            <div id = "race_data">
                 <?php for($i = 0; $i < count($result_race) / 3; $i++):?>
                     
                     <div class="row">
@@ -105,7 +123,20 @@ $flag = true;
                             <div class="col span-4">
                             <a href="subpage.php?race_id=<?= $result_race[$count]["RACE_ID"] ?>">
                                     <h5>第<?= $result_race[$count]["RACENUMBER"]?>レース  <?= $result_race[$count]["PLACE"] ?><br><?= $result_race[$count]["RNAME"]?></h5>
-                                    <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気：<?= $result_race[$count]["WEATHER"] ?></p>
+                                    <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気：<?= $result_race[$count]["WEATHER"] ?>
+                                    <?php 
+                                        $weather = $result_race[$count]["WEATHER"];
+                                        
+                                        if($weather == "晴"){
+                                            echo ('<img class="weather_icon" src="./img/tennki-illust1.png" alt="準備中" width="30px" height="30px">');
+                                        }elseif($weather == "曇"){
+                                            echo ('<img class="weather_icon" src="./img/tennki-illust5.png" alt="準備中" width="30px" height="30px">');
+                                        }elseif($weather == "雨"){
+                                            echo ('<img class="weather_icon" src="./img/tennki-illust7.png" alt="準備中" width="30px" height="30px">');
+                                        }elseif($weather == "小雨"){
+                                            echo ('<img class="weather_icon" src="./img/tennki-illust17.png" alt="準備中" width="30px" height="30px">');
+                                        }
+                                    ?></p>
                                 </a>
                             </div> 
                             <?php $flag = false; ?>
@@ -116,7 +147,19 @@ $flag = true;
                                 <div class="col span-4">
                                 <a href="subpage.php?race_id=<?= $result_race[$count]["RACE_ID"] ?>">
                                     <h5>第<?= $result_race[$count]["RACENUMBER"]?>レース  <?= $result_race[$count]["PLACE"] ?><br><?= $result_race[$count]["RNAME"]?></h5>
-                                    <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気：<?= $result_race[$count]["WEATHER"] ?></p>
+                                    <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気：<?= $result_race[$count]["WEATHER"] ?>
+                                    <?php 
+                                        $weather = $result_race[$count]["WEATHER"];
+                                        if($weather == "晴"){
+                                            echo ('<img class="weather_icon" src="./img/tennki-illust1.png" alt="準備中" width="30px" height="30px">');
+                                        }elseif($weather == "曇"){
+                                            echo ('<img class="weather_icon" src="./img/tennki-illust5.png" alt="準備中" width="30px" height="30px">');
+                                        }elseif($weather == "雨"){
+                                            echo ('<img class="weather_icon" src="./img/tennki-illust7.png" alt="準備中" width="30px" height="30px">');
+                                        }elseif($weather == "小雨"){
+                                            echo ('<img class="weather_icon" src="./img/tennki-illust17.png" alt="準備中" width="30px" height="30px">');
+                                        }
+                                    ?></p>
                                 </a>
                             </div> 
                             <?php $flag = false; ?>
@@ -127,7 +170,19 @@ $flag = true;
                                 <div class="col span-4">
                                 <a href="subpage.php?race_id=<?= $result_race[$count]["RACE_ID"] ?>">
                                     <h5>第<?= $result_race[$count]["RACENUMBER"]?>レース  <?= $result_race[$count]["PLACE"] ?><br><?= $result_race[$count]["RNAME"]?></h5>
-                                    <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気：<?= $result_race[$count]["WEATHER"] ?></p>
+                                    <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気：<?= $result_race[$count]["WEATHER"] ?>
+                                    <?php 
+                                        $weather = $result_race[$count]["WEATHER"];
+                                        if($weather == "晴"){
+                                            echo ('<img class="weather_icon" src="./img/tennki-illust1.png" alt="準備中" width="30px" height="30px">');
+                                        }elseif($weather == "曇"){
+                                            echo ('<img class="weather_icon" src="./img/tennki-illust5.png" alt="準備中" width="30px" height="30px">');
+                                        }elseif($weather == "雨"){
+                                            echo ('<img class="weather_icon" src="./img/tennki-illust7.png" alt="準備中" width="30px" height="30px">');
+                                        }elseif($weather == "小雨"){
+                                            echo ('<img class="weather_icon" src="./img/tennki-illust17.png" alt="準備中" width="30px" height="30px">');
+                                        }
+                                    ?></p>
                                 </a>
                             </div>                     
                             <?php endif; $count++;?>
