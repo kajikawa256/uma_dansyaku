@@ -9,9 +9,9 @@ def get_id():
   #                06中山、07中京、08京都、09阪神、10小倉
   place = [str(i).zfill(2) for i in range(1, 11)]
   #開催回(MAX10)
-  times = [str(i).zfill(2) for i in range(1, 11)]
+  times = [str(i).zfill(2) for i in range(1, 13)]
   #開催日(MAX10)
-  days  = [str(i).zfill(2) for i in range(1, 11)]
+  days  = [str(i).zfill(2) for i in range(1, 17)]
   #レース12(MAX12)
   races = [str(i).zfill(2) for i in range(1, 13)] 
 

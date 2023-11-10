@@ -8,6 +8,7 @@ import classes.table_insert_call_class as table_insert
 import classes.copy as copy
 from datetime import datetime
 import datetime as now
+import pprint
 
 #任意の年数分スクレイピングしてデータベースにinsertする
 
@@ -34,7 +35,6 @@ for race_id in tqdm(raceIdList):
     res.encoding = "EUC-JP"
     soup = BeautifulSoup(res.text, "html.parser")
 
-
     if "着順" in soup.text:
         # 日付の確認
         dt_now = now.datetime.now()
@@ -50,7 +50,7 @@ for race_id in tqdm(raceIdList):
         date = date_object.strftime("%Y年%m月%d日")
         if now_date < date:
             # レースの日付がきょう以降であればスキップ
-            print(f"開催予定のraceです race_id:{race_id}")
+            # print(f"開催予定のraceです race_id:{race_id}")
             continue
 
         # 各テーブルに対応したデータをinsertする
@@ -59,3 +59,4 @@ for race_id in tqdm(raceIdList):
         # 除外race_idのリストを生成する
         exclusionIDList = (escape.addEscapeList(race_id, list(exclusionIDList)))
         exclusionIDList = set(exclusionIDList)
+        # exclusionIDList = escape.addEscapeList(race_id,exclusionIDList)
