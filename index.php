@@ -27,11 +27,7 @@ $count = 0;
             <div class="row">   
                 <div class="col span-12">
                     <div class="head">
-                        <h1><a href="index.html">ウマ男爵</a></h1>
-                        <div class="snsbox">
-                            <a href="https://instagram.com/shousei._.xx?igshid=NGVhN2U2NjQ0Yg%3D%3D&utm_source=qr"><img src="img/in-icon.png" alt="Instagram"></a>
-                            <a><img src="img/fb-icon.png" alt="Facebook"></a>
-                        </div>
+                        <h1><a href="index.html">ウマ男爵 </a></h1>
                     </div>
                 </div>
             </div>
@@ -41,11 +37,11 @@ $count = 0;
                         <div id="open"></div>
                         <div id="close"></div>
                         <div id="navi">
-                            <ul>
+                            <!-- <ul>
                                 <li><a href="index.html">ホーム</a></li>
                                 <li><a href="subpage.html">競馬予想</a></li> 
                                 <li><a href="subpage.html">お問い合わせ</a></li>
-                            </ul>
+                            </ul> -->
                         </div>
                     </nav>
                 </div>
@@ -62,13 +58,21 @@ $count = 0;
     <main>
         <section>
             <div class="container">
-                <h2 class="catch">～競馬予想～</h2>
+                <h2 id=race class="catch">～競馬予想～</h2>
                 <div class = 'race_head'>
-                    <h3><span><?= $result_race[$count]["RACEDATE"] ?></span> 開催場：
-                        <?php for ($i = 0; $i < count($result_race_place); $i++) : ?>
-                            <a href="index.php?place=<?= $result_race_place[$i]["PLACE"] ?>"><?= $result_race_place[$i]["PLACE"] ?></a>
-                        <?php endfor ?>
-                    </h3>
+                    <form action="index.php#race" id = "myform" method = "GET">
+                        <h3>
+                            <select id = 'pulldown_racedate' name = 'select_racedate'>
+                                <?php foreach($result_race_date as $x) :?>
+                                    <option value =<?= $x["RACEDATE"] ?> ><?= $x["RACEDATE"] ?></option>
+                                <?php endforeach ?>  開催場：
+                            </select>
+                            <button type="submit">送信</button>
+                            <?php for ($i = 0; $i < count($result_race_place); $i++) : ?> 
+                                <a href="index.php?place=<?= $result_race_place[$i]["PLACE"] ?>"><?= $result_race_place[$i]["PLACE"] ?></a>
+                            <?php endfor ?>
+                        </h3>
+                    </form>
                 </div>
                 <?php for($i = 0; $i < count($result_race) / 3; $i++):?>
                     <div class="row">
@@ -83,7 +87,6 @@ $count = 0;
                         <?php endfor ?>           
                     </div>
                 <?php endfor ?>   
-                <p class="center"><button>過去の予想結果</button></p>
             </div>
         </section>
     </main>
@@ -117,6 +120,7 @@ $count = 0;
         </div>
     </div>
     <p id="pagetop"><a href="#">TOP</a></p>
+    <script src="js/index_get.js"></script>
 </body>
 
 </html>

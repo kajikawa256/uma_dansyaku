@@ -45,6 +45,7 @@ a img:hover {
     display: flex;
     flex-direction: row;
     padding: 1rem 0 0 0;
+    margin: 15px auto;
 }
 
 .head h1 {
@@ -280,6 +281,7 @@ footer h5 {
 
 .row .col.col.span-12 .result {
     display: flex;
+    padding-left: 45px;
 }
 
 .race_head {
@@ -310,3 +312,5 @@ footer h5 {
     background-size:cover;
     letter-spacing:5px;
   }
+
+  
