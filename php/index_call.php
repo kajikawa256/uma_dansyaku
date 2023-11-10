@@ -1,6 +1,7 @@
 <?php
 include('def.php');
 include('db.php');
+$sql_race="";
 
 if (isset($_GET['selectedValue'])) {
     $selectedValue = $_GET['selectedValue'];
@@ -10,20 +11,22 @@ if (isset($_GET['selectedValue'])) {
 echo $selectedValue;
 
 
-if(array_key_exists('place',$_GET)){
-    $x = $_GET['place'];
+# 場所
+if(array_key_exists('raceplace',$_GET)){
+    $x = $_GET['raceplace'];
     $race_filter = "'$x'";
 }else{
+    $_GET['raceplace'] ="";
     $race_filter = ""; 
 }
 
+# 日付
 if(array_key_exists('racedate',$_GET)){
     $y = $_GET['racedate'];
     $racedate_filter = "'$y'";
-    echo $racedate_filter;
 }else{
+    $_GET['racedate'] ="";
     $racedate_filter = ""; 
-    echo $racedate_filter;
 }
 
 /*
@@ -51,17 +54,21 @@ try{
         $racedate_filter = "'" . $race_filter_result[0]["RACEDATE"] . "'";
         $race_filter = "'" . $race_filter_result[0]["PLACE"] . "'";
     }
-    $sql_race = "SELECT RACE_ID,RACEDATE,
-                        RNAME,
-                        RACENUMBER,
-                        TIME,
-                        DISTANCE,
-                        GROUND,
-                        PLACE,
-                        WEATHER 
-    FROM $table[$RACE]
-    WHERE RACEDATE = $racedate_filter
-    AND PLACE = $race_filter;"; 
+
+    
+    $sql_race = "SELECT RACE_ID,
+                    RACEDATE,
+                    RNAME,
+                    RACENUMBER,
+                    TIME,
+                    DISTANCE,
+                    GROUND,
+                    PLACE,
+                    WEATHER 
+                FROM $table[$RACE]
+                WHERE RACEDATE = $racedate_filter
+                AND PLACE = $race_filter;"; 
+  
 
     //ステートメントの準備
     $stmt = $db->prepare($sql_race);
@@ -73,8 +80,35 @@ try{
         $result_race[] = $rows;
     }
     $stmt = null;
+
+    if(empty($result_race)){
+        $sql_race = "SELECT RACE_ID,
+                    RACEDATE,
+                    RNAME,
+                    RACENUMBER,
+                    TIME,
+                    DISTANCE,
+                    GROUND,
+                    PLACE,
+                    WEATHER 
+                FROM $table[$RACE]
+                WHERE RACEDATE = $racedate_filter"; 
+  
+
+        //ステートメントの準備
+        $stmt = $db->prepare($sql_race);
+        
+        //実行
+        $stmt->execute();
+        $result_race = [];
+        while($rows = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $result_race[] = $rows;
+        }
+        $stmt = null;
+    }
+    
 /*
-    Raceテーブルからindex.phpにプルダウン形式で表示するデータ 
+    Raceテーブルからindex.phpに日付をプルダウン形式で表示するデータ 
 */
 $sql_date = "SELECT DISTINCT RACEDATE FROM RACE ORDER BY RACEDATE DESC;";
 //ステートメントの準備
@@ -87,7 +121,22 @@ while($rows = $stmt->fetch(PDO::FETCH_ASSOC)){
 }
 $stmt = null;
 
+/*
+    Raceテーブルからindex.phpに場所をプルダウン形式で表示するデータ 
+*/
+$sql_date = "SELECT DISTINCT PLACE FROM RACE ORDER BY RACEDATE DESC;";
+//ステートメントの準備
+$stmt = $db->prepare($sql_date);
+//実行
+$stmt->execute();
+$result_race_place = [];
+while($rows = $stmt->fetch(PDO::FETCH_ASSOC)){
+    $result_race_place[] = $rows;
+}
+$stmt = null;
 
+
+if(strcmp($racedate_filter,"") == 0){
 /*
     Raceテーブルからindex.phpの開催場を表示するデータをreturnする関数 
 */
@@ -96,7 +145,7 @@ $stmt = null;
                         WHERE RACEDATE = (
                             SELECT MAX(RACEDATE) FROM RACE
                         );";
-  
+
     //ステートメントの準備
     $stmt = $db->prepare($sql_race_place);
     //実行
@@ -106,6 +155,21 @@ $stmt = null;
         $result_race_place[] = $rows;
     }
     $stmt = null;
+}else{
+    $sql_race_place = "SELECT DISTINCT PLACE 
+    FROM $table[$RACE] 
+    WHERE RACEDATE = $racedate_filter";
+
+    //ステートメントの準備
+    $stmt = $db->prepare($sql_race_place);
+    //実行
+    $stmt->execute();
+    $result_race_place = [];
+    while($rows = $stmt->fetch(PDO::FETCH_ASSOC)){
+    $result_race_place[] = $rows;
+    }
+    $stmt = null;
+}
 
     /*
         Hitテーブルからindex.phpに表示するデータをreturnする関数 
@@ -123,6 +187,7 @@ $stmt = null;
 }catch(PDOException $poe) {
     echo $sql_race;
     $db->rollBack();
+    var_dump ($race_filter);
     exit("DBエラー".$poe->getMessage());
     
 }finally{

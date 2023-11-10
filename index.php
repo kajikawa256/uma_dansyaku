@@ -1,7 +1,7 @@
 <?php
 include('php/index_call.php');
 $count = 0;
-
+$flag = true;
 
 ?>
 
@@ -16,6 +16,7 @@ $count = 0;
     <link rel="stylesheet" media="all" href="css/style.css" />
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/style.js"></script>
+    <script src="js/index_get.js"></script>
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="img/favicon.png">
@@ -27,7 +28,7 @@ $count = 0;
             <div class="row">   
                 <div class="col span-12">
                     <div class="head">
-                        <h1><a href="index.html">ウマ男爵 </a></h1>
+                        <h1><a href="index.php">ウマ男爵 </a></h1>
                     </div>
                 </div>
             </div>
@@ -37,11 +38,11 @@ $count = 0;
                         <div id="open"></div>
                         <div id="close"></div>
                         <div id="navi">
-                            <!-- <ul>
-                                <li><a href="index.html">ホーム</a></li>
+                            <ul>
+                                <li><a href="index.php">ホーム</a></li>
                                 <li><a href="subpage.html">競馬予想</a></li> 
                                 <li><a href="subpage.html">お問い合わせ</a></li>
-                            </ul> -->
+                            </ul>
                         </div>
                     </nav>
                 </div>
@@ -60,33 +61,81 @@ $count = 0;
             <div class="container">
                 <h2 id=race class="catch">～競馬予想～</h2>
                 <div class = 'race_head'>
-                    <form action="index.php#race" id = "myform" method = "GET">
+                    <form action="index.php" id = "myform" method = "GET">
                         <h3>
-                            <select id = 'pulldown_racedate' name = 'select_racedate'>
+                            <select id = 'pulldown_racedate' name = 'racedate' onchange = "submit(this.form)" onclick="buttonClick()" >
                                 <?php foreach($result_race_date as $x) :?>
-                                    <option value =<?= $x["RACEDATE"] ?> ><?= $x["RACEDATE"] ?></option>
-                                <?php endforeach ?>  開催場：
+
+                                    <!-- 日付のプルダウンを表示 選択した日付をデフォルトとして表示 -->
+                                    <?php if(strcmp($x["RACEDATE"],$_GET["racedate"])) {
+                                        echo("<option value = ". $x["RACEDATE"] .">". $x["RACEDATE"] . "</option>");
+                                    } else {
+                                        echo("<option value ='". $x["RACEDATE"] ."'selected>". $x["RACEDATE"] . "</option>");
+                                    }             
+                                    ?>
+                                <?php endforeach ?>
                             </select>
-                            <button type="submit">送信</button>
-                            <?php for ($i = 0; $i < count($result_race_place); $i++) : ?> 
+
+                            <select id = 'pulldown_raceplace' name = 'raceplace' onchange = "submit(this.form)" >
+                                <?php foreach($result_race_place as $x) :?>
+                                    <!-- 開催場所のプルダウンを表示 選択した開催場所をデフォルトとして表示 -->
+                                    <?php if(strcmp($x["PLACE"],$_GET["raceplace"])) {
+                                        echo("<option value = ". $x["PLACE"] .">". $x["PLACE"] . "</option>");
+                                    } else {
+                                        echo("<option value ='". $x["PLACE"] ."'selected>". $x["PLACE"] . "</option>");
+                                    }                                    
+                                    ?>
+                                <?php endforeach ?>
+                            </select>
+
+                            <!-- <?php for ($i = 0; $i < count($result_race_place); $i++) : ?>
                                 <a href="index.php?place=<?= $result_race_place[$i]["PLACE"] ?>"><?= $result_race_place[$i]["PLACE"] ?></a>
-                            <?php endfor ?>
+                            <?php endfor ?> -->
+
                         </h3>
                     </form>
                 </div>
                 <?php for($i = 0; $i < count($result_race) / 3; $i++):?>
+                    
                     <div class="row">
                         <?php for($j = 0; $j < 3; $j++) :?> <!-- 3は横並びにする数 -->
+                            
+                            <!-- 場所を指定して絞り込む -->
+                            <?php if(strcmp($result_race[$count]["PLACE"],$_GET["raceplace"]) == 0) : ?>
                             <div class="col span-4">
                             <a href="subpage.php?race_id=<?= $result_race[$count]["RACE_ID"] ?>">
-                                    <h5>第<?= $result_race[$count]["RACENUMBER"]?>レース<br><?= $result_race[$count]["RNAME"]?></h5>
+                                    <h5>第<?= $result_race[$count]["RACENUMBER"]?>レース  <?= $result_race[$count]["PLACE"] ?><br><?= $result_race[$count]["RNAME"]?></h5>
                                     <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気：<?= $result_race[$count]["WEATHER"] ?></p>
                                 </a>
                             </div> 
-                            <?php $count++; ?> 
+                            <?php $flag = false; ?>
+                            <?php  endif;?>
+                            
+                            <!-- 初回接続時 -->
+                            <?php if(strcmp($_GET["raceplace"],"") == 0): ?>
+                                <div class="col span-4">
+                                <a href="subpage.php?race_id=<?= $result_race[$count]["RACE_ID"] ?>">
+                                    <h5>第<?= $result_race[$count]["RACENUMBER"]?>レース  <?= $result_race[$count]["PLACE"] ?><br><?= $result_race[$count]["RNAME"]?></h5>
+                                    <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気：<?= $result_race[$count]["WEATHER"] ?></p>
+                                </a>
+                            </div> 
+                            <?php $flag = false; ?>
+                            <?php endif;?>
+                            
+                            <!-- どれにも該当しなかった場合 -->
+                            <?php if($flag && $count < 12): ?>
+                                <div class="col span-4">
+                                <a href="subpage.php?race_id=<?= $result_race[$count]["RACE_ID"] ?>">
+                                    <h5>第<?= $result_race[$count]["RACENUMBER"]?>レース  <?= $result_race[$count]["PLACE"] ?><br><?= $result_race[$count]["RNAME"]?></h5>
+                                    <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気：<?= $result_race[$count]["WEATHER"] ?></p>
+                                </a>
+                            </div>                     
+                            <?php endif; $count++;?>
+
                         <?php endfor ?>           
                     </div>
-                <?php endfor ?>   
+
+                <?php endfor; ?>   
             </div>
         </section>
     </main>
@@ -120,7 +169,6 @@ $count = 0;
         </div>
     </div>
     <p id="pagetop"><a href="#">TOP</a></p>
-    <script src="js/index_get.js"></script>
 </body>
 
 </html>
