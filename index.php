@@ -31,8 +31,15 @@ if(strcmp($_GET["racedate"],"")){
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="img/favicon.png">
 
+    <!-- ローディング画面 -->
+    <link rel="stylesheet" type="text/css" href="css/4-1-2.css">
 </head>
 <body>
+
+    <div id="splash">
+    <div id="splash_text"></div>
+    <!--/splash--></div>
+
     <header>
         <div class="container">
             <div class="row">   
@@ -224,6 +231,15 @@ if(strcmp($_GET["racedate"],"")){
         </div>
     </div>
     <p id="pagetop"><a href="#">TOP</a></p>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://rawgit.com/kimmobrunfeldt/progressbar.js/master/dist/progressbar.min.js"></script>
+    <!--IE11用-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script><!--不必要なら削除-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js"></script><!--不必要なら削除-->
+    <!--自作のJS-->
+    <script src="js/4-1-2.js"></script>
 </body>
 
 </html>
