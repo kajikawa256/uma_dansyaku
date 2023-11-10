@@ -1,0 +1,85 @@
+-- データベース作成
+DROP DATABASE IF EXISTS umadan;
+CREATE DATABASE umadan;
+
+-- データベース選択
+USE umadan;
+
+-- umadan@localhostが存在しているならユーザー削除
+DROP USER IF EXISTS 'umadan'@'localhost';
+
+-- ユーザー作成（ユーザー：umadan@localhost、パスワード：umadan）
+CREATE USER 'umadan'@'localhost' IDENTIFIED BY 'umadan';
+
+-- ユーザーにinsert操作の特権を付与
+GRANT SELECT, INSERT ON umadan.* TO umadan@localhost;
+
+-- なんの特権を付与してるかを確認
+SHOW GRANTS FOR 'umadan'@'localhost';
+
+/*---------------テーブル作成----------------------*/
+
+-- 的中
+CREATE TABLE HIT (
+    RACEDATE   VARCHAR(12),
+    COLLECT_PR INT(2) DEFAULT 0,
+    HIT_PR     INT(2) DEFAULT 0
+);
+
+-- レース
+CREATE TABLE RACE (
+    RACE_ID     VARCHAR(12),
+    RACEDATE    VARCHAR(12) NOT NULL,
+    RNAME       VARCHAR(50) NOT NULL,
+    RACENUMBER  INT(2) NOT NULL,
+    TIME        VARCHAR(9) NOT NULL,
+    DISTANCE    INT(4) NOT NULL,
+    HORSE_TOTAL INT(2) NOT NULL,
+    GROUND      VARCHAR(3) NOT NULL,
+    PLACE       VARCHAR(2) NOT NULL,
+    WEATHER     VARCHAR(3) NOT NULL,
+    SPIN        VARCHAR(1) ,
+    SITUATION   VARCHAR(2) NOT NULL
+);
+
+-- 結果情報
+CREATE TABLE RESULT_HORSE (
+    RACE_ID     VARCHAR(20) NOT NULL,
+    RANKING     VARCHAR(2)  NOT NULL,
+    HORSEFRAME  VARCHAR(2)  NOT NULL,
+    HORSENUMBER VARCHAR(2)  NOT NULL,
+    HNAME       VARCHAR(10) NOT NULL,
+    HORSE_ID    VARCHAR(20) NOT NULL,
+    GENDER      VARCHAR(1)  NOT NULL,
+    AGE         VARCHAR(2)  NOT NULL,
+    WEIGHT      FLOAT    NOT NULL,
+    JOCKEY      VARCHAR(10) NOT NULL,
+    JOCKEY_ID   VARCHAR(20) NOT NULL,
+    TORAINER    VARCHAR(10) NOT NULL,
+    TORAINER_ID VARCHAR(20) NOT NULL,
+    BASE        VARCHAR(5)  NOT NULL,
+    HORSE_WEIGHT        INT  NOT NULL,
+    WEIGHT_GAIN_LOSS    INT  NOT NULL,
+    ODDS        FLOAT   NULL,
+    POPULAR     INT     NULL
+);
+
+-- 予想情報
+CREATE TABLE PREDICTION_HORSE (
+    RACE_ID     VARCHAR(12) NOT NULL,
+    HNAME       VARCHAR(9) NOT NULL,
+    HORSENUMBER VARCHAR(2)NOT NULL,
+    HORSEFRAME  VARCHAR(2)NOT NULL,
+    RANKING     INT(1) NOT NULL
+);
+
+-- 払戻し詳細
+CREATE TABLE HIT_DETAIL (
+    RACE_ID     VARCHAR(12) NOT NULL,
+    KINDS       VARCHAR(3) NOT NULL,
+    HORSENUMBER VARCHAR(8),
+    HORSEFRAME  VARCHAR(8),
+    BETBACK     VARCHAR(10) NOT NULL DEFAULT 0,
+    POPULAR     VARCHAR(4) NOT NULL
+);
+
