@@ -7,6 +7,7 @@ html {
   box-sizing: border-box;
   overflow-y: scroll;
   -webkit-text-size-adjust: 100%
+  
 }
 
 *,
@@ -24,6 +25,7 @@ html {
 
 * {
   padding: 0;
+  font-family: monospace, monospace;
   margin: 0
 }
 
@@ -285,4 +287,98 @@ video {
   background-color: #b3d4fc;
   color: #000;
   text-shadow: none
+}
+
+.top_hit_detail {
+  width: 80%;
+  padding-left: 220px;
+}
+
+#null {
+  border-bottom: 1px solid black;
+}
+.summarize_element {
+  display: flex;
+  text-align: center;
+}
+
+.K {  
+  flex: 1;
+  margin: 10px auto;
+  text-align: center;
+} 
+.kinds {
+  border: 1px solid black;
+  border-top: none;
+  margin: 0;
+  padding: 0;
+}
+
+.horsenumber {
+  border: 1px solid black;
+  border-top: none;
+  border-left: none;
+  margin: 0;
+  padding: 0;
+}
+
+.betback {
+  border: 1px solid black;
+  border-top: none;
+  border-left: none;
+  margin: 0;
+  padding: 0;
+} 
+.popular_betback {
+  border: 1px solid black;
+  border-top: none;
+  border-left: none;
+  margin: 0;
+  padding: 0;
+}
+
+.race_detail {
+  text-align: center;
+  width: 100%;
+}
+
+.colored-number {
+  background-color: red;
+}
+
+
+/*
+      馬番の色識別
+*/
+
+
+.bg-all {
+  color:white;
+  padding: 0.3em 0.3em;
+}
+
+#bg-white {
+  background-color: white;
+  color:black;
+}
+#bg-black {
+  background-color: black;
+}
+#bg-red {
+  background-color: red;
+}
+#bg-blue {
+  background-color: blue;
+}
+#bg-yellow {
+  background-color: yellow;
+}
+#bg-green {
+  background-color: green;
+}
+#bg-orange {
+  background-color: orange;
+}
+#bg-pink {
+  background-color: pink;
 }

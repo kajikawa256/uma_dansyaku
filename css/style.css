@@ -4,7 +4,7 @@
 :root {
     /* 色変更される場合は、#以降のカラーコードを変更してください IE非対応 */
     --base-color: #000;
-    --link-color: #666;
+    --link-color: #373737;
     --linkhover-color: #999;
     --border-color: #ccc;
     --white-color: #fff;
@@ -45,6 +45,7 @@ a img:hover {
     display: flex;
     flex-direction: row;
     padding: 1rem 0 0 0;
+    margin: 15px auto;
 }
 
 .head h1 {
@@ -246,6 +247,72 @@ footer h5 {
 
 /* レース詳細ボックス
 ------------------------------------ */
+#race_data{
+    max-width: 1000px;
+    margin: auto;
+}
+
+#myform{
+    display: flex;
+}
+
+#select_tab{
+    text-align: center;
+    margin-right: 20px;
+}
+
+.selectbox-001 {
+    /* margin: 0px 20px; */
+    position: relative;
+}
+
+.selectbox-001::before,
+.selectbox-001::after {
+    position: absolute;
+    content: '';
+    pointer-events: none;
+}
+
+.selectbox-001::before {
+    display: inline-block;
+    right: 0;
+    width: 2.8em;
+    height: 2.8em;
+    border-radius: 0 3px 3px 0;
+    background-color: #858585;
+}
+
+.selectbox-001::after {
+    position: absolute;
+    top: 50%;
+    right: 1.4em;
+    transform: translate(50%, -50%) rotate(45deg);
+    width: 6px;
+    height: 6px;
+    border-bottom: 3px solid #fff;
+    border-right: 3px solid #fff;
+}
+
+.selectbox-001 select {
+    appearance: none;
+    min-width: 230px;
+    height: 2.8em;
+    padding: .4em 3.6em .4em .8em;
+    border: none;
+    border-radius: 3px;
+    background-color: #f5f5f5;
+    color: #333;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.selectbox-001 select:focus {
+    outline: 2px solid #858585;
+}
+
+.weather_icon{
+    vertical-align: bottom;
+}
 
 .row .col.span-4 {
     border:3px solid #131413;
@@ -258,7 +325,7 @@ footer h5 {
 
 .row .col.span-4:hover {
     transform: scale(1.05); /* クリック時のアニメーション（1.05倍の拡大） */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* 影の追加 */
+    box-shadow: 0 0 10px rgba(71, 31, 31, 0.2); /* 影の追加 */
 }
 
 .row .col.span-13 {
@@ -280,4 +347,36 @@ footer h5 {
 
 .row .col.col.span-12 .result {
     display: flex;
+    padding-left: 45px;
 }
+
+.race_head {
+  border-bottom: 3px solid black;
+}
+/* 
+.race_head span {
+    padding-right: 640px;
+    text-align: left;
+}
+
+.race_head p {
+    border: 3px solid #C0C0C0;
+    border-bottom: 0;
+    text-align: center;
+    margin: 1px; */
+/* } */
+.mainimg {
+    width:1170px;
+    padding:0 15px;
+    padding:0 auto;
+  }
+  
+  .top-mainimg {
+    padding:180px 0 100px 0;
+    background-image:url('../img/main_head2.jpg');
+    color: white;
+    background-size:cover;
+    letter-spacing:5px;
+  }
+
+  
