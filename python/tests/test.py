@@ -1,2 +1,3 @@
-test = "a"
-print(type(test))
+id = "07"
+
+print(int(id))
