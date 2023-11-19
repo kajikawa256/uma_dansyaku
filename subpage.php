@@ -140,7 +140,7 @@ function getBgclass($find_judge){
     <script src="js/style.js"></script>
 
     <!-- Favicon -->
-   <link rel="icon" type="image/png" href="img/favicon.png"> 
+   <link rel="icon" type="image/png" href="../img/favicon.png"> 
 
 </head>
 
@@ -150,7 +150,7 @@ function getBgclass($find_judge){
             <div class="row">
                 <div class="col span-12">
                     <div class="head">
-                        <h1><a href="">ウマ男爵</a></h1>
+                        <h1><a href="index.php">ウマ男爵</a></h1>
                     </div>
                 </div>
             </div>
@@ -180,192 +180,207 @@ function getBgclass($find_judge){
     </div>
     <main>
         <article>
-            <div class="container">
-                <div class="row">
-                    <div class="col span-12">
-                        <div class="breadcrumb">
-                            <ul>
-                                <li><a href="index.php">ホーム</a> > サブページ</li>
-                            </ul>
-                            <div class = 'race_detail'>
-                                <?php foreach($result_race_detail as $race_detail) :?>
-                                    <h1>
-                                      <?= $race_detail['RACEDATE']?>
-                                      第<?= $race_detail['RACENUMBER']?>レース
-                                      <?= $race_detail['RNAME']?>
-                                    </h1>
-                                    <h4>
-                                      <?=$race_detail['PLACE'] ?> /
-                                      <?=$race_detail['TIME'] ?>発走 /
-                                      天気：<?= $race_detail['WEATHER']?> /
-                                      <?= $race_detail['GROUND']?><?= $race_detail['DISTANCE']?>m (<?= $race_detail['SPIN']?>) /
-                                      頭数：<?= $race_detail['HORSE_TOTAL']?>頭 /
-                                      馬場：<?= $race_detail['SITUATION']?> 
+            <div class = 'background'>
+                <div class="container">
+                    <div class="row">
+                        <div class="col span-12">
+                            <div class="breadcrumb">
+                                <ul>
+                                    <li><a href="index.php">ホーム</a> > サブページ</li>
+                                </ul>
+                                <div class = 'race_detail'>
+                                    <?php foreach($result_race_detail as $race_detail) :?>
+                                        <h1>
+                                        <?= $race_detail['RACEDATE']?>のAI予想結果
+                                        </h1>
+                                        <div class = 'race_infomation'>
+                                            <h3>
+                                            <?= $race_detail['RACENUMBER']?>R
+                                            <?= $race_detail['RNAME']?>
+                                            </h3>
+                                            <p>
+                                            <?=$race_detail['PLACE'] ?> /
+                                            <?=$race_detail['TIME'] ?>発走 /
+                                            天気：<?php        
+                                                        if($race_detail['WEATHER'] == "晴"){
+                                                            echo ('<img class="weather_icon" src="../img/tennki-illust1.png" alt="準備中" width="30px" height="30px">');
+                                                        }elseif($race_detail['WEATHER'] == "曇"){
+                                                            echo ('<img class="weather_icon" src="../img/tennki-illust5.png" alt="準備中" width="30px" height="30px">');
+                                                        }elseif($race_detail['WEATHER'] == "雨"){
+                                                            echo ('<img class="weather_icon" src="../img/tennki-illust7.png" alt="準備中" width="30px" height="30px">');
+                                                        }elseif($race_detail['WEATHER'] == "小雨"){
+                                                            echo ('<img class="weather_icon" src="../img/tennki-illust17.png" alt="準備中" width="30px" height="30px">');
+                                                        }
+                                                    ?> /
+                                            <?= $race_detail['GROUND']?><?= $race_detail['DISTANCE']?>m (<?= $race_detail['SPIN']?>) /
+                                            頭数：<?= $race_detail['HORSE_TOTAL']?>頭 /
+                                            馬場：<?= $race_detail['SITUATION']?> 
 
-                                    </h4>
-                                <?php endforeach ?>
+                                            </p>
+                                        </div>
+                                        
+                                    <?php endforeach ?>
+                                </div>
+                            </div>
+                            <div class = "result"> 
+                                <div class = "rank_result_result">
+                                    <p class = "underline">レース結果</p>
+                                    <?php for($i = 0; $i < count($result_horsename); $i++) :?>
+                                        <?php 
+                                            $find_judge = $result_horsename[$i]["HORSEFRAME"];
+
+                                            $bgclass = getBgclass($find_judge);
+
+                                        ?>
+                                        <p><?= $i+1 ?>着：<span class="bg-all" id="<?=$bgclass?>"><?= $result_horsename[$i]["HORSENUMBER"] ?></span>  <?= $result_horsename[$i]["HNAME"]?></p>
+                                    <?php  endfor ?>
+                                </div>
+                                <div class = "rank_result_prediction">
+                                    <p class="underline">AI予想結果</p>
+                                    <p>１着：１位</p>
+                                    <p>２着：２位</p>
+                                    <p>３着：３位</p>
+                                    <p>４着：４位</p>
+                                    <p>５着：５位</p>
+                                </div>  
                             </div>
                         </div>
-                        <div class = "result"> 
-                            <div class = "rank_result">
-                                <h2 class = "underline">レース結果</h2>
-                                <?php for($i = 0; $i < count($result_horsename); $i++) :?>
-                                    <?php 
-                                        $find_judge = $result_horsename[$i]["HORSEFRAME"];
+                    </div>
+                </div>
+            </article>
+            <div class = "container">
+                <div class = "row">
+                    <div class = "col span-12">
+                        <div class = 'top_hit_detail'>
+                            <div class = 'hit_detail'>
+                            <div id = 'null'></div>
+                                <div class = 'summarize_element'>
+                                    <p class = 'K kinds C'>式別</p>
+                                    <p class = 'K horsenumber horsenumber_title C'>番号</p>
+                                    <p class = 'K betback C'>払戻し</p>
+                                    <p class = 'K popular_betback C'>人気</p>
+                                </div>
+                                
+                                <?php foreach($result_hit_detail as $hit_detail) : ?>
+                                    <div class = 'summarize_element'>
+                                        <p class = 'K kinds'><?= $hit_detail['KINDS'] ?></p>
+                                        <p class = 'K horsenumber'> 
+                                        <?php 
+                                            if($hit_detail['KINDS'] == 'ワイド'){
+                                                if(preg_match('/-/',$hit_detail['HORSEFRAME'])){
+                                                    $horsenumbers = explode("-",$hit_detail['HORSEFRAME']);
+                                                    //[10, 12]
 
-                                        $bgclass = getBgclass($find_judge);
+                                                    $horse_total = count($horsenumbers);
+                                                    $horse_count = 0;
 
-                                    ?>
-                                    <h3><?= $i+1 ?>着：<span class="bg-all" id="<?=$bgclass?>"><?= $result_horsename[$i]["HORSENUMBER"] ?></span><?= $result_horsename[$i]["HNAME"]?></h3>
-                                <?php  endfor ?>
-                             </div>
-                             <div class = "rank_result">
-                                <h2 class="underline">AI予想</h2>
-                                <h3>１着：１位</h3>
-                                <h3>２着：２位</h3>
-                                <h3>３着：３位</h3>
-                                <h3>４着：４位</h3>
-                                <h3>５着：５位</h3>
-                            </div>  
+                                                    foreach($horsenumbers as $horse){
+                                                        $find_judge = NULL;
+
+                                                    for($i=0; $i<count($result_detail_judge); $i++){
+                                                        if($horse == $result_detail_judge[$i]['HORSENUMBER']){
+                                                            $find_judge = $result_detail_judge[$i]['HORSEFRAME'];
+                                                        }
+                                                    }
+
+                                                    $bgclass = getBgclass($find_judge);
+
+                                                        echo '<span class = "bg-all" id = "' . $bgclass . '">' . $horse . '</span>';
+                                                        if($horse_total-1 !== $horse_count){
+                                                            echo '<span class = "num"> - </span>';
+                                                        }
+                                                        $horse_count++;
+                                                    }
+                                                }   
+                                            }else{
+                                                if(preg_match('/-/',$hit_detail['HORSENUMBER'])){
+                                                    $horsenumbers = explode("-",$hit_detail['HORSENUMBER']);
+                                                    //[10, 12]
+
+                                                    $horse_total = count($horsenumbers);
+                                                    $horse_count = 0;
+
+                                                    foreach($horsenumbers as $horse){
+                                                        $find_judge = NULL;
+
+                                                    for($i=0; $i<count($result_detail_judge); $i++){
+                                                        if($horse == $result_detail_judge[$i]['HORSENUMBER']){
+                                                            $find_judge = $result_detail_judge[$i]['HORSEFRAME'];
+                                                        }
+                                                    }
+
+                                                    $bgclass = getBgclass($find_judge);
+
+                                                        echo '<span class = "bg-all" id = "' . $bgclass . '">' . $horse . '</span>';
+                                                        if($horse_total-1 !== $horse_count){
+                                                            echo '<span class = "num"> - </span>';
+                                                        }
+                                                        $horse_count++;
+                                                    }
+                                                }elseif(preg_match('/>/',$hit_detail['HORSENUMBER'])){
+                                                    $horsenumbers = explode(">",$hit_detail['HORSENUMBER']);
+                                                    //[10, 12]
+
+                                                    $horse_total = count($horsenumbers);
+                                                    $horse_count = 0;
+
+                                                    foreach($horsenumbers as $horse){
+                                                        $find_judge = NULL;
+
+                                                    for($i=0; $i<count($result_detail_judge); $i++){
+                                                        if($horse == $result_detail_judge[$i]['HORSENUMBER']){
+                                                            $find_judge = $result_detail_judge[$i]['HORSEFRAME'];
+                                                        }
+                                                    }
+
+                                                    $bgclass = getBgclass($find_judge);
+
+                                                        echo '<span class = "bg-all" id = "' . $bgclass . '">' . $horse . '</span>';
+                                                        if($horse_total-1 !== $horse_count){
+                                                            echo '<span class = "num"> > </span>';
+                                                        }
+                                                        $horse_count++;
+                                                    }
+                                                }else{
+                                                    $find_judge = NULL;
+
+                                                    for($i=0; $i<count($result_detail_judge); $i++){
+                                                        if($hit_detail['HORSENUMBER'] == $result_detail_judge[$i]['HORSENUMBER']){
+                                                            $find_judge = $result_detail_judge[$i]['HORSEFRAME'];
+                                                        }
+                                                    }
+
+                                                    $bgclass = getBgclass($find_judge);
+
+                                                    echo '<span class = "bg-all" id = "' . $bgclass . '">' . $hit_detail['HORSENUMBER'] . '</span>';
+                                                }
+                                            }
+                                            ?>                         
+                                        </p>
+                                        <p class = 'K betback'><?= $hit_detail['BETBACK'] ?>円</p>
+                                        <p class = 'K popular_betback'><?= $hit_detail['POPULAR'] ?>人気</p>
+                                    </div>
+                                <?php endforeach ?>  
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </article>
-        <div class = 'top_hit_detail'>
-
-            <div class = 'hit_detail'>
-            <div id = 'null'></div>
-                <div class = 'summarize_element'>
-                    <h3 class = 'K kinds'>式別</h3>
-                    <h3 class = 'K horsenumber'>番号</h3>
-                    <h3 class = 'K betback'>払戻し</h3>
-                    <h3 class = 'K popular_betback'>人気</h3>
-                </div>
-                
-                <?php foreach($result_hit_detail as $hit_detail) : ?>
-                    <div class = 'summarize_element'>
-                        <h3 class = 'K kinds'><?= $hit_detail['KINDS'] ?></h3>
-                        <h3 class = 'K horsenumber'> 
-                        <?php 
-                            if($hit_detail['KINDS'] == 'ワイド'){
-                                if(preg_match('/-/',$hit_detail['HORSEFRAME'])){
-                                    $horsenumbers = explode("-",$hit_detail['HORSEFRAME']);
-                                    //[10, 12]
-
-                                    $horse_total = count($horsenumbers);
-                                    $horse_count = 0;
-
-                                    foreach($horsenumbers as $horse){
-                                        $find_judge = NULL;
-
-                                       for($i=0; $i<count($result_detail_judge); $i++){
-                                        if($horse == $result_detail_judge[$i]['HORSENUMBER']){
-                                            $find_judge = $result_detail_judge[$i]['HORSEFRAME'];
-                                        }
-                                       }
-
-                                       $bgclass = getBgclass($find_judge);
-
-                                        echo '<span id = "' . $bgclass . '">' . $horse . '</span>';
-                                        if($horse_total-1 !== $horse_count){
-                                            echo ' - ';
-                                        }
-                                        $horse_count++;
-                                    }
-                                }   
-                            }else{
-                                if(preg_match('/-/',$hit_detail['HORSENUMBER'])){
-                                    $horsenumbers = explode("-",$hit_detail['HORSENUMBER']);
-                                    //[10, 12]
-
-                                    $horse_total = count($horsenumbers);
-                                    $horse_count = 0;
-
-                                    foreach($horsenumbers as $horse){
-                                        $find_judge = NULL;
-
-                                       for($i=0; $i<count($result_detail_judge); $i++){
-                                        if($horse == $result_detail_judge[$i]['HORSENUMBER']){
-                                            $find_judge = $result_detail_judge[$i]['HORSEFRAME'];
-                                        }
-                                       }
-
-                                       $bgclass = getBgclass($find_judge);
-
-                                        echo '<span id = "' . $bgclass . '">' . $horse . '</span>';
-                                        if($horse_total-1 !== $horse_count){
-                                            echo ' - ';
-                                        }
-                                        $horse_count++;
-                                    }
-                                }elseif(preg_match('/>/',$hit_detail['HORSENUMBER'])){
-                                    $horsenumbers = explode(">",$hit_detail['HORSENUMBER']);
-                                    //[10, 12]
-
-                                    $horse_total = count($horsenumbers);
-                                    $horse_count = 0;
-
-                                    foreach($horsenumbers as $horse){
-                                        $find_judge = NULL;
-
-                                       for($i=0; $i<count($result_detail_judge); $i++){
-                                        if($horse == $result_detail_judge[$i]['HORSENUMBER']){
-                                            $find_judge = $result_detail_judge[$i]['HORSEFRAME'];
-                                        }
-                                       }
-
-                                       $bgclass = getBgclass($find_judge);
-
-                                        echo '<span id = "' . $bgclass . '">' . $horse . '</span>';
-                                        if($horse_total-1 !== $horse_count){
-                                            echo ' > ';
-                                        }
-                                        $horse_count++;
-                                    }
-                                }else{
-                                    $find_judge = NULL;
-
-                                    for($i=0; $i<count($result_detail_judge); $i++){
-                                        if($hit_detail['HORSENUMBER'] == $result_detail_judge[$i]['HORSENUMBER']){
-                                            $find_judge = $result_detail_judge[$i]['HORSEFRAME'];
-                                        }
-                                    }
-
-                                    $bgclass = getBgclass($find_judge);
-
-                                    echo '<span id = "' . $bgclass . '">' . $hit_detail['HORSENUMBER'] . '</span>';
-                                }
-                            }
-                            ?>                         
-                        </h3>
-                        <h3 class = 'K betback'><?= $hit_detail['BETBACK'] ?>円</h3>
-                        <h3 class = 'K popular_betback'><?= $hit_detail['POPULAR'] ?>人気</h3>
-
-                    </div>
-
-                <?php endforeach ?>  
-
-            </div>
-
+            
         </div>
-
     </main>
     <footer>
         <div class="container">
             
             <div class="row">
                 <div class="col span-4">
-                    <h5>フッター１</h5>
-                    <p>ここにSNSやテキストなどが入ります。SNSやテキストなどが入ります。</p>
+                  
                 </div>
                 <div class="col span-4">
-                    <h5>フッター２</h5>
-                    <p>ここにSNSやテキストなどが入ります。SNSやテキストなどが入ります。</p>
+                    
                 </div>
                 <div class="col span-4">
-                    <h5>フッター３</h5>
-                    <p>ここにSNSやテキストなどが入ります。SNSやテキストなどが入ります。</p>
+        
                 </div>
             </div>
         </div>

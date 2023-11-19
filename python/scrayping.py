@@ -4,23 +4,19 @@ import time
 from tqdm import tqdm
 import component.create_raceID as cr
 import component.create_escape_list as escape
-import classes.table_insert_call_class as table_insert
-import classes.copy as copy
+import classes.create_scrayping_list as create_list
 from datetime import datetime
 import datetime as now
 import pprint
 
 #任意の年数分スクレイピングしてデータベースにinsertする
-
-# insert_instans = table_insert.Main() # インスタンスの作成
-insert_instans = copy.Main() # インスタンスの作成
+insert_instans = create_list.Main()  # インスタンスの作成
 exclusionIDList = []                 # 除外race_idリスト
 raceIdList = cr.get_id()             # race_idのリストを生成
 
 # race_idのリストを基にスクレイピングを行う
 for race_id in tqdm(raceIdList):
     # URLを作成
-    # url = f"https://db.netkeiba.com/race/{race_id}"
     url = f"https://race.netkeiba.com/race/result.html?race_id={race_id}"
 
     # 除外リストに含まれていたらスキップ
@@ -59,4 +55,3 @@ for race_id in tqdm(raceIdList):
         # 除外race_idのリストを生成する
         exclusionIDList = (escape.addEscapeList(race_id, list(exclusionIDList)))
         exclusionIDList = set(exclusionIDList)
-        # exclusionIDList = escape.addEscapeList(race_id,exclusionIDList)
