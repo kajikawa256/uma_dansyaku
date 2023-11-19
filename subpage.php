@@ -203,13 +203,13 @@ function getBgclass($find_judge){
                                             <?=$race_detail['TIME'] ?>発走 /
                                             天気：<?php        
                                                         if($race_detail['WEATHER'] == "晴"){
-                                                            echo ('<img class="weather_icon" src="../img/tennki-illust1.png" alt="準備中" width="30px" height="30px">');
+                                                            echo ('<img class="weather_icon" src="img/tennki-illust1.png" alt="準備中" width="30px" height="30px">');
                                                         }elseif($race_detail['WEATHER'] == "曇"){
-                                                            echo ('<img class="weather_icon" src="../img/tennki-illust5.png" alt="準備中" width="30px" height="30px">');
+                                                            echo ('<img class="weather_icon" src="img/tennki-illust5.png" alt="準備中" width="30px" height="30px">');
                                                         }elseif($race_detail['WEATHER'] == "雨"){
-                                                            echo ('<img class="weather_icon" src="../img/tennki-illust7.png" alt="準備中" width="30px" height="30px">');
+                                                            echo ('<img class="weather_icon" src="img/tennki-illust7.png" alt="準備中" width="30px" height="30px">');
                                                         }elseif($race_detail['WEATHER'] == "小雨"){
-                                                            echo ('<img class="weather_icon" src="../img/tennki-illust17.png" alt="準備中" width="30px" height="30px">');
+                                                            echo ('<img class="weather_icon" src="img/tennki-illust17.png" alt="準備中" width="30px" height="30px">');
                                                         }
                                                     ?> /
                                             <?= $race_detail['GROUND']?><?= $race_detail['DISTANCE']?>m (<?= $race_detail['SPIN']?>) /
