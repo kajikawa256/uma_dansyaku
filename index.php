@@ -29,7 +29,7 @@ if(strcmp($_GET["racedate"],"")){
     <script src="js/index_get.js"></script>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link rel="icon" type="image/png" href="img/favicon2.png">
 
     <!-- ローディング画面 -->
     <link rel="stylesheet" type="text/css" href="css/4-1-2.css">
@@ -45,7 +45,7 @@ if(strcmp($_GET["racedate"],"")){
             <div class="row">   
                 <div class="col span-12">
                     <div class="head">
-                        <h1><a href="index.php">ウマ男爵 </a></h1>
+                        <h1><a href="index.php"><img src="./img/ウマ男爵.png" alt="準備中" width="150px" height="150px"> </a></h1>
                     </div>
                 </div>
             </div>
