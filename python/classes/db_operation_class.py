@@ -79,6 +79,23 @@ class Main:
             print(f"Error Occurred: {e}")
 
 
+    # PREDICTION_HORSEテーブルに保存されているrace_idを取得
+    def get_prediction_race_id(self):
+        try:
+            sql = "SELECT RACE_ID FROM PREDICTION_HORSE;"
+            self.cur.execute(sql)
+
+            # 実行結果を使いやすいようにリスト化
+            race_id = self.cur.fetchall()
+            race_id_list = [item[0] for item in race_id]
+            
+            # 取得済みのrace_idをreturn
+            return race_id_list
+
+        except Exception as e:
+            print(f"Error Occurred: {e}")
+
+
     # RACEテーブルにのみ存在するRACE_IDを取得
     def get_need_update_race_id(self):
         try:
