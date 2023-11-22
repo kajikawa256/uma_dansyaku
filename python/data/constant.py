@@ -4,7 +4,7 @@
 #データベース接続情報
 USER = "root"
 PASSWORD = "root"
-HOST = "localhost"
+HOST = "mysql"
 DB = "umadan"
 PORT = "3306"
 
