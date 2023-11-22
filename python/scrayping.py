@@ -4,10 +4,8 @@ import time
 from tqdm import tqdm
 import component.create_raceID as cr
 import component.create_escape_list as escape
+import component.day_check as get_day
 import classes.create_scrayping_list as create_list
-from datetime import datetime
-import datetime as now
-import pprint
 
 #任意の年数分スクレイピングしてデータベースにinsertする
 insert_instans = create_list.Main()  # インスタンスの作成
@@ -31,22 +29,15 @@ for race_id in tqdm(raceIdList):
     res.encoding = "EUC-JP"
     soup = BeautifulSoup(res.text, "html.parser")
 
-    if "着順" in soup.text:
+    if "出馬表" in soup.text:
         # 日付の確認
-        dt_now = now.datetime.now()
-        now_date = dt_now.strftime("%Y年%m月%d日")
-        year = race_id[0:4] + "年"
-        month_day = soup.find("dd",class_="Active").text
-        if "/" in month_day:
-            month_day = month_day.replace("/","月")
-            month_day += "日"
-        else:
-            month_day = month_day[:-3]
-        date_object = datetime.strptime(year + month_day, "%Y年%m月%d日")       
-        date = date_object.strftime("%Y年%m月%d日")
+        now_date, date = get_day.day_check(race_id,soup)
+
         if now_date < date:
             # レースの日付がきょう以降であればスキップ
-            # print(f"開催予定のraceです race_id:{race_id}")
+            # レースの日付が今日以降の場合出馬表のスクレイピング実行
+            print(f"開催予定のraceです race_id:{race_id}")
+            print(f"きょうの日付{now_date} レースの日付{date}")
             continue
 
         # 各テーブルに対応したデータをinsertする

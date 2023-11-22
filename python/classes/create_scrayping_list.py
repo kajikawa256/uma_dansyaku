@@ -46,6 +46,12 @@ class Main():
     # grade = RaceData02[4] if "(" in RaceData02[-5] else RaceData02[-5]                                        # グレード
     # grade = RaceData02[-4] if len(grade) >= 6 else grade                                                       # グレード（例外処理）
     grade = RaceData02[4]
+    if "５００万下" in grade:
+      grade = "１勝クラス"
+    elif "１０００万下" in grade:
+      grade = "２勝クラス"
+    elif "１６００万下" in grade:
+      grade = "３勝クラス"
     limit = "牝" if "牝" in RaceData02[-4] else "無"                                                           # 制限
     handicap = "定量" if RaceData02[-3] == "馬齢" else RaceData02[-3]                                          # ハンデ
 
@@ -137,6 +143,8 @@ class Main():
       if datas[0] == "除外":
         popular = 0
         odds = 0
+        if horse_weight == "":
+          horse_weight = 0
       elif datas[0] == "取消":
         horse_weight = 0
         popular = 0

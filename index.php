@@ -124,6 +124,7 @@ if(strcmp($_GET["racedate"],"")){
                     
                     <div class="row">
                         <?php for($j = 0; $j < 3; $j++) :?> <!-- 3は横並びにする数 -->
+                        <?php if($count == count($result_race)){break;} ?>
                             
                             <!-- 場所を指定して絞り込む -->
                             <?php if(strcmp($result_race[$count]["PLACE"],$_GET["raceplace"]) == 0) : ?>
