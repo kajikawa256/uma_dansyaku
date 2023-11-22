@@ -1,4 +1,4 @@
-/*!
+/*
  * ress.css • v1.2.2
  * MIT License
  * github.com/filipelinhares/ress
@@ -7,6 +7,7 @@ html {
   box-sizing: border-box;
   overflow-y: scroll;
   -webkit-text-size-adjust: 100%
+  
 }
 
 *,
@@ -24,6 +25,7 @@ html {
 
 * {
   padding: 0;
+  font-family: monospace, monospace;
   margin: 0
 }
 
@@ -47,6 +49,8 @@ main,
 menu,
 nav,
 section,
+.summarize_element,
+.top_hit_detail,
 summary {
   display: block
 }
@@ -285,4 +289,180 @@ video {
   background-color: #b3d4fc;
   color: #000;
   text-shadow: none
+}
+
+.top_hit_detail {
+  display: flex;
+  width: 100%;
+  padding:0 120px;
+  box-sizing: border-box; 
+  max-width: 1000px;
+  margin: auto auto;
+  align-items: center;
+  text-align: center; 
+}
+
+
+#null {
+  border-bottom: 1px solid black;
+  margin: 0;
+  padding: 0;
+  width: 700px; 
+}
+.summarize_element {
+  box-sizing: border-box;
+  display: flex;
+  text-align: center;
+  width: 700px;
+  height: 45px;
+  margin: 0;
+  padding: 0;
+}
+
+.summarize_element p {
+  box-sizing: border-box;
+}
+
+.K {  
+  flex: 1;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+} 
+
+.C {
+  background-color: #d3d3d3;
+}
+
+.kinds {
+  border: 1px solid black;
+  border-top: none;
+  margin: 0;
+  padding:1.5%;
+  
+}
+
+.horsenumber {
+  box-sizing: border-box;
+  border: 1px solid black;
+  border-top: none;
+  border-left: none;
+  margin: 0;
+  padding: 1.5%;
+  color:white;
+ 
+}
+
+.horsenumber_title {
+  color:black
+}
+
+.betback {
+  border: 1px solid black;
+  border-top: none;
+  border-left: none;
+  margin:0;
+  padding:1.5%;
+} 
+.popular_betback {
+  border: 1px solid black;
+  border-top: none;
+  border-left: none;
+  margin: 0;
+  padding:1.5%;
+}
+
+.race_detail {
+  text-align: center;
+  width: 100%;
+}
+.race_detail h1 {
+  text-align: left;
+  padding: 2.5% 9%;
+}
+.race_detail h4 {
+  margin-bottom: 1.5em;
+}
+.race_infomation {
+  border: 2px solid #a9a9a9;
+  text-align: left;
+  margin: 0 9%;
+  padding:0;
+}
+.race_infomation h3 {
+  padding:5px 0;
+  margin: 0;
+  background-color: #d3d3d3;
+  letter-spacing: 0.2rem;
+}
+.race_infomation p {
+  padding:10px 0;
+  margin: 0;
+}
+
+
+
+
+.colored-number {
+  background-color: red;
+}
+
+.num {
+  color:black;
+}
+
+
+/*
+      馬番の色識別
+*/
+
+
+.bg-all {
+  color:white;
+  padding: 0.3em 0.3em;
+}
+
+#bg-white {
+  background-color: white;
+  color:black;
+  margin: 1% 2%;
+  padding: 5px 6px;
+}
+#bg-black {
+  background-color: black;
+  margin: 1% 2%;
+  padding: 5px 6px;
+}
+#bg-red {
+  background-color: red;
+  margin: 1% 2%;
+  padding: 5px 6px;
+}
+#bg-blue {
+  background-color: blue;
+  margin: 1% 2%;
+  padding: 5px 6px;
+}
+#bg-yellow {
+  background-color: yellow;
+  margin: 1% 2%;
+  padding: 5px 6px;
+  color:black;
+}
+#bg-green {
+  background-color: green;
+  margin: 1% 2%;
+  padding: 5px 6px;
+}
+#bg-orange {
+  background-color: orange;
+  margin: 1% 2%;
+  padding: 5px 6px;
+  color: black;
+}
+#bg-pink {
+  background-color: pink;
+  margin: 1% 2%;
+  padding: 5px 6px;
+  color: black;
 }
