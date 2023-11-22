@@ -72,7 +72,7 @@ if($icon !== ''){
             <div class="row">   
                 <div class="col span-12">
                     <div class="head">
-                        <h1><a href="index.php"><img src="./img/1.png" alt="準備中" width="150px" height="150px"> </a></h1>
+                        <h1><a href="index.php"><img src="../img/1.png" alt="準備中" width="150px" height="150px"> </a></h1>
                     </div>
                 </div>
             </div>
