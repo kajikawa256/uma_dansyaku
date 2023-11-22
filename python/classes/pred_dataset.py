@@ -10,12 +10,12 @@ class Main():
     # コンストラクタ dbのインスタンス作成
     def __init__(self):
         #pickleデータロード
-        self.dfRaceInfo = pd.read_pickle('./data/race_info.pkl')
-        self.dfHorseResult = pd.read_pickle('./data/horse_result2.pkl')
-        self.dfHorsePed = pd.read_pickle('./data/horse_ped2.pkl')
+        self.dfRaceInfo = pd.read_pickle('python/data/race_info.pkl')
+        self.dfHorseResult = pd.read_pickle('python/data/horse_result2.pkl')
+        self.dfHorsePed = pd.read_pickle('python/data/horse_ped2.pkl')
 
         # 学習済みモデルの読み込み
-        self.model = pickle.load(open('./data/model1.pkl','rb'))
+        self.model = pickle.load(open('python/data/model1.pkl','rb'))
 
 
     def entryHorse(self, raceinfo, horseinfo):
