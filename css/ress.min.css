@@ -294,7 +294,7 @@ video {
 .top_hit_detail {
   display: flex;
   width: 100%;
-  padding:0 120px;
+  padding:0 100px;
   box-sizing: border-box; 
   max-width: 1000px;
   margin: auto auto;
@@ -307,13 +307,13 @@ video {
   border-bottom: 1px solid black;
   margin: 0;
   padding: 0;
-  width: 700px; 
+  width: 750px; 
 }
 .summarize_element {
   box-sizing: border-box;
   display: flex;
   text-align: center;
-  width: 700px;
+  width: 750px;
   height: 45px;
   margin: 0;
   padding: 0;
@@ -339,6 +339,7 @@ video {
   border-top: none;
   margin: 0;
   padding:1.5%;
+  width: auto;
   
 }
 
@@ -348,9 +349,8 @@ video {
   border-top: none;
   border-left: none;
   margin: 0;
-  padding: 1.5%;
+  padding:1.5%;
   color:white;
- 
 }
 
 .horsenumber_title {
@@ -409,6 +409,10 @@ video {
 
 .num {
   color:black;
+}
+
+.hit p{
+  font-size: 14px;
 }
 
 

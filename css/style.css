@@ -362,7 +362,7 @@ footer h5 {
     border:3px solid #131413;
     padding:0.5%;
     margin: 20px;
-    margin-left: 10px;
+    margin-left: 0;
     background-color:#f9faf9;
     width: 500px;
 }
@@ -370,9 +370,10 @@ footer h5 {
 
 .row .col.col.span-12 .result {
     display: flex;
-    padding: 0 20px;
+    padding-right: 20px;
+    padding-left: 30px;
     max-width: 1000px;
-    margin: auto 90px;
+    margin: auto 70px;
 }
 
 
