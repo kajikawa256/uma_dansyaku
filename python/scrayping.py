@@ -1,18 +1,19 @@
-import requests
-from bs4 import BeautifulSoup
 import time
 from tqdm import tqdm
 import component.create_raceID as cr
 import component.create_escape_list as escape
+import component.day_check as get_day
+import component.scrayping_def as sc
 import classes.create_scrayping_list as create_list
-from datetime import datetime
-import datetime as now
-import pprint
+import classes.scrayping_running_list as running_list
+import classes.crontab as cron
 
 #任意の年数分スクレイピングしてデータベースにinsertする
-insert_instans = create_list.Main()  # インスタンスの作成
-exclusionIDList = []                 # 除外race_idリスト
-raceIdList = cr.get_id()             # race_idのリストを生成
+insert_instans = create_list.Main()             # インスタンスの作成
+running_list_instans = running_list.Main()      # 出馬表をスクレイピングするためのseleniumインスタンスクラス
+cron_instans = cron.CrontabControl()            # cronの実行タイミングを設定するインスタンス
+exclusionIDList = []                            # 除外race_idリスト
+raceIdList = cr.get_id()                        # race_idのリストを生成
 
 # race_idのリストを基にスクレイピングを行う
 for race_id in tqdm(raceIdList):
@@ -23,35 +24,51 @@ for race_id in tqdm(raceIdList):
     if race_id in exclusionIDList:
         continue
 
-    # 1秒待機
+    # URLを基にスクレイピング
+    soup = sc.get_soup(url)
     time.sleep(1)
 
-    # スクレイピング
-    res = requests.get(url)
-    res.encoding = "EUC-JP"
-    soup = BeautifulSoup(res.text, "html.parser")
-
-    if "着順" in soup.text:
+    if "出馬表" in soup.text:
         # 日付の確認
-        dt_now = now.datetime.now()
-        now_date = dt_now.strftime("%Y年%m月%d日")
-        year = race_id[0:4] + "年"
-        month_day = soup.find("dd",class_="Active").text
-        if "/" in month_day:
-            month_day = month_day.replace("/","月")
-            month_day += "日"
-        else:
-            month_day = month_day[:-3]
-        date_object = datetime.strptime(year + month_day, "%Y年%m月%d日")       
-        date = date_object.strftime("%Y年%m月%d日")
-        if now_date < date:
-            # レースの日付がきょう以降であればスキップ
-            # print(f"開催予定のraceです race_id:{race_id}")
+        now_date, date = get_day.day_check(race_id,soup)
+        flag = get_day.day_next(date)
+
+        # 日付が現在より未来で　かつ　スクレイピング対象ページの日付が1日後なら
+        if now_date < date and flag:
+            # レースの日付が今日以降の場合出馬表のスクレイピング実行
+            url = f"https://race.netkeiba.com/race/shutuba.html?race_id={race_id}&rf=race_submenu"
+            
+            # スクレイピング
+            soup = sc.get_soup(url)
+
+            # 各テーブルに対応したデータをinsertする
+            insert_instans.insert_plan(soup,race_id)
+
+            # # raceテーブルの発走時刻を基にcronを設定する
+            # # # コマンドを指定
+            # command = 'python3 ./helloworld.py > ./test.txt'
+            # # スケジュールを指定
+            # schedule = '0 10 * * *'
+            # # ファイルを指定
+            # file = 'output.tab'
+            
+            # # ファイルに書き込む
+            # cron_instans.write_job(command, schedule, file)
+            # # タスクスケジュールの監視を開始
+            # cron_instans.monitor_start(file)
             continue
 
+        # 日付が現在より未来で　かつ　スクレイピング対象ページの日付が1日後じゃなければ
+        if now_date < date and flag != True:
+            continue
+        
         # 各テーブルに対応したデータをinsertする
         insert_instans.insert(soup,race_id)
     else:
+        #race_idの末尾が01でなければaddEscapeListを呼び出さない
+        if race_id[-2:] != "01":
+            continue
+        
         # 除外race_idのリストを生成する
         exclusionIDList = (escape.addEscapeList(race_id, list(exclusionIDList)))
         exclusionIDList = set(exclusionIDList)
