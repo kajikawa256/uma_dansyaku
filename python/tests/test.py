@@ -1,39 +1,42 @@
-# import requests
-# from bs4 import BeautifulSoup
-# import classes.db_operation_class as db
-# import classes.copy as table
-# import re
-# import data.constant as con
-# import component.count_horse_num as count
-# from datetime import datetime
-# import prediction as pre
-# import pandas as pd
-# import sqlalchemy as sa
-# import classes.copy as copy
-
-# # race_id = "202304040507"    # 直線のレース
-# # race_id = "201005030212" # １位が同着のレース（例外）
-# # race_id = "202304010410"
-# # race_id = "202301010101" #通常のレース
-# # race_id = "202309040401" #障害レース
-# # race_id = "202304040507" #小雨のレース
-# # race_id = "202306010101"
-# # race_id = "202305040901"
-#         #   "202305011001"
-#         #   "202305050301"
-# race_id = "202305050301"
-
-# copy_instans = copy.Main()
+import requests
+from bs4 import BeautifulSoup
+import classes.db_operation_class as db
+import re
+import data.constant as con
+import component.count_horse_num as count
+from datetime import datetime
+import prediction as pre
+import pandas as pd
+import sqlalchemy as sa
+import datetime as now
+from datetime import datetime
+import datetime
+import component.day_check  as check
 
 
-# # url = f"https://race.netkeiba.com/race/shutuba.html?race_id={race_id}"
+# race_id = "202304040507"    # 直線のレース
+# race_id = "201005030212" # １位が同着のレース（例外）
+# race_id = "202304010410"
+# race_id = "202301010101" #通常のレース
+# race_id = "202309040401" #障害レース
+# race_id = "202304040507" #小雨のレース
+# race_id = "202306010101"
+# race_id = "202305040901"
+        #   "202305011001"
+        #   "202305050301"
+race_id = "202306050102"
+
+
+url = f"https://race.netkeiba.com/race/shutuba.html?race_id={race_id}"
 # url = f"https://race.netkeiba.com/race/result.html?race_id={race_id}&rf=race_list"
-# # url = f"https://db.netkeiba.com/race/{race_id}"
-# res = requests.get(url)
-# res.encoding = "EUC-JP"
-# soup = BeautifulSoup(res.text, "html.parser")
+# url = f"https://db.netkeiba.com/race/{race_id}"
+res = requests.get(url)
+res.encoding = "EUC-JP"
+soup = BeautifulSoup(res.text, "html.parser")
 
-# # copy_instans.insert(soup,race_id)
+
+
+# copy_instans.insert(soup,race_id)
 
 
 

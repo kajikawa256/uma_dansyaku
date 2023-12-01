@@ -212,11 +212,11 @@ if($icon !== ''){
                     <p><a href="https://race.netkeiba.com/race/shutuba.html?race_id=202309010101">netkeiba</a></p>
                 </div>
                 <div class="col span-13">
-                    <h5>10月7日の回収率</h5>
+                    <h5><?= $result_race[0]["RACEDATE"] ?>の回収率</h5>
                     <p><?= $collect?>%</p>
                 </div>
                 <div class="col span-13">
-                    <h5>10月7日の的中率</h5>
+                    <h5><?= $result_race[0]["RACEDATE"] ?>の的中率</h5>
                     <p><?= $hit?>%</p>
                 </div>
             </div>
