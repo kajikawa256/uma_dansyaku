@@ -1,30 +1,31 @@
 from crontab import CronTab
 
 class CrontabControl:
+    # インスタンス生成時にコマンドを設定
     def __init__(self):
         self.cron = CronTab()
         self.job = None
 
-        # コマンドを設定
-        self.command = 'python ./scrayping.py > ../data/output.text'
-
         # ファイルを指定
-        file = 'schedule.tab'
+        self.file = 'schedule.tab'
+
  
     # ファイルにジョブを書き込むメソッド
-    def write_job(self, command, schedule, file_name):
+    def write_job(self, command, schedule):
         self.job = self.cron.new(command=command)
         self.job.setall(schedule)
-        self.cron.write(file_name)
+        self.cron.write(self.file)
+
  
     # ファイル中のジョブを全て読み込むメソッド
-    def read_jobs(self, file_name):
-        self.cron = CronTab(tabfile=file_name)
+    def read_jobs(self):
+        self.cron = CronTab(tabfile=self.file)
+
  
     # ジョブを監視するメソッド
-    def monitor_start(self, file):
+    def monitor_start(self):
         # スケジュールを読み込む
-        self.read_jobs(file)
+        self.read_jobs(self.file)
         for result in self.cron.run_scheduler():
             # スケジュールになるとこの中の処理が実行される
             print("予定していたスケジュールを実行しました")
@@ -47,6 +48,6 @@ class CrontabControl:
 # # インスタンス作成
 # c = CrontabControl()
 # # ファイルに書き込む
-# c.write_job(command, schedule, file)
+# c.write_job(command, schedule)
 # # タスクスケジュールの監視を開始
 # c.monitor_start(file)

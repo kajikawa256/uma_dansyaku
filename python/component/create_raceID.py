@@ -1,6 +1,7 @@
 import classes.db_operation_class as db
 import component.day_check as day_check
 
+
 #race_idを作成する関数
 def get_id():
   # 現在の年を取得
@@ -56,3 +57,15 @@ def get_id_prediction():
   optimization_raceIdList = [i for i in result_race_id if i not in acquiredIDList]
 
   return optimization_raceIdList
+
+
+# raceテーブルの天気と馬場状態が設定されていないrace_idを取得する関数
+def update_race_id():
+  # インスタンスの作成&関数の実行
+  db_instans = db.Main()
+  result_race_id = db_instans.empty_get_race_id()                 # raceテーブルに保存されているrace_idを取得
+  result_race_id = set(result_race_id)
+  result_race_id = list(result_race_id)
+
+  return result_race_id
+  
