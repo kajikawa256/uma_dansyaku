@@ -1,7 +1,6 @@
 # レース発走30分前に実行して確定した馬体重,馬場状態,天気を更新する
 from tqdm import tqdm
 import time
-import datetime
 import component.create_raceID as cr
 import component.scrayping_def as sc
 import classes.create_scrayping_list as create_list
@@ -9,13 +8,9 @@ import classes.db_operation_class as db
 import classes.crontab as cron
 import data.constant as con
 
-
 raceIdList = cr.update_race_id()        # 結果確定していないレースIDの取得
 insert_instans = create_list.Main()     # インスタンスの作成
 db_instans = db.Main()                  # インスタンスの作成
-
-command = 'python ./just_before.py > ../data/output.txt'
-cron_instans = cron.CrontabControl(command)    # cronインスタンス
 
 for race_id in tqdm(raceIdList):
     # URLを作成
@@ -23,7 +18,6 @@ for race_id in tqdm(raceIdList):
 
     # URLを基にスクレイピング
     soup = sc.get_soup(url)
-    time.sleep(1)
 
     if "馬番" in soup.text:
         # 古いデータを削除

@@ -7,7 +7,7 @@ class CrontabControl:
         self.job = None
 
         # ファイルを指定
-        self.file = 'schedule.tab'
+        self.file = './python/data/schedule.tab'
 
  
     # ファイルにジョブを書き込むメソッド
@@ -18,18 +18,21 @@ class CrontabControl:
 
  
     # ファイル中のジョブを全て読み込むメソッド
-    def read_jobs(self):
-        self.cron = CronTab(tabfile=self.file)
+    def read_jobs(self,file):
+        self.cron = CronTab(tabfile=file)
 
  
     # ジョブを監視するメソッド
-    def monitor_start(self):
+    def monitor_start(self,count):
         # スケジュールを読み込む
         self.read_jobs(self.file)
+        flg = 0
         for result in self.cron.run_scheduler():
             # スケジュールになるとこの中の処理が実行される
             print("予定していたスケジュールを実行しました")
-            break
+            flg += 1
+            if(count == flg):
+                break
     
 
       # デストラクタ(driverを終了させる)
