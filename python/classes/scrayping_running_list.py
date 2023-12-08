@@ -2,7 +2,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import classes.db_operation_class as db
-import os
 
 class Main():
   # コンストラクタ
@@ -19,7 +18,6 @@ class Main():
 
     self.chrome_options = chrome_options
     self.path = "./data/chromedriver.exe"                                        # chromedriceのパス
-
 
   # 出馬表をスクレイピング
   def scrayping_running_list(self,race_id):

@@ -5,13 +5,15 @@ import re
 import data.constant as con
 import component.count_horse_num as count
 from datetime import datetime
-import prediction as pre
 import pandas as pd
 import sqlalchemy as sa
 import datetime as now
 from datetime import datetime
 import datetime
 import component.day_check  as check
+import classes.db_operation_class as db
+
+db_instans = db.Main()
 
 
 # race_id = "202304040507"    # 直線のレース
@@ -24,15 +26,34 @@ import component.day_check  as check
 # race_id = "202305040901"
         #   "202305011001"
         #   "202305050301"
-race_id = "202306050102"
+race_id = "202301010102"
+
+# レースの発走時間を取得
+starting_time = db_instans.get_starting_time(race_id)
+dt1 = datetime.datetime.strptime(starting_time, '%H:%M')
+dt2 = dt1 + datetime.timedelta(minutes=-30) # 発走時間の30分前
+
+# crontabで監視
+schedule = 'm h * * *'
+schedule = schedule.replace("m",str(dt2.minute))
+schedule = schedule.replace("h",str(dt2.hour))
+
+print(schedule)
 
 
-url = f"https://race.netkeiba.com/race/shutuba.html?race_id={race_id}"
-# url = f"https://race.netkeiba.com/race/result.html?race_id={race_id}&rf=race_list"
-# url = f"https://db.netkeiba.com/race/{race_id}"
-res = requests.get(url)
-res.encoding = "EUC-JP"
-soup = BeautifulSoup(res.text, "html.parser")
+
+
+# times = time.split(":")
+
+
+
+
+# url = f"https://race.netkeiba.com/race/shutuba.html?race_id={race_id}"
+# # url = f"https://race.netkeiba.com/race/result.html?race_id={race_id}&rf=race_list"
+# # url = f"https://db.netkeiba.com/race/{race_id}"
+# res = requests.get(url)
+# res.encoding = "EUC-JP"
+# soup = BeautifulSoup(res.text, "html.parser")
 
 
 

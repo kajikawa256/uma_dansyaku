@@ -23,6 +23,23 @@ class Main:
 
         except Exception as e:
             print(f"Error Occurred: {e}")
+            
+
+    # delete関数
+    def delete(self,table,race_id):
+        try:
+            # SQL（データベースを操作するコマンド）を実行する
+            sql = f"DELETE FROM {table} WHERE RACE_ID = '{race_id}';"
+            self.cur.execute(sql)
+
+            #コミット
+            self.dbconnect.commit()
+
+        except Exception as e:
+            #エラーが発生したらロールバック
+            self.dbconnect.rollback()
+            print(f"Error Occurred: {e}")
+            print(sql)
 
 
     # insert関数
@@ -62,10 +79,44 @@ class Main:
             print(sql)
 
 
+    # RESULT_HORSEテーブルの着順が0のレースIDを取得
+    def empty_get_race_id(self):
+        try:
+            sql = "SELECT RACE_ID FROM RESULT_HORSE WHERE RANKING = '未定';"
+            self.cur.execute(sql)
+
+            # 実行結果を使いやすいようにリスト化
+            race_id = self.cur.fetchall()
+            race_id_list = [item[0] for item in race_id]
+            
+            # 取得済みのrace_idをreturn
+            return race_id_list
+
+        except Exception as e:
+            print(f"Error Occurred: {e}")
+
+
     # RACEテーブルに保存されているrace_idを取得
-    def get_race_id(self):
+    def get_race_id_all(self):
         try:
             sql = "SELECT RACE_ID FROM RACE;"
+            self.cur.execute(sql)
+
+            # 実行結果を使いやすいようにリスト化
+            race_id = self.cur.fetchall()
+            race_id_list = [item[0] for item in race_id]
+            
+            # 取得済みのrace_idをreturn
+            return race_id_list
+
+        except Exception as e:
+            print(f"Error Occurred: {e}")
+
+
+    # RACEテーブルに保存されているrace_idを取得(引数にraceidが含まれる場合)
+    def get_race_id(self,race_id):
+        try:
+            sql = f"SELECT RACE_ID FROM RACE WHERE RACE_ID LIKE '%{race_id}%';"
             self.cur.execute(sql)
 
             # 実行結果を使いやすいようにリスト化
@@ -118,26 +169,42 @@ class Main:
             print(f"Error Occurred: {e}")
 
     
-    # レース直前に天気と馬場状態をupdateする関数
-    def race_update(self,race_id,weather,situation):
-        if race_id == None:
-            return
+    # 受け取ったrace_idの発走時間を取得しリターンする
+    def get_starting_time(self,race_id):
         try:
-            # 天気の更新
-            sql = f"UPDATE RACE SET WEATHER = '{weather}' WHERE RACE_ID = {race_id}"
-            self.cur.execute(sql)
-            # 馬場状態の更新
-            sql = f"UPDATE RACE SET SITUATION = '{situation}' WHERE RACE_ID = {race_id}"
+            sql = f"SELECT TIME FROM RACE WHERE RACE_ID = '{race_id}';"
             self.cur.execute(sql)
 
-            #コミット
-            self.dbconnect.commit()
+            # 実行結果を取得
+            time = self.cur.fetchall()
+            
+            # 発走時間をreturn
+            return time[0][0]
 
         except Exception as e:
-            #エラーが発生したらロールバック
-            self.dbconnect.rollback()
-            print(sql)
             print(f"Error Occurred: {e}")
+
+    
+    # レース直前に天気と馬場状態をupdateする関数
+    # def race_update(self,race_id,weather,situation):
+    #     if race_id == None:
+    #         return
+    #     try:
+    #         # 天気の更新
+    #         sql = f"UPDATE RACE SET WEATHER = '{weather}' WHERE RACE_ID = {race_id}"
+    #         self.cur.execute(sql)
+    #         # 馬場状態の更新
+    #         sql = f"UPDATE RACE SET SITUATION = '{situation}' WHERE RACE_ID = {race_id}"
+    #         self.cur.execute(sql)
+
+    #         #コミット
+    #         self.dbconnect.commit()
+
+    #     except Exception as e:
+    #         #エラーが発生したらロールバック
+    #         self.dbconnect.rollback()
+    #         print(sql)
+    #         print(f"Error Occurred: {e}")
 
     
     # デストラクタ 処理が終わればcloseする

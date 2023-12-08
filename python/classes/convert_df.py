@@ -23,15 +23,16 @@ class Main():
     if race_id == "":
       # race_idが空なら全件取得
       sql_query = f"SELECT RANKING, RACE_ID, HORSEFRAME, HORSENUMBER, HNAME, HORSE_ID, GENDER AGE, WEIGHT, JOCKEY, JOCKEY_ID, TORAINER, TORAINER_ID, BASE, HORSE_WEIGHT, WEIGHT_GAIN_LOSS, ODDS, POPULAR FROM {table};"
+      df = pd.read_sql(sql=sql_query, con=self.engine)
     elif len(race_id) == 4 :
       # race_idが4桁ならlike演算子
-      sql_query = f"SELECT * FROM {table} WHERE RACE_ID LIKE '%{race_id}%';"
+      sql_query = f"SELECT * FROM {table} WHERE RACE_ID LIKE %s;"
+      df = pd.read_sql(sql=sql_query, con=self.engine, params=(f'%{race_id}%',))
     else:
       # race_id1件分
-      sql_query = f"SELECT * FROM {table} WHERE RACE_ID = {race_id};"
-
-    # sqlを基にdfを作成
-    df = pd.read_sql(sql=sql_query, con=self.engine)
-
+      sql_query = f"select * from (select result_horse.RACE_ID,RANKING,HORSEFRAME,HORSENUMBER,HNAME,HORSE_ID,GENDER,AGE,WEIGHT,JOCKEY,JOCKEY_ID,TORAINER,TORAINER_ID,BASE,HORSE_WEIGHT,WEIGHT_GAIN_LOSS,ODDS,POPULAR,RNAME,RACENUMBER,HORSE_TOTAL,GROUND,SPIN,DISTANCE,WEATHER,SITUATION,TIME,RACEDATE,PLACE,GRADE,race.LIMIT,HANDICAP,rank() over (partition by hname order by RACEDATE desc) as junban from result_horse,race where hname in(select hname from result_horse where race_id='{race_id}') and result_horse.race_id = race.race_id and racedate <= ( select racedate from race where race_id = '{race_id}') order by hname,racedate desc) as ABC where junban <= 3;"
+      # sql_query = f"SELECT * FROM {table} WHERE RACE_ID = '{race_id}';"
+      df = pd.read_sql(sql=sql_query, con=self.engine)
+      
     return df
 

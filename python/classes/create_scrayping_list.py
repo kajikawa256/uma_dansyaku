@@ -2,8 +2,6 @@ from datetime import datetime
 import classes.db_operation_class as db
 import data.constant as con
 import classes.scrayping_running_list as runnningu_list
-import component.count_horse_num as count
-
 
 class Main():
   # コンストラクタ dbのインスタンス作成
