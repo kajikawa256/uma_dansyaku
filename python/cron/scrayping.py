@@ -28,6 +28,7 @@ for race_id in tqdm(raceIdList):
     soup = sc.get_soup(url)
     time.sleep(1)
 
+    # 存在するページならbs4で解析
     if "出馬表" in soup.text:
         # 日付の確認
         now_date, date = get_day.day_check(race_id,soup)

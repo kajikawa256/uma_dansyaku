@@ -1,6 +1,17 @@
 version: '3'
 
 services:
+
+  selenium:
+    image: selenium/standalone-chrome:4.1.4-20220427
+    ports:
+      - 4444:4444
+      - 7900:7900
+    volumes:
+      - /dev/shm:/dev/shm
+    networks:
+      - databasenetwork
+
   mysql:
     container_name:
       'mysql'
@@ -19,7 +30,7 @@ services:
       context: .
       dockerfile: ./php/Dockerfile
     volumes:
-      - ../src:/var/www/html
+      - ../src:/var/www/html/src
       - ../css:/var/www/html/css
       - ../img:/var/www/html/img
       - ../js:/var/www/html/js
@@ -39,6 +50,8 @@ services:
     build:
       context: .
       dockerfile: ./python/Dockerfile
+    ports:
+      - 8888:8888
     tty:
       true
     environment:
@@ -47,6 +60,7 @@ services:
       - ../python:/python
     depends_on:
       - mysql
+      - selenium
     networks:
       - databasenetwork
     restart:
