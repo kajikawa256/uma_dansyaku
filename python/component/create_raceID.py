@@ -36,7 +36,7 @@ def get_id():
 
   # インスタンスの作成&関数の実行
   db_instans = db.Main()
-  acquiredIDList = db_instans.get_race_id()
+  acquiredIDList = db_instans.get_race_id_all()
   acquiredIDList = set(acquiredIDList)
   
   #取得済みのrace_idを除外
@@ -45,7 +45,7 @@ def get_id():
   return optimization_raceIdList
 
 
-# prediction_horseテーブルに存在するrace_idを取得する関数
+# raceテーブルは存在するがprediction_horseテーブルには存在しないrace_idを取得する関数
 def get_id_prediction():
   # インスタンスの作成&関数の実行
   db_instans = db.Main()
@@ -59,7 +59,7 @@ def get_id_prediction():
   return optimization_raceIdList
 
 
-# raceテーブルの天気と馬場状態が設定されていないrace_idを取得する関数
+# result_horseテーブルのRANKINGが未定になっているrace_idを重複なしで取得する関数
 def update_race_id():
   # インスタンスの作成&関数の実行
   db_instans = db.Main()
@@ -68,4 +68,12 @@ def update_race_id():
   result_race_id = list(result_race_id)
 
   return result_race_id
+
+
+# racテーブルに存在するrace_idを取得する関数
+def get_save_race_id():
+   db_instans = db.Main()
+   save_race_id = db_instans.get_race_id("2022")
+
+   return save_race_id
   

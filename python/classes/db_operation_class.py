@@ -97,9 +97,26 @@ class Main:
 
 
     # RACEテーブルに保存されているrace_idを取得
-    def get_race_id(self):
+    def get_race_id_all(self):
         try:
             sql = "SELECT RACE_ID FROM RACE;"
+            self.cur.execute(sql)
+
+            # 実行結果を使いやすいようにリスト化
+            race_id = self.cur.fetchall()
+            race_id_list = [item[0] for item in race_id]
+            
+            # 取得済みのrace_idをreturn
+            return race_id_list
+
+        except Exception as e:
+            print(f"Error Occurred: {e}")
+
+
+    # RACEテーブルに保存されているrace_idを取得(引数にraceidが含まれる場合)
+    def get_race_id(self,race_id):
+        try:
+            sql = f"SELECT RACE_ID FROM RACE WHERE RACE_ID LIKE '%{race_id}%';"
             self.cur.execute(sql)
 
             # 実行結果を使いやすいようにリスト化

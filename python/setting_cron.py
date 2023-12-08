@@ -1,4 +1,5 @@
 # 毎日8時に自動実行するファイル
+
 from tqdm import tqdm
 import datetime
 import classes.crontab as cron
