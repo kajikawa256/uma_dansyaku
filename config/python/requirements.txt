@@ -26,7 +26,7 @@ pandas
 requests
 beautifulsoup4
 # lxml
-# selenium
+selenium
 
 # web系
 # Flask
@@ -37,3 +37,13 @@ beautifulsoup4
 
 # データベース系
 mysql-connector-python
+
+# スケジューラー
+python-crontab
+croniter
+
+#インストールツール
+wget
+
+# デジタルデータの暗号化や署名、認証を行うためのフリーソフトウェア
+gnupg

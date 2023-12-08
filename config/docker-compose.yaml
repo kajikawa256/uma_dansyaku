@@ -41,6 +41,8 @@ services:
       dockerfile: ./python/Dockerfile
     tty:
       true
+    environment:
+      SELENIUM_URL: http://selenium:4444/wd/hub
     volumes:
       - ../python:/python
     depends_on:
