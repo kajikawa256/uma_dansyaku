@@ -10,8 +10,5 @@ RUN apt-get update && apt-get install -y libonig-dev && \
 #phpディレクトリをつくり、phpフォルダに全てのphpファイルをcopy
 COPY ../php /var/www/html/php/
 
-#srcでぃれくとりをつくり、srcフォルダにすべてのファイルをcopy
-# COPY ../src /var/www/html/src/
-
 # Apacheの設定ファイルをコピー
 COPY ./php/httpd.conf /etc/apache2/httpd.conf
