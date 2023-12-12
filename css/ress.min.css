@@ -36,6 +36,19 @@ audio:not([controls]) {
   height: 0
 }
 
+#main{
+  /* background-image: url('../img/45.jpeg'); */
+  /* background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),url("../img/45.jpg") ; */
+
+  background-position: center;
+  /* background-repeat: repeat-x;
+  background-repeat: repeat-y; */
+  background-repeat: repeat;
+  background-color: rgba(255, 255, 255,);
+  background-blend-mode:lighten;
+
+}
+
 hr {
   overflow: visible
 }

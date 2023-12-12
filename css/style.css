@@ -10,6 +10,11 @@
     --white-color: #fff;
 }
 
+#logo{
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+}
+
 img {
     max-width: 100%;
     height: auto;
@@ -197,7 +202,7 @@ main {
 h2.catch {
     text-align: center;
     color: var(--link-color);
-    font-size: 4.0rem;
+    font-size: 3rem;
     margin-bottom: 3rem;
 }
 
@@ -265,9 +270,24 @@ footer h5 {
 
 /* レース詳細ボックス
 ------------------------------------ */
-#race_data{
+#side_var{
+    padding-left: 3%;
+    /* padding-right: 3%; */
+    width: 30%;
+}
+#contents{
     max-width: 1000px;
     margin: auto;
+    display: flex;
+}
+.koukoku{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-right: 0;
+}
+#race_data{
+    /* margin: auto; */
+    width: 70%;
 }
 
 .race_footer {
@@ -410,7 +430,7 @@ footer h5 {
     height: 45px;
     border: none;
     border-radius: 0 3px 3px 0;
-    background-color: #2589d0;
+    background-color: #373737;
     cursor: pointer;
 }
 
@@ -428,13 +448,13 @@ footer h5 {
 }
 
 .row .col.span-4 {
-    border:3px solid #131413;
+    border:2px solid #373737;
     padding:5px;
-    margin: 15px auto;
+    margin: 15px 0;
     background-color:#f9faf9;
-    border-radius:10px;
+    border-radius:5px;
     transition: all 0.3s ease; /* アニメーションの設定 */
-    width: 80%;
+    width: 100%;
 }
 
 .row .col.span-4:hover {
@@ -505,12 +525,23 @@ footer h5 {
     .result .result_hname {
         width: 50%;
     }
+    #contents{
+        width: 90%;
+        display: block;
+    }
+    #race_data{
+        margin: 0;
+        width: 100%;
+    }
+    #side_var{
+        width: 100%;
+    }
 }
 
 .race_head {
     margin: 0 auto;
 }
-/* 
+/*
 .race_head span {
     padding-right: 640px;
     text-align: left;

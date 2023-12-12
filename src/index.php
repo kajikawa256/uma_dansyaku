@@ -73,7 +73,7 @@ if($icon !== ''){
             <div class="row">   
                 <div class="col span-12">
                     <div class="head">
-                        <h1><a href="index.php"><img src="../img/1.png" alt="準備中" width="150px" height="150px"> </a></h1>
+                        <h1 id = "logo"><a href="index.php"><img src="../img/1.png" alt="準備中" width="150px" height="150px"> </a></h1>
                     </div>
                 </div>
             </div>
@@ -102,10 +102,10 @@ if($icon !== ''){
         </div>
     </div>
     <main>
-        <section>
+        <section id ="main">
             <div class="container" id = ''>
                 <div class = 'misosiru'>
-                    <h2 id=race class="catch">～競馬予想～</h2>
+                    <h2 id=race class="catch">中央競馬レース予想</h2>
                     <div class = 'race_head'>
                         <form action="index.php" id = "myform" method = "GET">
                             <div id = "select_tab">
@@ -150,6 +150,7 @@ if($icon !== ''){
                     </div>
                 </div>                      
             </div>
+            <div id = "contents">
             <div id = "race_data">
                 <?php for($i = 0; $i < count($result_race) / 3; $i++):?>
                     
@@ -161,7 +162,7 @@ if($icon !== ''){
                             <?php if(strcmp($result_race[$count]["PLACE"],$_GET["raceplace"]) == 0) : ?>
                             <div class="col span-4">
                             <a href="subpage.php?race_id=<?= $result_race[$count]["RACE_ID"] ?>">
-                                    <h5>第<?= $result_race[$count]["RACENUMBER"]?>レース  <?= $result_race[$count]["PLACE"] ?><br><?= $result_race[$count]["RNAME"]?></h5>
+                                    <h5 class="race_title"><?= $result_race[$count]["RACENUMBER"]?>R <?= $result_race[$count]["RNAME"]?></h5>
                                     <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気 : 
                                     <?php 
                                         $weather = $result_race[$count]["WEATHER"];
@@ -176,7 +177,7 @@ if($icon !== ''){
                             <?php if(strcmp($_GET["raceplace"],"") == 0): ?>
                                 <div class="col span-4">
                                 <a href="subpage.php?race_id=<?= $result_race[$count]["RACE_ID"] ?>">
-                                    <h5>第<?= $result_race[$count]["RACENUMBER"]?>レース  <?= $result_race[$count]["PLACE"] ?><br><?= $result_race[$count]["RNAME"]?></h5>
+                                    <h5 class="race_title"><?= $result_race[$count]["RACENUMBER"]?>R  <?= $result_race[$count]["RNAME"]?></h5>
                                     <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気：
                                     <?php 
                                        $weather = $result_race[$count]["WEATHER"];
@@ -191,7 +192,7 @@ if($icon !== ''){
                             <?php if($flag && $count < 12): ?>
                                 <div class="col span-4">
                                 <a href="subpage.php?race_id=<?= $result_race[$count]["RACE_ID"] ?>">
-                                    <h5>第<?= $result_race[$count]["RACENUMBER"]?>レース  <?= $result_race[$count]["PLACE"] ?><br><?= $result_race[$count]["RNAME"]?></h5>
+                                    <h5 class="race_title"><?= $result_race[$count]["RACENUMBER"]?>R <?= $result_race[$count]["RNAME"]?></h5>
                                     <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気：
                                     <?php 
                                      $weather = $result_race[$count]["WEATHER"];
@@ -206,6 +207,22 @@ if($icon !== ''){
 
                 <?php endfor; ?>   
             </div>
+            <div id = "side_var">
+                <div class="side_centense">
+                    <h4>タイトル</h4>
+                    <p>最新情報、人気記事、特集コンテンツ。カテゴリー別に検索してみてください。新着アップデートやお得な情報も随時更新中。質問やご意見はお気軽にお知らせください。</p>
+                </div>
+                <div class="side_centense">
+                    <h4>人気馬ランキング</h4>
+                    <p>1位　イクイノックス</p>
+                    <p>2位　キタサンブラック</p>
+                    <p>3位　ジャスティンパレス</p>
+                </div>
+                <img src="../img/side.jpg" class="koukoku">
+                <img src="../img/side2.jpg" class="koukoku">
+                <img src="../img/side3.jpg" class="koukoku">
+            <div>
+            </div>
         </section>
     </main>
     <footer>
@@ -215,6 +232,7 @@ if($icon !== ''){
                             <h5>参考サイト</h5>
                             <p><a href="https://race.netkeiba.com/race/shutuba.html?race_id=202309010101">netkeiba</a></p>
                     </div>
+                    <br>
                     <div class="col span-13">
                             <h5><?= $result_collecthit_racedate[0]['DATE'] ?>の回収率</h5>
                             <p><?= $collect?>%</p>

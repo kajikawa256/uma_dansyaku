@@ -83,7 +83,7 @@ body {
 @media (min-width : 768px) {
   .row {
     display: flex;
-    flex-direction: row;
+    /* flex-direction: row; */
     padding: 0;
   }
 
@@ -112,7 +112,7 @@ body {
 
   .row .col.span-4 {
     flex: 0 0 30.6666666667%;
-    max-width: 30.6666666667%;
+    /* max-width: 30.6666666667%; */
   }
 
   .row .col.span-5 {
@@ -223,9 +223,35 @@ h1 {
 }
 
 h2 {
-  font-size: 3.2rem;
-  line-height: 1.25;
-  letter-spacing: -.1rem;
+  position: relative;
+  padding: 1.5rem 2rem;
+  border: 3px solid #d8d8d8;
+  border-radius: 10px;
+  background: #f9f9f9;
+}
+
+h2:before {
+  position: absolute;
+  bottom: -14px;
+  left: 1em;
+  width: 0;
+  height: 0;
+  content: '';
+  border-width: 14px 12px 0 12px;
+  border-style: solid;
+  border-color: #d8d8d8 transparent transparent transparent;
+}
+
+h2:after {
+  position: absolute;
+  bottom: -10px;
+  left: 1em;
+  width: 0;
+  height: 0;
+  content: '';
+  border-width: 14px 12px 0 12px;
+  border-style: solid;
+  border-color: #f9f9f9 transparent transparent transparent;
 }
 
 h3 {
@@ -246,11 +272,40 @@ h5 {
   letter-spacing: -.05rem;
 }
 
+.side_centense{
+  background: #e2e1e100;
+  border-left: 5px dotted rgba(0,0,0,.1);
+  box-shadow: 0 0 0 5px #d7d7d7e0;
+  padding: 1em;
+  margin-top: 1em;
+  margin-bottom: 3em;
+}
+
+.side_centense h4{
+  font-size: 1.5em;
+  margin-bottom:5%;
+  border-bottom:solid 1px #000;
+}
+
+.side_centense p{
+  margin: 0;
+  padding: 0;
+}
+
+.race_title {
+  padding: 0.4em 0.5em;/*文字の上下 左右の余白*/
+  color: #494949;/*文字色*/
+  background: #f4f4f4;/*背景色*/
+  border-left: solid 5px #494949;/*左線*/
+  border-bottom: solid 3px #d7d7d7;/*下線*/
+}
+
 h6 {
   font-size: 1.5rem;
   line-height: 1.6;
   letter-spacing: 0;
 }
+
 
 /* モバイル表示 */
 @media (min-width: 550px) {
@@ -270,7 +325,7 @@ h6 {
   }
 
   h5 {
-    font-size: 2.4rem;
+    font-size: 2rem;
   }
 
   h6 {
@@ -518,7 +573,7 @@ p,
 ul,
 ol,
 form {
-  margin-bottom: 2.5rem;
+  margin-bottom: 1rem;
 }
 
 
