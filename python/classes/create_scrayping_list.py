@@ -1,22 +1,30 @@
 from datetime import datetime
 import classes.db_operation_class as db
 import data.constant as con
-import component.count_horse_num as count
-
+import classes.scrayping_running_list as runnningu_list
 
 class Main():
   # コンストラクタ dbのインスタンス作成
   def __init__(self):
     self.db = db.Main()
+    self.running = runnningu_list.Main()
 
 
-  # データベースに各テーブルの情報をinsertする
+  # 過去のレースをデータベースに各テーブルの情報をinsertする
   def insert(self,soup,race_id):
     self.soup = soup
     self.race_id = race_id
-    self._insert_race()
-    self._insert_result_horse()
-    self._insert_hit_detail()
+    self._insert_race()         # レース情報
+    self._insert_result_horse() # 結果情報
+    self._insert_hit_detail()   # 払い戻し情報
+
+
+  # 開催予定の情報をスクレイピングする
+  def insert_plan(self,soup,race_id):
+    self.soup = soup
+    self.race_id = race_id
+    self._insert_race()         # レース情報
+    self._insert_plan_horse()   # 出馬表
 
 
   # AI予想をテーブルにinsertする
@@ -33,18 +41,29 @@ class Main():
     RaceData01 = self.soup.find("div",class_="RaceData01").text.replace("\n","").replace(" ","").split("/")
     RaceData02 = self.soup.find("div",class_="RaceData02").text.split()
 
+    # レース前日の出馬表の場合は天気と馬場状態が公開されないため空白で埋める
+    if len(RaceData01) > 2:
+      weather = RaceData01[2][3:4] if len(RaceData01[2]) <= 4 else RaceData01[2][3:5]                            # 天気
+      # 馬場状態
+      situation = RaceData01[3] if "障" not in RaceData01[1] else "良"
+      if "稍" in situation:
+        situation += "重"
+      elif "不" in situation:
+        situation += "良"
+      situation = situation[-1] if ":" in situation[-2:] else situation[-2:]
+    else:
+      weather = ""
+      situation = ""
+
     title = self.soup.find("div",class_="RaceName").text.replace("\n","")                                      # レースタイトル
-    horse_num = count.get_update(self.soup)                                                                    # 頭数
+    horse_num = RaceData02[-2].replace("頭","")                                                                # 頭数
     race_place = RaceData02[1]                                                                                 # 開催場 
     race_num = self.soup.find(class_="RaceNum").text.replace('R',"").replace("\n","")                          # 第何レースか
     spin = "障害" if "障" in RaceData01[1] else RaceData01[1][7:8]                                             # 回り方データの整形
     time = RaceData01[0][0:5]                                                                                  # 発走時刻の整形
-    weather = RaceData01[2][3:4] if len(RaceData01[2]) <= 4 else RaceData01[2][3:5]                            # 天気
     ground = RaceData01[1][0:1] if "障" not in RaceData01[1][0:1] else "障害"                                  # 馬場
     ground = "ダート" if "ダ" in ground else ground                                                            # 馬場2
     distance = RaceData01[1][1:5]                                                                              # 距離
-    # grade = RaceData02[4] if "(" in RaceData02[-5] else RaceData02[-5]                                        # グレード
-    # grade = RaceData02[-4] if len(grade) >= 6 else grade                                                       # グレード（例外処理）
     grade = RaceData02[4]
     if "５００万下" in grade:
       grade = "１勝クラス"
@@ -65,14 +84,6 @@ class Main():
       month_day = month_day[:-3]
     date_object = datetime.strptime(year + month_day, "%Y年%m月%d日")       
     date = date_object.strftime("%Y年%m月%d日")
-
-    # 馬場状態
-    situation = RaceData01[3] if "障" not in RaceData01[1] else "良"
-    if "稍" in situation:
-      situation += "重"
-    elif "不" in situation:
-      situation += "良"
-    situation = situation[-1] if ":" in situation[-2:] else situation[-2:]
 
     # race_list順番(データベース定義書通りの順番)
     order = [
@@ -100,6 +111,15 @@ class Main():
     # dbにinsertする
     self.db.insert(con.TABLE[con.RACE],race_list)
 
+
+  #---------- result_horseテーブル(出馬表) ----------#
+  def _insert_plan_horse(self):
+    # 出馬表をseleniumを使ってスクレイピングする
+    resutl_list = self.running.scrayping_running_list(self.race_id)
+
+    # dbにinsertする
+    self.db.insert(con.TABLE[con.RESULT_HORSE],resutl_list)
+    
     
   #---------- result_horseテーブル ----------#
   def _insert_result_horse(self):
