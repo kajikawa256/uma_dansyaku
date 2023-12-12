@@ -430,6 +430,7 @@ function getWeather($weather){
                         <div class = 'top_hit_detail'>
                             <div class = 'hit_detail'>
                                 <div class = 'summarize_element'>
+                                
                                 <table>
                                     <tr>
                                         <th class = 'K kinds C'>式別</th>
@@ -555,14 +556,16 @@ function getWeather($weather){
                                         <td class = 'K betback'><?= $hit_detail['BETBACK'] ?>円</td>
                                         <td class = 'K popular_betback'><?= $hit_detail['POPULAR'] ?>人気</td>
                                     </tr>
-                            
+                                  
                                 <?php endforeach ?>
+                              
                                 </table>
-                            
+                               
                             </div>
                         </div>
                     </div>
                 </div>
+                <img src="../img/umamusume.jpg" alt="準備中" width = 300px height = 200px margin-left = 20px>
             </div>
             
         </div>

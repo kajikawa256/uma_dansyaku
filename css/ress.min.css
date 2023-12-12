@@ -402,11 +402,15 @@ video {
   margin: 0;
 } 
 
+
+
 .summarize_element table {
   border-collapse: collapse;
   width: 100%;
   align-items: center;
 }
+
+
 
 .summarize_element th, .summarize_element td {
   border: 1px solid #dddddd;
