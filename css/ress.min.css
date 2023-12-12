@@ -25,6 +25,8 @@ html {
 
 * {
   padding: 0;
+  font-size: 1em;
+  font-weight: bold;
   font-family: monospace, monospace;
   margin: 0
 }
@@ -43,7 +45,6 @@ aside,
 details,
 figcaption,
 figure,
-footer,
 header,
 main,
 menu,
@@ -291,7 +292,7 @@ video {
   text-shadow: none
 }
 
-.top_hit_detail {
+/* .top_hit_detail {
   display: flex;
   width: 100%;
   padding:0 100px;
@@ -300,15 +301,15 @@ video {
   margin: auto auto;
   align-items: center;
   text-align: center; 
-}
+} */
 
-
+/*
 #null {
   border-bottom: 1px solid black;
   margin: 0;
   padding: 0;
   width: 750px; 
-}
+} 
 .summarize_element {
   box-sizing: border-box;
   display: flex;
@@ -371,6 +372,7 @@ video {
   margin: 0;
   padding:1.5%;
 }
+*/
 
 .race_detail {
   text-align: center;
@@ -378,7 +380,7 @@ video {
 }
 .race_detail h1 {
   text-align: left;
-  padding: 2.5% 9%;
+  padding: 2.5% 0;
 }
 .race_detail h4 {
   margin-bottom: 1.5em;
@@ -386,7 +388,7 @@ video {
 .race_infomation {
   border: 2px solid #a9a9a9;
   text-align: left;
-  margin: 0 9%;
+  /* margin: 0 9%; */
   padding:0;
 }
 .race_infomation h3 {
@@ -398,7 +400,53 @@ video {
 .race_infomation p {
   padding:10px 0;
   margin: 0;
+} 
+
+
+
+.summarize_element table {
+  border-collapse: collapse;
+  width: 100%;
+  align-items: center;
 }
+
+
+
+.summarize_element th, .summarize_element td {
+  border: 1px solid #dddddd;
+  padding: 8px 0;
+  text-align: center;
+}
+
+.summarize_element th {
+  background-color: #f2f2f2;
+}
+
+.summarize_element .kinds, .summarize_element .betback, .summarize_element .popular_betback  {
+  width: 12%;
+}
+
+.summarize_element .horsenumber {
+  width: 20%;
+  
+}
+
+@media screen and (max-width: 768px) {
+  .summarize_element .horsenumber {
+    width: 30%;
+  }
+}
+
+
+
+
+/* .summarize_element p {
+  margin: 0;
+}
+
+.K {
+  margin-right: 10px;
+} */
 
 
 
@@ -424,6 +472,8 @@ video {
 .bg-all {
   color:white;
   padding: 0.3em 0.3em;
+  border: 1px solid #ddd;
+  width: 1.5em;
 }
 
 #bg-white {
@@ -431,6 +481,7 @@ video {
   color:black;
   margin: 1% 2%;
   padding: 5px 6px;
+  border: 1px solid #ddd;
 }
 #bg-black {
   background-color: black;
@@ -441,6 +492,7 @@ video {
   background-color: red;
   margin: 1% 2%;
   padding: 5px 6px;
+  border: 1px solid #ddd;
 }
 #bg-blue {
   background-color: blue;
@@ -469,4 +521,23 @@ video {
   margin: 1% 2%;
   padding: 5px 6px;
   color: black;
+  width: 1.5em;
 }
+
+#bg-ranking-yellow {
+  /* background-color: #ffff00(230,105,212,0.3); */
+  background-color: rgba(255, 255, 0, 0.3);
+}
+
+#bg-ranking-blue {
+  background-color: #e6e6fa;
+}
+
+#bg-ranking-red {
+  background-color: rgba(255, 160, 122, 0.5);
+}
+
+#bgodds {
+  color: red;
+}
+
