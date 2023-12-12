@@ -102,49 +102,52 @@ if($icon !== ''){
     </div>
     <main>
         <section>
-            <div class="container">
-                <h2 id=race class="catch">～競馬予想～</h2>
-                
+            <div class="container" id = ''>
+                <div class = 'misosiru'>
+                    <h2 id=race class="catch">～競馬予想～</h2>
+                    <div class = 'race_head'>
+                        <form action="index.php" id = "myform" method = "GET">
+                            <div id = "select_tab">
+                            <label class="selectbox-001">
+                                <select id = 'pulldown_racedate' name = 'racedate' onchange = "submit(this.form)" onclick="buttonClick()" >
+                                    <?php foreach($result_race_date as $x) :?>
 
+                                        <!-- 日付のプルダウンを表示 選択した日付をデフォルトとして表示 -->
+                                        <?php if(strcmp($x["RACEDATE"],$_GET["racedate"])) {
+                                            echo("<option value = ". $x["RACEDATE"] .">". $x["RACEDATE"] . "</option>");
+                                        } else {
+                                            echo("<option value ='". $x["RACEDATE"] ."'selected>". $x["RACEDATE"] . "</option>");
+                                        }             
+                                        ?>
+                                    <?php endforeach ?>
+                                </select>
+                            </label>
+                            </div>
 
-                <div class = 'race_head'>
-                    <form action="index.php" id = "myform" method = "GET">
-                        <div id = "select_tab">
-                        <label class="selectbox-001">
-                            <select id = 'pulldown_racedate' name = 'racedate' onchange = "submit(this.form)" onclick="buttonClick()" >
-                                <?php foreach($result_race_date as $x) :?>
-
-                                    <!-- 日付のプルダウンを表示 選択した日付をデフォルトとして表示 -->
-                                    <?php if(strcmp($x["RACEDATE"],$_GET["racedate"])) {
-                                        echo("<option value = ". $x["RACEDATE"] .">". $x["RACEDATE"] . "</option>");
-                                    } else {
-                                        echo("<option value ='". $x["RACEDATE"] ."'selected>". $x["RACEDATE"] . "</option>");
-                                    }             
-                                    ?>
-                                <?php endforeach ?>
-                            </select>
-                        </label>
-                        </div>
-
-                        <div id = "select_tab">
-                        <label class="selectbox-001">
-                            <select id = 'pulldown_raceplace' name = 'raceplace' onchange = "submit(this.form)" >
-                                <?php foreach($result_race_place as $x) :?>
-                                    <!-- 開催場所のプルダウンを表示 選択した開催場所をデフォルトとして表示 -->
-                                    <?php if(strcmp($x["PLACE"],$_GET["raceplace"])) {
-                                        echo("<option value = ". $x["PLACE"] .">". $x["PLACE"] . "</option>");
-                                    } else {
-                                        echo("<option value ='". $x["PLACE"] ."'selected>". $x["PLACE"] . "</option>");
-                                    }                                    
-                                    ?>
-                                <?php endforeach ?>
-                            </select>
-                        </label>
-                        </div>
-
-                    </form>
-                </div>
-                                    
+                            <div id = "select_tab">
+                                <label class="selectbox-001">
+                                    <select id = 'pulldown_raceplace' name = 'raceplace' onchange = "submit(this.form)" >
+                                        <?php foreach($result_race_place as $x) :?>
+                                            <!-- 開催場所のプルダウンを表示 選択した開催場所をデフォルトとして表示 -->
+                                            <?php if(strcmp($x["PLACE"],$_GET["raceplace"])) {
+                                                echo("<option value = ". $x["PLACE"] .">". $x["PLACE"] . "</option>");
+                                            } else {
+                                                echo("<option value ='". $x["PLACE"] ."'selected>". $x["PLACE"] . "</option>");
+                                            }                                    
+                                            ?>
+                                        <?php endforeach ?>
+                                    </select>
+                                </label>
+                            </div>
+                            <!-- <div class = 'search-form-005'>
+                            <label>
+                                <input type="text" placeholder="キーワードを入力">
+                            </label>
+                            <button type="submit" aria-label="検索"></button>
+                            </div>         -->
+                        </form>
+                    </div>
+                </div>                      
             </div>
             <div id = "race_data">
                 <?php for($i = 0; $i < count($result_race) / 3; $i++):?>
@@ -205,21 +208,21 @@ if($icon !== ''){
         </section>
     </main>
     <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col span-13">
-                    <h5>参考サイト</h5>
-                    <p><a href="https://race.netkeiba.com/race/shutuba.html?race_id=202309010101">netkeiba</a></p>
-                </div>
-                <div class="col span-13">
-                    <h5>10月7日の回収率</h5>
-                    <p><?= $collect?>%</p>
-                </div>
-                <div class="col span-13">
-                    <h5>10月7日の的中率</h5>
-                    <p><?= $hit?>%</p>
-                </div>
-            </div>
+        <div class="top_footer">
+             <div class = 'index_footer'>
+                    <div class="col span-13">
+                            <h5>参考サイト</h5>
+                            <p><a href="https://race.netkeiba.com/race/shutuba.html?race_id=202309010101">netkeiba</a></p>
+                    </div>
+                    <div class="col span-13">
+                            <h5><?= $result_collecthit_racedate[0]['DATE'] ?>の回収率</h5>
+                            <p><?= $collect?>%</p>
+                    </div>
+                    <div class="col span-13">
+                        <h5><?= $result_collecthit_racedate[0]['DATE'] ?>の的中率</h5>
+                        <p><?= $hit?>%</p>
+                    </div>
+              </div>
         </div>
     </footer>
     <div class="copyright">

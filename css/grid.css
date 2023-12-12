@@ -27,12 +27,27 @@ body {
 
 /* グリッド
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-.container {
-  margin: auto ;
-  max-width: 1000px;
+.container_result {
+  margin: auto;
+
+  width: 1000px;
   padding: 0 3.5rem;
   position: relative;
 }
+
+.container_summarize {
+  margin: auto;
+  width: 800px;
+  padding: 0 3.5rem;
+  position: relative;
+  margin-left: 130px;
+  
+}
+
+
+
+
+
 
 /* ブロックを縦に表示 */
 .row {
@@ -40,6 +55,21 @@ body {
   flex-direction: column;
   padding: 0;
   width: 100%;
+}
+@media screen and (max-width: 768px) {
+  .container {
+    margin: auto ;
+    width: 100%;
+    padding: 0 2rem;
+    position: relative;
+  }
+
+  /* .row {
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    width: 100%;
+  } */
 }
 
 .col {
@@ -247,11 +277,24 @@ h6 {
   h6 {
     font-size: 1.5rem;
   }
+  p {
+    margin-top: 0;
+  }
 }
 
-p {
-  margin-top: 0;
+@media (max-width: 550px) {
+  h5 {
+    font-size: 2.6rem;
+  }
+
+  p {
+    font-size: 1.3rem;
+  }
+
+  
 }
+
+
 
 
 /* リンク
