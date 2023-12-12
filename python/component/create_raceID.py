@@ -49,7 +49,7 @@ def get_id():
 def get_id_prediction():
   # インスタンスの作成&関数の実行
   db_instans = db.Main()
-  result_race_id = db_instans.get_race_id()                 # raceテーブルに保存されているrace_idを取得
+  result_race_id = db_instans.get_race_id_all()                 # raceテーブルに保存されているrace_idを取得
   acquiredIDList = db_instans.get_prediction_race_id()      # prediction_horseテーブルに保存されているrace_idを取得
   acquiredIDList = set(acquiredIDList)
   

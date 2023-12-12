@@ -39,8 +39,9 @@ class Main():
     # レコード数分ループ
     for x in range(0, len(tr)):
       # 出走取消馬などはスクレイピングせずにスキップ
-      if "取消" in tr[x].text:
+      if "取消" in tr[x].text or "除外" in tr[x].text:
         continue
+
       record = tr[x].text.replace("--","").split()
       horse_id = driver.find_elements(By.CLASS_NAME, "HorseName")[x+1].find_element(By.TAG_NAME,"a").get_attribute("href").split("horse/")[1]
       jockey_id = driver.find_elements(By.CLASS_NAME, "Jockey")[x+1].find_element(By.TAG_NAME,"a").get_attribute("href").split("recent/")[1].replace("/","")
