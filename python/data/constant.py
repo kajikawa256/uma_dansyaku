@@ -2,9 +2,9 @@
 -----------------------以下データベース-----------------------
 '''
 #データベース接続情報
-USER = "root"
-PASSWORD = "root"
-HOST = "mysql"
+USER = "python"
+PASSWORD = "dwxpyt"
+HOST = "169.254.109.207" #その時のIPアドレス（AWS上では多分変わる）
 DB = "umadan"
 PORT = "3306"
 

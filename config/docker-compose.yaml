@@ -9,20 +9,7 @@ services:
     volumes:
       - /dev/shm:/dev/shm
     networks:
-      - databasenetwork
-
-  mysql:
-    container_name:
-      'mysql'
-    build:
-      context: .
-      dockerfile: ./db/Dockerfile
-    volumes:
-      - ./db/mysql:/var/lib/mysql
-    networks:
-      - databasenetwork
-    restart:
-      always
+      - python-network
 
   php:
     build:
@@ -38,8 +25,6 @@ services:
       - 8080:80
     depends_on:
       - python
-    networks:
-      - databasenetwork
     restart:
       always
 
@@ -58,13 +43,12 @@ services:
     volumes:
       - ../python:/python
     depends_on:
-      - mysql
       - selenium
     networks:
-      - databasenetwork
+      - python-network
     restart:
       on-failure:3
 
 networks:
-  databasenetwork:
+  python-network:
     driver: bridge

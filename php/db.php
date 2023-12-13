@@ -2,10 +2,10 @@
 function db_connect()
 {
 
-  $host = 'mysql';
+  $host = '169.254.109.207';
   $dbname = 'umadan';
-  $username = 'root';
-  $password = 'root';
+  $username = 'umadan';
+  $password = 'umadan';
 
   try {
     $db = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
