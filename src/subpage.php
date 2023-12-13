@@ -58,7 +58,7 @@ if (isset($_GET['race_id'])) {
                         WHERE R.RACE_ID = :race_id
                         AND R.HNAME = P.HNAME
                         ORDER BY R.HORSENUMBER ASC";
-    
+
     $stmt = $db->prepare($sql_race_result);
     $stmt->bindParam(":race_id", $race_id);
     $stmt->execute();
@@ -66,7 +66,6 @@ if (isset($_GET['race_id'])) {
     while($rows = $stmt->fetch(PDO::FETCH_ASSOC)){
         $result_race_result[] = $rows;
     }
-    var_dump($result_race_result[2]['WEIGHT_GAIN_LOSS']);
     $stmt = null;
 
 /*
@@ -236,7 +235,7 @@ function getWeather($weather){
      default :
          break;
     }
- 
+
     if($icon !== ''){
         echo ('<img class="weather_icon" src="../img/' . $icon . '" alt="準備中" width="30px" height="30px">');
     }
@@ -275,32 +274,9 @@ function getWeather($weather){
 </head>
 
 <body>
-    <header>
-        <div class="container">
-            <div class="row">
-                <div class="col span-12">
-                    <div class="head">
-                        <h1><a href="index.php"><img src="../img/1.png" alt="準備中" width="150px" height="150px"> </a></h1>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col span-12">
-                    <nav>
-                        <div id="open"></div>
-                        <div id="close"></div>
-                        <div id="navi">
-                            <!-- <ul>
-                                <li><a href="index.html">ホーム</a></li>
-                                <li><a href="subpage.html">競馬予想</a></li> 
-                                <li><a href="subpage.html">お問い合わせ</a></li>
-                            </ul> -->
-                        </div>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </header>
+    <!-- headerの読み込み -->
+    <?php require_once("./component/header.php")?>
+
     <div class = 'top-mainimg'>
         <div class="mainimg">
             <h3>Let's try predicting horse racing using the uma_dansyaku!</h3>

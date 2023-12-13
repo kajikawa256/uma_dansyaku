@@ -68,32 +68,9 @@ if($icon !== ''){
     <div id="splash_text"></div>
     <!--/splash--></div>
 
-    <header>
-        <div class="container">
-            <div class="row">   
-                <div class="col span-12">
-                    <div class="head">
-                        <h1 id = "logo"><a href="index.php"><img src="../img/1.png" alt="準備中" width="150px" height="150px"> </a></h1>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col span-12">
-                    <nav>
-                        <div id="open"></div>
-                        <div id="close"></div>
-                        <div id="navi">
-                            <ul>
-                                <li><a href="index.php">ホーム</a></li>
-                                <li><a href="subpage.html">競馬予想</a></li> 
-                                <li><a href="subpage.html">お問い合わせ</a></li>
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </header>
+    <!-- headerの読み込み -->
+    <?php require_once("./component/header.php")?>
+
     <div class = 'top-mainimg'>
         <div class="mainimg">
             <h3>Let's try predicting horse racing using the uma_dansyaku!</h3>
@@ -105,7 +82,10 @@ if($icon !== ''){
         <section id ="main">
             <div class="container" id = ''>
                 <div class = 'misosiru'>
-                    <h2 id=race class="catch">中央競馬レース予想</h2>
+                    <?php
+                            $ua = $_SERVER['HTTP_USER_AGENT'];
+                            if ((strpos($ua, 'Android') !== false) && (strpos($ua, 'Mobile') !== false) || (strpos($ua, 'iPhone') !== false) || (strpos($ua, 'Windows Phone') !== false)) {$msg = "";}else{$msg = "（全10開催場）";}?>
+                    <h2 id=race class="catch">中央競馬レース予想<?= $msg;?></h2>
                     <div class = 'race_head'>
                         <form action="index.php" id = "myform" method = "GET">
                             <div id = "select_tab">
@@ -118,7 +98,7 @@ if($icon !== ''){
                                             echo("<option value = ". $x["RACEDATE"] .">". $x["RACEDATE"] . "</option>");
                                         } else {
                                             echo("<option value ='". $x["RACEDATE"] ."'selected>". $x["RACEDATE"] . "</option>");
-                                        }             
+                                        }
                                         ?>
                                     <?php endforeach ?>
                                 </select>
@@ -134,7 +114,7 @@ if($icon !== ''){
                                                 echo("<option value = ". $x["PLACE"] .">". $x["PLACE"] . "</option>");
                                             } else {
                                                 echo("<option value ='". $x["PLACE"] ."'selected>". $x["PLACE"] . "</option>");
-                                            }                                    
+                                            }
                                             ?>
                                         <?php endforeach ?>
                                     </select>
@@ -172,7 +152,7 @@ if($icon !== ''){
                             </div> 
                             <?php $flag = false; ?>
                             <?php  endif;?>
-                            
+
                             <!-- 初回接続時 -->
                             <?php if(strcmp($_GET["raceplace"],"") == 0): ?>
                                 <div class="col span-4">
@@ -225,37 +205,9 @@ if($icon !== ''){
             </div>
         </section>
     </main>
-    <footer>
-        <div class="top_footer">
-             <div class = 'index_footer'>
-                    <div class="col span-13">
-                            <h5>参考サイト</h5>
-                            <p><a href="https://race.netkeiba.com/race/shutuba.html?race_id=202309010101">netkeiba</a></p>
-                    </div>
-                    <br>
-                    <div class="col span-13">
-                            <h5><?= $result_collecthit_racedate[0]['DATE'] ?>の回収率</h5>
-                            <p><?= $collect?>%</p>
-                    </div>
-                    <div class="col span-13">
-                        <h5><?= $result_collecthit_racedate[0]['DATE'] ?>の的中率</h5>
-                        <p><?= $hit?>%</p>
-                    </div>
-              </div>
-        </div>
-    </footer>
-    <div class="copyright">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <hr>
-                    Copyright © <a href="https://popo-design.net" target="_blank">popodesign. </a>
 
-                </div>
-            </div>
-        </div>
-    </div>
-    <p id="pagetop"><a href="#">TOP</a></p>
+    <!-- footerの読み込み -->
+    <?php require_once("./component/footer.php") ?>
 
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
