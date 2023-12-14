@@ -11,8 +11,19 @@
 }
 
 #logo{
-    margin-top: 0.5em;
-    margin-left: 0.5em;
+    margin-top: 0.7em;
+    margin-left: 1em;
+
+}
+@media screen and (max-width: 768px) {
+    #logo{
+        width: 3em;
+        height: auto;
+        margin-left: 0;
+    }
+    #head{
+        margin: 0;
+    }
 }
 
 img {
@@ -109,11 +120,11 @@ nav a {
     body {
         font-size: 12px;
     }
-    
+
     .head {
         flex-direction: column;
         text-align: left;
-        margin-bottom: 20px;
+        margin-bottom: 0px;
     }
 
     .telbox {

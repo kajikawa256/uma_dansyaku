@@ -7,12 +7,16 @@
               </div>
               <br>
               <div class="col span-13">
-                      <h5><?= $result_collecthit_racedate[0]['DATE'] ?>の回収率</h5>
-                      <p><?= $collect?>%</p>
+                      <!-- <h5><?= $result_collecthit_racedate[0]['DATE'] ?>の回収率</h5> -->
+                      <!-- <p><?= $collect?>%</p> -->
+                      <h5>タイトル</h5>
+                      <p>テキスト</p>
               </div>
               <div class="col span-13">
-                  <h5><?= $result_collecthit_racedate[0]['DATE'] ?>の的中率</h5>
-                  <p><?= $hit?>%</p>
+                  <!-- <h5><?= $result_collecthit_racedate[0]['DATE'] ?>の的中率</h5> -->
+                  <!-- <p><?= $hit?>%</p> -->
+                  <h5>タイトル</h5>
+                  <p>テキスト</p>
               </div>
         </div>
   </div>
@@ -23,7 +27,7 @@
             <div class="row">
                 <div class="col">
                     <hr>
-                    Copyright © <a href="https://popo-design.net" target="_blank">popodesign. </a>
+                    Copyright © 2023 <a href="https://comp.ecc.ac.jp/" target="_blank">ECCコンピュータ専門学校 ウマ息子</a>
 
                 </div>
             </div>
