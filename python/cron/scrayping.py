@@ -11,7 +11,7 @@ import classes.crontab as cron
 #任意の年数分スクレイピングしてデータベースにinsertする
 insert_instans = create_list.Main()             # インスタンスの作成
 running_list_instans = running_list.Main()      # 出馬表をスクレイピングするためのseleniumインスタンスクラス
-cron_instans = cron.CrontabControl()            # cronの実行タイミングを設定するインスタンス
+# cron_instans = cron.CrontabControl()            # cronの実行タイミングを設定するインスタンス
 exclusionIDList = []                            # 除外race_idリスト
 raceIdList = cr.get_id()                        # race_idのリストを生成
 

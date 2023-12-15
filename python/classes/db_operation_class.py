@@ -58,7 +58,7 @@ class Main:
                 insertData += str(data) if type(data) is int else f"'{data}'"
                 insertData += ","
                 
-                if (table == "RESULT_HORSE" and count % len(con.COLUMNS[con.RESULT_HORSE]) == 0) or ( table == "RACE" and count % len(con.COLUMNS[con.RACE]) == 0 ) or (table == "HIT_DETAIL" and count % len(con.COLUMNS[con.HIT_DETAIL]) == 0) or (table == "PREDICTION_HORSE" and count % len(con.COLUMNS[con.PREDICTION_HORSE]) == 0) :
+                if (table == "RESULT_HORSE" and count % len(con.COLUMNS[con.RESULT_HORSE]) == 0) or ( table == "RACE" and count % len(con.COLUMNS[con.RACE]) == 0 ) or (table == "HIT_DETAIL" and count % len(con.COLUMNS[con.HIT_DETAIL]) == 0) or (table == "PREDICTION_HORSE" and count % len(con.COLUMNS[con.PREDICTION_HORSE]) == 0) or (table == "PRIZE_MONEY" and count % len(con.COLUMNS[con.PRIZE_MONEY]) == 0) :
                     # 末尾のカンマを削除
                     insertData = insertData[:-1]
 

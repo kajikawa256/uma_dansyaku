@@ -9,6 +9,12 @@ class Main():
     self.db = db.Main()
     self.running = runnningu_list.Main()
 
+  def test(self,soup,race_id):
+    self.soup = soup
+    self.race_id = race_id
+    self._insert_race()         # レース情報
+
+
 
   # 過去のレースをデータベースに各テーブルの情報をinsertする
   def insert(self,soup,race_id):
@@ -73,6 +79,30 @@ class Main():
       grade = "３勝クラス"
     limit = "牝" if "牝" in RaceData02[-4] else "無"                                                           # 制限
     handicap = "定量" if RaceData02[-3] == "馬齢" else RaceData02[-3]                                          # ハンデ
+    if   self.soup.select(".Icon_GradeType.Icon_GradeType1"):                                           #レースアイコン
+      icon = "G1"
+    elif self.soup.select(".Icon_GradeType.Icon_GradeType2"):
+      icon = "G2"
+    elif self.soup.select(".Icon_GradeType.Icon_GradeType3"):
+      icon = "G3"
+    elif self.soup.select(".Icon_GradeType.Icon_GradeType5"):
+      icon = "OP"
+    elif self.soup.select(".Icon_GradeType.Icon_GradeType10"):
+      icon = "JG1"
+    elif self.soup.select(".Icon_GradeType.Icon_GradeType11"):
+      icon = "JG2"
+    elif self.soup.select(".Icon_GradeType.Icon_GradeType12"):
+      icon = "JG3"
+    elif self.soup.select(".Icon_GradeType.Icon_GradeType15"):
+      icon = "L"
+    elif self.soup.select(".Icon_GradeType.Icon_GradeType16"):
+      icon = "3勝"
+    elif self.soup.select(".Icon_GradeType.Icon_GradeType17"):
+      icon = "2勝"
+    elif self.soup.select(".Icon_GradeType.Icon_GradeType18"):
+      icon = "1勝"
+    else:
+      icon = ""
 
     # 日付の整形
     year = self.race_id[0:4] + "年"
@@ -84,6 +114,15 @@ class Main():
       month_day = month_day[:-3]
     date_object = datetime.strptime(year + month_day, "%Y年%m月%d日")       
     date = date_object.strftime("%Y年%m月%d日")
+
+    # 賞金
+    price = RaceData02[-1].replace("本賞金:","").replace("万円","")
+    price_list = price.split(',')
+    price_money = []
+    for x in range(5):
+      price_money.append(self.race_id)
+      price_money.append(x+1)
+      price_money.append(int(price_list[x]))
 
     # race_list順番(データベース定義書通りの順番)
     order = [
@@ -101,7 +140,8 @@ class Main():
       race_place,               # 開催場
       grade,                    # グレード
       limit,                    # 制限
-      handicap                  # ハンデ
+      handicap,                 # ハンデ
+      icon                      #レースアイコン
     ]
 
     #race_listに格納
@@ -110,6 +150,9 @@ class Main():
 
     # dbにinsertする
     self.db.insert(con.TABLE[con.RACE],race_list)
+
+    # 賞金情報をinsert
+    self.db.insert(con.TABLE[con.PRIZE_MONEY],price_money)
 
 
   #---------- result_horseテーブル(出馬表) ----------#
@@ -137,7 +180,7 @@ class Main():
 
       # カラムをデータに分解
       datas = colomu.text.split()
-
+          
       if colomu == colomuns[1]:
         # 1着の馬は着差が空白になり、indexが１つ少なくなるので空白を挿入
         datas.insert(8,"")
@@ -158,22 +201,29 @@ class Main():
       horse_weight = colomu.find(class_="Weight").text[1:4]
       weight_gain_loss = colomu.find(class_="Weight").find("small").text
       weight_gain_loss = weight_gain_loss.replace("(","").replace(")","") if weight_gain_loss != "" else 0 
-      weight_gain_loss = int(weight_gain_loss)
+      weight_gain_loss = int(weight_gain_loss) 
+      
+      
 
       if datas[0] == "除外":
         popular = 0
         odds = 0
+        time = 0
         if horse_weight == "":
           horse_weight = 0
       elif datas[0] == "取消":
         horse_weight = 0
         popular = 0
         odds = 0
+        time = 0
       elif datas[0] == "中止":
         popular = int(datas[7])
         odds = float(datas[8])
+        time = 0
       else:
         try:
+          time = float(datas[7].split(':')[0]) * 60
+          time += float(datas[7].split(':')[1])
           popular = int(datas[9])
         except:
           print(self.race_id)
@@ -198,7 +248,8 @@ class Main():
         horse_weight,     # 馬体重
         weight_gain_loss, # 体重増減
         odds,             # オッズ
-        popular           # 人気
+        popular,          # 人気
+        time              #タイム
       ]   
 
       # dbにinsertする
@@ -214,7 +265,7 @@ class Main():
     # 出馬表をdfで渡すとprediction_listを返してくれる関数を呼び出す
     
     # dbにinsertする
-    self.db.insert(con.TABLE[con.PREDICTION_HORSE],prediction_list)
+    # self.db.insert(con.TABLE[con.PREDICTION_HORSE],prediction_list)
 
 
   #---------- hit_detailテーブル ----------#
