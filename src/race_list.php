@@ -103,7 +103,7 @@ if($icon !== ''){
                             if ((strpos($ua, 'Android') !== false) && (strpos($ua, 'Mobile') !== false) || (strpos($ua, 'iPhone') !== false) || (strpos($ua, 'Windows Phone') !== false)) {$msg = "";}else{$msg = "（全10開催場）";}?>
                     <h2 id=race class="catch">中央競馬レース予想<?= $msg;?></h2>
                     <div class = 'race_head'>
-                        <form action="index.php" id = "myform" method = "GET">
+                        <form action="race_list.php" id = "myform" method = "GET">
                             <div id = "select_tab">
                             <label class="selectbox-001">
                                 <select id = 'pulldown_racedate' name = 'racedate' onchange = "submit(this.form)" onclick="buttonClick()" >
@@ -144,16 +144,16 @@ if($icon !== ''){
                             </div>         -->
                         </form>
                     </div>
-                </div>                      
+                </div>
             </div>
             <div id = "contents">
             <div id = "race_data">
                 <?php for($i = 0; $i < count($result_race) / 3; $i++):?>
-                    
+
                     <div class="row">
                         <?php for($j = 0; $j < 3; $j++) :?> <!-- 3は横並びにする数 -->
                         <?php if($count == count($result_race)){break;} ?>
-                            
+
                             <!-- 場所を指定して絞り込む -->
                             <?php if(strcmp($result_race[$count]["PLACE"],$_GET["raceplace"]) == 0) : ?>
                             <div class="col span-4">
