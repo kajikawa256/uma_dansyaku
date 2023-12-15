@@ -23,7 +23,7 @@ def get_id():
   #開催日(MAX16)
   days  = [str(i).zfill(2) for i in range(1, 17)]
   #レース12(MAX12)
-  races = [str(i).zfill(2) for i in range(1, 13)] 
+  races = [str(i).zfill(2) for i in range(1, 13)]
 
   raceIdList = []
 
@@ -38,7 +38,7 @@ def get_id():
   db_instans = db.Main()
   acquiredIDList = db_instans.get_race_id_all()
   acquiredIDList = set(acquiredIDList)
-  
+
   #取得済みのrace_idを除外
   optimization_raceIdList = [i for i in raceIdList if i not in acquiredIDList]
 
@@ -52,7 +52,7 @@ def get_id_prediction():
   result_race_id = db_instans.get_race_id_all()                 # raceテーブルに保存されているrace_idを取得
   acquiredIDList = db_instans.get_prediction_race_id()      # prediction_horseテーブルに保存されているrace_idを取得
   acquiredIDList = set(acquiredIDList)
-  
+
   #取得済みのrace_idを除外
   optimization_raceIdList = [i for i in result_race_id if i not in acquiredIDList]
 

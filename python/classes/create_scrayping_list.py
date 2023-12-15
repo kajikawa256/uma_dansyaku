@@ -63,7 +63,7 @@ class Main():
 
     title = self.soup.find("div",class_="RaceName").text.replace("\n","")                                      # レースタイトル
     horse_num = RaceData02[-2].replace("頭","")                                                                # 頭数
-    race_place = RaceData02[1]                                                                                 # 開催場 
+    race_place = RaceData02[1]                                                                                 # 開催場
     race_num = self.soup.find(class_="RaceNum").text.replace('R',"").replace("\n","")                          # 第何レースか
     spin = "障害" if "障" in RaceData01[1] else RaceData01[1][7:8]                                             # 回り方データの整形
     time = RaceData01[0][0:5]                                                                                  # 発走時刻の整形
@@ -112,7 +112,7 @@ class Main():
       month_day += "日"
     else:
       month_day = month_day[:-3]
-    date_object = datetime.strptime(year + month_day, "%Y年%m月%d日")       
+    date_object = datetime.strptime(year + month_day, "%Y年%m月%d日")
     date = date_object.strftime("%Y年%m月%d日")
 
     # 賞金
@@ -162,8 +162,8 @@ class Main():
 
     # dbにinsertする
     self.db.insert(con.TABLE[con.RESULT_HORSE],resutl_list)
-    
-    
+
+
   #---------- result_horseテーブル ----------#
   def _insert_result_horse(self):
     result_list = []
@@ -200,10 +200,8 @@ class Main():
       base = colomu.find(class_="Trainer").find("span").text
       horse_weight = colomu.find(class_="Weight").text[1:4]
       weight_gain_loss = colomu.find(class_="Weight").find("small").text
-      weight_gain_loss = weight_gain_loss.replace("(","").replace(")","") if weight_gain_loss != "" else 0 
-      weight_gain_loss = int(weight_gain_loss) 
-      
-      
+      weight_gain_loss = weight_gain_loss.replace("(","").replace(")","") if weight_gain_loss != "" else 0
+      weight_gain_loss = int(weight_gain_loss)
 
       if datas[0] == "除外":
         popular = 0
@@ -249,13 +247,13 @@ class Main():
         weight_gain_loss, # 体重増減
         odds,             # オッズ
         popular,          # 人気
-        time              #タイム
-      ]   
+        time
+      ]
 
       # dbにinsertする
       self.db.insert(con.TABLE[con.RESULT_HORSE],result_list)
 
-  
+
   #---------- PREDICTION_HORSEテーブル ----------#
   def _insert_prediction(self):
     prediction_list = []
@@ -263,7 +261,7 @@ class Main():
     # レースIDから出馬表とレース表を取得しdfにする
 
     # 出馬表をdfで渡すとprediction_listを返してくれる関数を呼び出す
-    
+
     # dbにinsertする
     # self.db.insert(con.TABLE[con.PREDICTION_HORSE],prediction_list)
 
@@ -290,10 +288,10 @@ class Main():
       elif kinds in ['3連複', '3連単']:
         index = 3
       else:
-        index = 1 
+        index = 1
       # 連番を一括りにする
       nums = [split_nums[i:i+index] for i in range(0, len(split_nums), index)]
-      
+
       bet_backs = datas[1].get_text("</br>").split("</br>")            # 払い戻し額
       populars_test = datas[2].get_text("</br>").split("</br>")        # 何番人気
       populars = [item for item in populars_test if "\n" not in item]  # リストに改行コードが含まれていたら削除

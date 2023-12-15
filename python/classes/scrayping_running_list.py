@@ -2,6 +2,9 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import classes.db_operation_class as db
+import os
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
 
 class Main():
   # コンストラクタ
@@ -15,16 +18,17 @@ class Main():
     chrome_options.add_argument('--blink-settings=imagesEnabled=false')             # 画像を読み込まない
     chrome_options.add_argument('--disable-background-networking')                  # 様々なバックグラウンドネットワークサービスを無効にする
     chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])   # chromedriveのログ非表示
-
     self.chrome_options = chrome_options
-    self.path = "./python/data/chromedriver"                                        # chromedriceのパス
-
 
   # 出馬表をスクレイピング
   def scrayping_running_list(self,race_id):
     # chromedriverの起動
-    service = webdriver.chrome.service.Service(self.path)
-    driver = webdriver.Chrome(service=service, options=self.chrome_options)
+    driver = webdriver.Remote(
+      command_executor = os.environ["SELENIUM_URL"],
+      options = self.chrome_options
+    )
+
+    driver.implicitly_wait(5)
 
     # url
     url = f"https://race.netkeiba.com/race/shutuba.html?race_id={race_id}"
@@ -36,6 +40,7 @@ class Main():
 
     result_list = []
 
+
     # レコード数分ループ
     for x in range(0, len(tr)):
       # 出走取消馬などはスクレイピングせずにスキップ
@@ -46,7 +51,6 @@ class Main():
       horse_id = driver.find_elements(By.CLASS_NAME, "HorseName")[x+1].find_element(By.TAG_NAME,"a").get_attribute("href").split("horse/")[1]
       jockey_id = driver.find_elements(By.CLASS_NAME, "Jockey")[x+1].find_element(By.TAG_NAME,"a").get_attribute("href").split("recent/")[1].replace("/","")
       trainer_id = driver.find_elements(By.CLASS_NAME, "Trainer")[x+1].find_element(By.TAG_NAME,"a").get_attribute("href").split("recent/")[1].replace("/","")
-
 
       # 馬体重が発表されていない場合馬体重と体重増減を0にする
       if len(record) == 9:
@@ -84,4 +88,3 @@ class Main():
     driver.quit()
 
     return result_list
-      
