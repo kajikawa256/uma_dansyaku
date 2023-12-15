@@ -1,0 +1,12 @@
+body,html{
+	overflow: hidden;
+}
+
+@keyframes scrollseal {
+from { overflow: hidden }
+to { overflow: visible }
+}
+
+body, html{
+	animation: scrollseal 0s 3s both;
+}
