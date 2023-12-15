@@ -2,10 +2,15 @@
 function db_connect()
 {
 
-  $host = 'umadan-db.cg4rvknxvwgf.us-east-2.rds.amazonaws.com';
+  // $host = 'umadan-db.cg4rvknxvwgf.us-east-2.rds.amazonaws.com';
+  // $dbname = 'umadan';
+  // $username = 'uma_php';
+  // $password = 'cog_dpd';
+  $host = 'localhost';
   $dbname = 'umadan';
-  $username = 'uma_php';
-  $password = 'cog_dpd';
+  $username = 'root';
+  $password = 'root';
+
 
   try {
     $db = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);

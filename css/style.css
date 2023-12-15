@@ -379,7 +379,7 @@ footer h5 {
     width: 2.8em;
     height: 2.8em;
     border-radius: 0 3px 3px 0;
-    /* background-color: #858585; */
+    background-color: skyblue;
 }
 
 .selectbox-001::after {
@@ -407,7 +407,7 @@ footer h5 {
 }
 
 .selectbox-001 select:focus {
-    outline: 2px solid #858585;
+    outline: 2px solid #1893e0;
 }
 
 .search-form-005 {
