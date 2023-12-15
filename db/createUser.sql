@@ -11,13 +11,15 @@
 /*
   ユーザー作成
 */
-create user 'uma_admin'@'msi' identified by 'cog_gvout';
-create user 'uma_python'@'msi' identified by 'cog_dwxpyt';
-create user 'uma_php'@'msi' identified by 'cog_dpd';
+create user 'uma_admin'@'3.136.245.58' identified by 'cog_gvout';
+create user 'uma_python'@'3.136.245.58' identified by 'cog_dwxpyt';
+create user 'uma_php'@'3.136.245.58' identified by 'cog_dpd';
 
 /*
   権限付与
 */
-grant all on umadan . * to 'uma_admin'@'msi';
-grant select, delete, insert on umadan . * to 'uma_python'@'msi';
-grant select on umadan . * to 'uma_php'@'msi';
+grant all on umadan . * to 'uma_admin'@'3.136.245.58';
+grant select, delete, insert on umadan . * to 'uma_python'@'3.136.245.58';
+grant select on umadan . * to 'uma_php'@'3.136.245.58';
+
+SHOW GRANTS FOR 'uma_php'@'3.136.245.58';
