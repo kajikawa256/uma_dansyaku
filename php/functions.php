@@ -193,4 +193,21 @@ function getCollect($racedate_filter){
             AND HIT.KINDS = '単勝';";
     return $sql;
 }
+
+
+function getHitCheck($race_filter,$racedate_filter){
+    $sql = "SELECT R.HNAME AS RESULT_NAME, P.HNAME AS PREDICTION_NAME
+            FROM RESULT_HORSE R
+            JOIN PREDICTION_HORSE P
+            ON R.RACE_ID = P.RACE_ID
+            WHERE R.RACE_ID IN (
+                SELECT RACE.RACE_ID 
+                FROM RACE RACE
+                WHERE RACE.RACEDATE = $racedate_filter
+                AND RACE.PLACE = $race_filter
+            )
+            AND R.RANKING = '1'
+            AND P.RANKING = 1;";
+    return $sql;
+}
 ?>

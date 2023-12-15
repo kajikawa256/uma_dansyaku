@@ -176,7 +176,26 @@ try{
     }
     $sql_collect = getCollect($racedate_filter);
     $result_collect = getElement($db,$sql_collect);
-     
+    $stmt = null;
+
+
+    /*
+        的中orはずれを判定する関数
+    */
+    
+    $sql_hitcheck = getHitCheck($race_filter,$racedate_filter);
+    $result_hitcheck = getElement($db,$sql_hitcheck);
+    if(empty($result_hitcheck)){
+        $place = getPlace($racedate_filter);
+        $place = getElement($db,$place);
+        $place = $place[0]['PLACE'];
+        $race_filter = "'$place'";
+        $sql_hitcheck = getHitCheck($race_filter,$racedate_filter);
+        $result_hitcheck = getElement($db,$sql_hitcheck);
+    }
+    var_dump($result_hitcheck);
+    $stmt = null;
+
 }catch(PDOException $poe) {
     echo $sql_race;
     $db->rollBack();

@@ -118,7 +118,7 @@ nav a {
 
 @media screen and (max-width: 768px) {
     body {
-        font-size: 12px;
+        font-size: 1rem;
     }
 
     .head {
@@ -379,7 +379,7 @@ footer h5 {
     width: 2.8em;
     height: 2.8em;
     border-radius: 0 3px 3px 0;
-    background-color: #858585;
+    /* background-color: #858585; */
 }
 
 .selectbox-001::after {
@@ -581,6 +581,18 @@ footer h5 {
     color: white;
     background-size:cover;
     letter-spacing:5px;
+  }
+
+  #hit_icon_top {
+    height:100%;
+  }
+
+  .hit_icon {
+    text-align: right;
+    height: 100%;
+    max-width: 100%;
+    
+    
   }
 
   

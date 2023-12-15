@@ -257,7 +257,7 @@ h2:after {
 h3 {
   font-size: 3.0rem;
   line-height: 1.3;
-  letter-spacing: -.1rem;
+  letter-spacing: 0.3rem;
 }
 
 h4 {
@@ -293,11 +293,14 @@ h5 {
 }
 
 .race_title {
+  display: flex;
   padding: 0.4em 0.5em;/*文字の上下 左右の余白*/
   color: #494949;/*文字色*/
   background: #f4f4f4;/*背景色*/
-  border-left: solid 5px #494949;/*左線*/
+  border-left: solid 5px #1893e0;/*左線*/
   border-bottom: solid 3px #d7d7d7;/*下線*/
+  height: 5rem;
+  justify-content: space-between;
 }
 
 h6 {
@@ -338,7 +341,8 @@ h6 {
 
 @media (max-width: 550px) {
   h5 {
-    font-size: 2.6rem;
+    font-size: 1.9rem;
+    font-weight: bold;
   }
 
   p {
