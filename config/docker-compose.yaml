@@ -21,6 +21,7 @@ services:
       - ../img:/var/www/html/img
       - ../js:/var/www/html/js
       - ../php:/var/www/html/php
+      - ../video:/var/www/html/video
     ports:
       - 8080:80
     depends_on:
