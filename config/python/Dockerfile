@@ -1,9 +1,13 @@
 FROM python:3.12
 
+ENV PYTHONIOENCODING utf-8
+ENV TZ="Asia/Tokyo"
+ENV LANG=C.UTF-8
+ENV LANGUAGE=en_US:en_US
+
 # pipのアップグレードとjupyterlabのインストール
 RUN apt-get update && \
-  pip install --upgrade pip && \
-  python -m pip install jupyterlab
+  pip install --upgrade pip
 
 # 作業フォルダに移動
 WORKDIR /python

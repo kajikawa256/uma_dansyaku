@@ -1,22 +1,30 @@
 from datetime import datetime
 import classes.db_operation_class as db
 import data.constant as con
-import component.count_horse_num as count
-
+import classes.scrayping_running_list as runnningu_list
 
 class Main():
   # コンストラクタ dbのインスタンス作成
   def __init__(self):
     self.db = db.Main()
+    self.running = runnningu_list.Main()
 
 
-  # データベースに各テーブルの情報をinsertする
+  # 過去のレースをデータベースに各テーブルの情報をinsertする
   def insert(self,soup,race_id):
     self.soup = soup
     self.race_id = race_id
-    self._insert_race()
-    self._insert_result_horse()
-    self._insert_hit_detail()
+    self._insert_race()         # レース情報
+    self._insert_result_horse() # 結果情報
+    self._insert_hit_detail()   # 払い戻し情報
+
+
+  # 開催予定の情報をスクレイピングする
+  def insert_plan(self,soup,race_id):
+    self.soup = soup
+    self.race_id = race_id
+    self._insert_race()         # レース情報
+    self._insert_plan_horse()   # 出馬表
 
 
   # AI予想をテーブルにinsertする
@@ -33,19 +41,36 @@ class Main():
     RaceData01 = self.soup.find("div",class_="RaceData01").text.replace("\n","").replace(" ","").split("/")
     RaceData02 = self.soup.find("div",class_="RaceData02").text.split()
 
+    # レース前日の出馬表の場合は天気と馬場状態が公開されないため空白で埋める
+    if len(RaceData01) > 2:
+      weather = RaceData01[2][3:4] if len(RaceData01[2]) <= 4 else RaceData01[2][3:5]                            # 天気
+      # 馬場状態
+      situation = RaceData01[3] if "障" not in RaceData01[1] else "良"
+      if "稍" in situation:
+        situation += "重"
+      elif "不" in situation:
+        situation += "良"
+      situation = situation[-1] if ":" in situation[-2:] else situation[-2:]
+    else:
+      weather = ""
+      situation = ""
+
     title = self.soup.find("div",class_="RaceName").text.replace("\n","")                                      # レースタイトル
-    horse_num = count.get_update(self.soup)                                                                    # 頭数
-    race_place = RaceData02[1]                                                                                 # 開催場 
+    horse_num = RaceData02[-2].replace("頭","")                                                                # 頭数
+    race_place = RaceData02[1]                                                                                 # 開催場
     race_num = self.soup.find(class_="RaceNum").text.replace('R',"").replace("\n","")                          # 第何レースか
     spin = "障害" if "障" in RaceData01[1] else RaceData01[1][7:8]                                             # 回り方データの整形
     time = RaceData01[0][0:5]                                                                                  # 発走時刻の整形
-    weather = RaceData01[2][3:4] if len(RaceData01[2]) <= 4 else RaceData01[2][3:5]                            # 天気
     ground = RaceData01[1][0:1] if "障" not in RaceData01[1][0:1] else "障害"                                  # 馬場
     ground = "ダート" if "ダ" in ground else ground                                                            # 馬場2
     distance = RaceData01[1][1:5]                                                                              # 距離
-    # grade = RaceData02[4] if "(" in RaceData02[-5] else RaceData02[-5]                                        # グレード
-    # grade = RaceData02[-4] if len(grade) >= 6 else grade                                                       # グレード（例外処理）
     grade = RaceData02[4]
+    if "５００万下" in grade:
+      grade = "１勝クラス"
+    elif "１０００万下" in grade:
+      grade = "２勝クラス"
+    elif "１６００万下" in grade:
+      grade = "３勝クラス"
     limit = "牝" if "牝" in RaceData02[-4] else "無"                                                           # 制限
     handicap = "定量" if RaceData02[-3] == "馬齢" else RaceData02[-3]                                          # ハンデ
 
@@ -57,16 +82,8 @@ class Main():
       month_day += "日"
     else:
       month_day = month_day[:-3]
-    date_object = datetime.strptime(year + month_day, "%Y年%m月%d日")       
+    date_object = datetime.strptime(year + month_day, "%Y年%m月%d日")
     date = date_object.strftime("%Y年%m月%d日")
-
-    # 馬場状態
-    situation = RaceData01[3] if "障" not in RaceData01[1] else "良"
-    if "稍" in situation:
-      situation += "重"
-    elif "不" in situation:
-      situation += "良"
-    situation = situation[-1] if ":" in situation[-2:] else situation[-2:]
 
     # race_list順番(データベース定義書通りの順番)
     order = [
@@ -94,7 +111,16 @@ class Main():
     # dbにinsertする
     self.db.insert(con.TABLE[con.RACE],race_list)
 
-    
+
+  #---------- result_horseテーブル(出馬表) ----------#
+  def _insert_plan_horse(self):
+    # 出馬表をseleniumを使ってスクレイピングする
+    resutl_list = self.running.scrayping_running_list(self.race_id)
+
+    # dbにinsertする
+    self.db.insert(con.TABLE[con.RESULT_HORSE],resutl_list)
+
+
   #---------- result_horseテーブル ----------#
   def _insert_result_horse(self):
     result_list = []
@@ -131,12 +157,14 @@ class Main():
       base = colomu.find(class_="Trainer").find("span").text
       horse_weight = colomu.find(class_="Weight").text[1:4]
       weight_gain_loss = colomu.find(class_="Weight").find("small").text
-      weight_gain_loss = weight_gain_loss.replace("(","").replace(")","") if weight_gain_loss != "" else 0 
+      weight_gain_loss = weight_gain_loss.replace("(","").replace(")","") if weight_gain_loss != "" else 0
       weight_gain_loss = int(weight_gain_loss)
 
       if datas[0] == "除外":
         popular = 0
         odds = 0
+        if horse_weight == "":
+          horse_weight = 0
       elif datas[0] == "取消":
         horse_weight = 0
         popular = 0
@@ -171,12 +199,12 @@ class Main():
         weight_gain_loss, # 体重増減
         odds,             # オッズ
         popular           # 人気
-      ]   
+      ]
 
       # dbにinsertする
       self.db.insert(con.TABLE[con.RESULT_HORSE],result_list)
 
-  
+
   #---------- PREDICTION_HORSEテーブル ----------#
   def _insert_prediction(self):
     prediction_list = []
@@ -184,7 +212,7 @@ class Main():
     # レースIDから出馬表とレース表を取得しdfにする
 
     # 出馬表をdfで渡すとprediction_listを返してくれる関数を呼び出す
-    
+
     # dbにinsertする
     self.db.insert(con.TABLE[con.PREDICTION_HORSE],prediction_list)
 
@@ -211,10 +239,10 @@ class Main():
       elif kinds in ['3連複', '3連単']:
         index = 3
       else:
-        index = 1 
+        index = 1
       # 連番を一括りにする
       nums = [split_nums[i:i+index] for i in range(0, len(split_nums), index)]
-      
+
       bet_backs = datas[1].get_text("</br>").split("</br>")            # 払い戻し額
       populars_test = datas[2].get_text("</br>").split("</br>")        # 何番人気
       populars = [item for item in populars_test if "\n" not in item]  # リストに改行コードが含まれていたら削除

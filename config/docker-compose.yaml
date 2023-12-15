@@ -1,25 +1,22 @@
 version: '3'
 
 services:
-  mysql:
-    container_name:
-      'mysql'
-    build:
-      context: .
-      dockerfile: ./db/Dockerfile
+
+  selenium:
+    image: selenium/standalone-chrome:4.1.4-20220427
+    ports:
+      - 4444:4444
     volumes:
-      - ./db/mysql:/var/lib/mysql
+      - /dev/shm:/dev/shm
     networks:
-      - databasenetwork
-    restart:
-      always
+      - python-network
 
   php:
     build:
       context: .
       dockerfile: ./php/Dockerfile
     volumes:
-      - ../src:/var/www/html
+      - ../src:/var/www/html/src
       - ../css:/var/www/html/css
       - ../img:/var/www/html/img
       - ../js:/var/www/html/js
@@ -28,8 +25,6 @@ services:
       - 8080:80
     depends_on:
       - python
-    networks:
-      - databasenetwork
     restart:
       always
 
@@ -39,17 +34,21 @@ services:
     build:
       context: .
       dockerfile: ./python/Dockerfile
+    ports:
+      - 8888:8888
     tty:
       true
+    environment:
+      SELENIUM_URL: http://selenium:4444/wd/hub
     volumes:
       - ../python:/python
     depends_on:
-      - mysql
+      - selenium
     networks:
-      - databasenetwork
+      - python-network
     restart:
       on-failure:3
 
 networks:
-  databasenetwork:
+  python-network:
     driver: bridge

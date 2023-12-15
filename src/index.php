@@ -1,5 +1,8 @@
 <?php
-include('php/index_call.php');
+include('../php/index_call.php');
+$hit = ROUND($result_hitcount[0]["hitcount"] / $result_racecount[0]["racecount"] * 100,1);
+$race_money = $result_racecount[0]["racecount"] * 100;
+$collect = ROUND(intval($result_collect[0]['collect']) / $race_money * 100,1);
 $count = 0;
 $flag = true;
 
@@ -7,6 +10,30 @@ if(strcmp($_GET["racedate"],"")){
     $position = 680;
 }else{
     $position = 0;
+}
+
+function getWeather($weather){
+   $icon = '';
+   switch($weather){
+    case '晴' :
+        $icon = 'tennki-illust1.png';
+        break;
+    case '曇' :
+        $icon = 'tennki-illust5.png';
+        break;
+    case '雨' :
+        $icon = 'tennki-illust7.png';
+        break;
+    case '小雨' :
+        $icon = 'tennki-illust17.png';
+        break;
+    default :
+        break;
+   }
+
+if($icon !== ''){
+    echo ('<img class="weather_icon" src="../img/' . $icon . '" alt="準備中" width="30px" height="30px">');
+}
 }
 
 ?>
@@ -22,17 +49,17 @@ if(strcmp($_GET["racedate"],"")){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ウマ男爵</title>
-    <link rel="stylesheet" media="all" href="css/ress.min.css" />
-    <link rel="stylesheet" media="all" href="css/style.css" />
-    <script src="js/jquery-3.6.0.min.js"></script>
-    <script src="js/style.js"></script>
-    <script src="js/index_get.js"></script>
+    <link rel="stylesheet" media="all" href="../css/ress.min.css" />
+    <link rel="stylesheet" media="all" href="../css/style.css" />
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script src="../js/style.js"></script>
+    <script src="../js/index_get.js"></script>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="img/favicon2.png">
+    <link rel="icon" type="image/png" href="../img/favicon.png">
 
     <!-- ローディング画面 -->
-    <link rel="stylesheet" type="text/css" href="css/4-1-2.css">
+    <link rel="stylesheet" type="text/css" href="../css/4-1-2.css">
 </head>
 <body>
 
@@ -45,7 +72,7 @@ if(strcmp($_GET["racedate"],"")){
             <div class="row">   
                 <div class="col span-12">
                     <div class="head">
-                        <h1><a href="index.php"><img src="./img/ウマ男爵.png" alt="準備中" width="150px" height="150px"> </a></h1>
+                        <h1><a href="index.php"><img src="../img/1.png" alt="準備中" width="150px" height="150px"> </a></h1>
                     </div>
                 </div>
             </div>
@@ -124,25 +151,17 @@ if(strcmp($_GET["racedate"],"")){
                     
                     <div class="row">
                         <?php for($j = 0; $j < 3; $j++) :?> <!-- 3は横並びにする数 -->
+                        <?php if($count == count($result_race)){break;} ?>
                             
                             <!-- 場所を指定して絞り込む -->
                             <?php if(strcmp($result_race[$count]["PLACE"],$_GET["raceplace"]) == 0) : ?>
                             <div class="col span-4">
                             <a href="subpage.php?race_id=<?= $result_race[$count]["RACE_ID"] ?>">
                                     <h5>第<?= $result_race[$count]["RACENUMBER"]?>レース  <?= $result_race[$count]["PLACE"] ?><br><?= $result_race[$count]["RNAME"]?></h5>
-                                    <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気：<?= $result_race[$count]["WEATHER"] ?>
+                                    <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気 : 
                                     <?php 
                                         $weather = $result_race[$count]["WEATHER"];
-                                        
-                                        if($weather == "晴"){
-                                            echo ('<img class="weather_icon" src="./img/tennki-illust1.png" alt="準備中" width="30px" height="30px">');
-                                        }elseif($weather == "曇"){
-                                            echo ('<img class="weather_icon" src="./img/tennki-illust5.png" alt="準備中" width="30px" height="30px">');
-                                        }elseif($weather == "雨"){
-                                            echo ('<img class="weather_icon" src="./img/tennki-illust7.png" alt="準備中" width="30px" height="30px">');
-                                        }elseif($weather == "小雨"){
-                                            echo ('<img class="weather_icon" src="./img/tennki-illust17.png" alt="準備中" width="30px" height="30px">');
-                                        }
+                                        getWeather($weather);
                                     ?></p>
                                 </a>
                             </div> 
@@ -154,18 +173,10 @@ if(strcmp($_GET["racedate"],"")){
                                 <div class="col span-4">
                                 <a href="subpage.php?race_id=<?= $result_race[$count]["RACE_ID"] ?>">
                                     <h5>第<?= $result_race[$count]["RACENUMBER"]?>レース  <?= $result_race[$count]["PLACE"] ?><br><?= $result_race[$count]["RNAME"]?></h5>
-                                    <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気：<?= $result_race[$count]["WEATHER"] ?>
+                                    <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気：
                                     <?php 
-                                        $weather = $result_race[$count]["WEATHER"];
-                                        if($weather == "晴"){
-                                            echo ('<img class="weather_icon" src="./img/tennki-illust1.png" alt="準備中" width="30px" height="30px">');
-                                        }elseif($weather == "曇"){
-                                            echo ('<img class="weather_icon" src="./img/tennki-illust5.png" alt="準備中" width="30px" height="30px">');
-                                        }elseif($weather == "雨"){
-                                            echo ('<img class="weather_icon" src="./img/tennki-illust7.png" alt="準備中" width="30px" height="30px">');
-                                        }elseif($weather == "小雨"){
-                                            echo ('<img class="weather_icon" src="./img/tennki-illust17.png" alt="準備中" width="30px" height="30px">');
-                                        }
+                                       $weather = $result_race[$count]["WEATHER"];
+                                       getWeather($weather);
                                     ?></p>
                                 </a>
                             </div> 
@@ -177,18 +188,10 @@ if(strcmp($_GET["racedate"],"")){
                                 <div class="col span-4">
                                 <a href="subpage.php?race_id=<?= $result_race[$count]["RACE_ID"] ?>">
                                     <h5>第<?= $result_race[$count]["RACENUMBER"]?>レース  <?= $result_race[$count]["PLACE"] ?><br><?= $result_race[$count]["RNAME"]?></h5>
-                                    <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気：<?= $result_race[$count]["WEATHER"] ?>
+                                    <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気：
                                     <?php 
-                                        $weather = $result_race[$count]["WEATHER"];
-                                        if($weather == "晴"){
-                                            echo ('<img class="weather_icon" src="./img/tennki-illust1.png" alt="準備中" width="30px" height="30px">');
-                                        }elseif($weather == "曇"){
-                                            echo ('<img class="weather_icon" src="./img/tennki-illust5.png" alt="準備中" width="30px" height="30px">');
-                                        }elseif($weather == "雨"){
-                                            echo ('<img class="weather_icon" src="./img/tennki-illust7.png" alt="準備中" width="30px" height="30px">');
-                                        }elseif($weather == "小雨"){
-                                            echo ('<img class="weather_icon" src="./img/tennki-illust17.png" alt="準備中" width="30px" height="30px">');
-                                        }
+                                     $weather = $result_race[$count]["WEATHER"];
+                                     getWeather($weather);
                                     ?></p>
                                 </a>
                             </div>                     
@@ -209,12 +212,12 @@ if(strcmp($_GET["racedate"],"")){
                     <p><a href="https://race.netkeiba.com/race/shutuba.html?race_id=202309010101">netkeiba</a></p>
                 </div>
                 <div class="col span-13">
-                    <h5>10月7日の回収率</h5>
-                    <h6><?= $result_hit[0]["COLLECT_PR"] ?>%</h6>
+                    <h5><?= $result_race[0]["RACEDATE"] ?>の回収率</h5>
+                    <p><?= $collect?>%</p>
                 </div>
                 <div class="col span-13">
-                    <h5>10月7日の的中率</h5>
-                    <h6><?= $result_hit[0]["HIT_PR"]?>%</h6>
+                    <h5><?= $result_race[0]["RACEDATE"] ?>の的中率</h5>
+                    <p><?= $hit?>%</p>
                 </div>
             </div>
         </div>
@@ -239,7 +242,7 @@ if(strcmp($_GET["racedate"],"")){
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script><!--不必要なら削除-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js"></script><!--不必要なら削除-->
     <!--自作のJS-->
-    <script src="js/4-1-2.js"></script>
+    <script src="../js/4-1-2.js"></script>
 </body>
 
 </html>
