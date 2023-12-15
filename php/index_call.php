@@ -193,7 +193,6 @@ try{
         $sql_hitcheck = getHitCheck($race_filter,$racedate_filter);
         $result_hitcheck = getElement($db,$sql_hitcheck);
     }
-    var_dump($result_hitcheck);
     $stmt = null;
 
 }catch(PDOException $poe) {

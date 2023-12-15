@@ -15,7 +15,7 @@
                     <div id="navi">
                         <ul>
                             <li><a href="index.php">ホーム</a></li>
-                            <li><a href="">競馬予想</a></li>
+                            <li><a href="race_list.php">競馬予想</a></li>
                             <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfzWtOr4EU9nW9kIQsfnDjrYnmp9swpvNSvmgqCkwTTF210nQ/viewform?usp=sf_link">お問い合わせ</a></li>
                         </ul>
                     </div>

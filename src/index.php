@@ -1,58 +1,7 @@
 <?php
-include('../php/index_call.php');
-$hit = ROUND($result_hitcount[0]["hitcount"] / $result_racecount[0]["racecount"] * 100,1);
-$race_money = $result_racecount[0]["racecount"] * 100;
-$collect = ROUND(intval($result_collect[0]['collect']) / $race_money * 100,1);
-$count = 0;
-$racecount = 0;
-$flag = true;
-
-/*
-    「RNAME」の文字数を削減
-*/
-
-function truncateString($inputString, $maxLength = 10) {
-    if (mb_strlen($inputString) > $maxLength) {
-        $truncatedString = mb_substr($inputString, 0, $maxLength - 1) . '...';
-        return $truncatedString;
-    } else {
-        return $inputString;
-    }
-}
-
-
-
-if(strcmp($_GET["racedate"],"")){
-    $position = 680;
-}else{
-    $position = 0;
-}
-
-function getWeather($weather){
-   $icon = '';
-   switch($weather){
-    case '晴' :
-        $icon = 'tennki-illust1.png';
-        break;
-    case '曇' :
-        $icon = 'tennki-illust5.png';
-        break;
-    case '雨' :
-        $icon = 'tennki-illust7.png';
-        break;
-    case '小雨' :
-        $icon = 'tennki-illust17.png';
-        break;
-    default :
-        break;
-   }
-
-if($icon !== ''){
-    echo ('<img class="weather_icon" src="../img/' . $icon . '" alt="準備中" width="30px" height="30px">');
-}
-
-}
-
+# セッション変数とスマホかPCかチェックする変数の定義
+session_start();
+$ua = $_SERVER['HTTP_USER_AGENT'];
 ?>
 <!-- ページの自動スクロール -->
 <script>
@@ -68,189 +17,200 @@ if($icon !== ''){
     <title>ウマ男爵</title>
     <link rel="stylesheet" media="all" href="../css/ress.min.css" />
     <link rel="stylesheet" media="all" href="../css/style.css" />
+    <link rel="stylesheet" media="all" href="../css/home.css" />
     <script src="../js/jquery-3.6.0.min.js"></script>
     <script src="../js/style.js"></script>
     <script src="../js/index_get.js"></script>
+    <script src="../js/feedin.js"></script>
+    <script src="../js/text.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="../img/favicon.png">
 
     <!-- ローディング画面 -->
-    <!-- <link rel="stylesheet" type="text/css" href="../css/4-1-2.css"> -->
+    <link rel="stylesheet" type="text/css" href="../css/4-1-2.css">
+
 </head>
+
+
 <body>
 
-    <div id="splash">
-    <div id="splash_text"></div>
-    <!--/splash--></div>
+<!-- 初回接続時のみフェードイン -->
+<?php if (!isset($_SESSION["visited"])):$_SESSION["visited"] = 1; ?>
+<div class="logo_fadein">
+  <p><img src="../img/1.png" alt=""></p>
+</div>
+<link rel="stylesheet" media="all" href="../css/lock_schrool.css" />
+<?php endif;?>
 
-    <!-- headerの読み込み -->
-    <?php require_once("./component/header.php")?>
 
-    <div class = 'top-mainimg'>
-        <div class="mainimg">
-            <h3>Let's try predicting horse racing using the uma_dansyaku!</h3>
-            <p>開発者4人で力を合わせ競馬予想AIシステムを作りました!</p>
-            <p>競馬初心者や競馬予想の参考が欲しい人におすすめ!</p>
+<!-- headerの読み込み -->
+<?php require_once("./component/header.php")?>
+
+
+<main>
+    <!-- 馬の動画とタイトル -->
+    <div id = "main_top_movie">
+        <!-- スマホなら画像、PCなら動画を表示 -->
+        <?php if ((strpos($ua, 'Android') !== false) && (strpos($ua, 'Mobile') !== false) || (strpos($ua, 'iPhone') !== false) || (strpos($ua, 'Windows Phone') !== false)) : ?>
+            <img id="top" src="../img/top_main.jpg">
+        <?php else: ?>
+            <video id="top" src="../video/horse1.mp4" autoplay muted playsinline loop></video>
+        <?php endif; ?>
+        <div>
+            <img id="title_log" src="../img/logo_2.png">
         </div>
     </div>
-    <main>
-        <section id ="main">
-            <div class="container" id = ''>
-                <div class = 'misosiru'>
-                    <?php
-                            $ua = $_SERVER['HTTP_USER_AGENT'];
-                            if ((strpos($ua, 'Android') !== false) && (strpos($ua, 'Mobile') !== false) || (strpos($ua, 'iPhone') !== false) || (strpos($ua, 'Windows Phone') !== false)) {$msg = "";}else{$msg = "（全10開催場）";}?>
-                    <h2 id=race class="catch">中央競馬レース予想<?= $msg;?></h2>
-                    <div class = 'race_head'>
-                        <form action="index.php" id = "myform" method = "GET">
-                            <div id = "select_tab">
-                            <label class="selectbox-001">
-                                <select id = 'pulldown_racedate' name = 'racedate' onchange = "submit(this.form)" onclick="buttonClick()" >
-                                    <?php foreach($result_race_date as $x) :?>
 
-                                        <!-- 日付のプルダウンを表示 選択した日付をデフォルトとして表示 -->
-                                        <?php if(strcmp($x["RACEDATE"],$_GET["racedate"])) {
-                                            echo("<option value = ". $x["RACEDATE"] .">". $x["RACEDATE"] . "</option>");
-                                        } else {
-                                            echo("<option value ='". $x["RACEDATE"] ."'selected>". $x["RACEDATE"] . "</option>");
-                                        }
-                                        ?>
-                                    <?php endforeach ?>
-                                </select>
-                            </label>
-                            </div>
+    <!-- Descryption -->
+    <div class = "contents">
+        <h3 class="cp_h3title">Descryption</h3>
+        <div class="box-design6">
 
-                            <div id = "select_tab">
-                                <label class="selectbox-001">
-                                    <select id = 'pulldown_raceplace' name = 'raceplace' onchange = "submit(this.form)" >
-                                        <?php foreach($result_race_place as $x) :?>
-                                            <!-- 開催場所のプルダウンを表示 選択した開催場所をデフォルトとして表示 -->
-                                            <?php if(strcmp($x["PLACE"],$_GET["raceplace"])) {
-                                                echo("<option value = ". $x["PLACE"] .">". $x["PLACE"] . "</option>");
-                                            } else {
-                                                echo("<option value ='". $x["PLACE"] ."'selected>". $x["PLACE"] . "</option>");
-                                            }
-                                            ?>
-                                        <?php endforeach ?>
-                                    </select>
-                                </label>
-                            </div>
-                            <!-- <div class = 'search-form-005'>
-                            <label>
-                                <input type="text" placeholder="キーワードを入力">
-                            </label>
-                            <button type="submit" aria-label="検索"></button>
-                            </div>         -->
-                        </form>
-                    </div>
-                </div>                      
+            <?php if ((strpos($ua, 'Android') !== false) && (strpos($ua, 'Mobile') !== false) || (strpos($ua, 'iPhone') !== false) || (strpos($ua, 'Windows Phone') !== false)) : ?>
+                    <p>当サイト「ウマ男爵」は競馬初心者の方から玄人の方まで幅広いユーザを対象としたWebサイトです。</p>
+                    <p>弊社の競馬予想AIは、中央競馬(JRA)のレースを対象に過去の競馬データ、馬の成績、騎手の実績などを含む多岐にわたるデータを分析し、洗練されたアルゴリズムを活用して予測を行います。</p>
+                    <p>我々は"回収率100%越え"を目標に、AIの開発を進めています。</p>
+            <?php else: ?>
+                    <div class="fadein fadein-left blue"><p>当サイト「ウマ男爵」は競馬初心者の方から玄人の方まで幅広いユーザを対象としたWebサイトです。</p></div>
+                    <div class="fadein fadein-left blue"><p>弊社の競馬予想AIは、中央競馬(JRA)のレースを対象に過去の競馬データ、馬の成績、騎手の実績などを含む多岐にわたるデータを分析し、洗練されたアルゴリズムを活用して予測を行います。</p></div>
+                    <div class="fadein fadein-left blue"><p>我々は"回収率100%越え"を目標に、AIの開発を進めています。</p></div>
+            <?php endif; ?>
+
+            <div id = "next_button">
+                <a href="race_list.php" class="btn_01">予想を見る ></a></div>
             </div>
-            <div id = "contents">
-            <div id = "race_data">
-                <?php for($i = 0; $i < count($result_race) / 3; $i++):?>
-                    
-                    <div class="row">
-                        <?php for($j = 0; $j < 3; $j++) :?> <!-- 3は横並びにする数 -->
-                        <?php if($count == count($result_race)){break;} ?>
-                            
-                            <!-- 場所を指定して絞り込む -->
-                            <?php if(strcmp($result_race[$count]["PLACE"],$_GET["raceplace"]) == 0) : ?>
-                            <div class="col span-4">
-                            <a href="subpage.php?race_id=<?= $result_race[$count]["RACE_ID"] ?>">
-                                <?php 
-                                    $output = truncateString($result_race[$count]["RNAME"], 9);
-                                ?>
-                                    <h5 class="race_title"><?= $result_race[$count]["RACENUMBER"]?>R <?= $output?>
-                                    <?php 
-                                        if($result_hitcheck[$racecount]['RESULT_NAME'] == $result_hitcheck[$racecount]['PREDICTION_NAME']){
-                                            echo '<div id = "hit_icon_top"><img class="hit_icon" src="../img/的中.png" alt="準備中"></div>';
-                                        }
-                                    ?>
-                                    </h5>
-                                    <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気 : 
-                                    <?php 
-                                        $weather = $result_race[$count]["WEATHER"];
-                                        getWeather($weather);
-                                    ?></p>
-                                </a>
-                            </div> 
-                            <?php $flag = false; ?>
-                            <?php  endif;?>
 
-                            <!-- 初回接続時 -->
-                            <?php if(strcmp($_GET["raceplace"],"") == 0): ?>
-                                <div class="col span-4">
-                                <a href="subpage.php?race_id=<?= $result_race[$count]["RACE_ID"] ?>">
-                                    <?php 
-                                        $output = truncateString($result_race[$count]["RNAME"], 9);
-                                    ?>
-                                    <h5 class="race_title"><?= $result_race[$count]["RACENUMBER"]?>R  <?= $output?>
-                                    <?php 
-                                        if($result_hitcheck[$racecount]['RESULT_NAME'] == $result_hitcheck[$racecount]['PREDICTION_NAME']){
-                                            echo '<div id = "hit_icon_top"><img class="hit_icon" src="../img/的中.png" alt="準備中"></div>';
-                                        }
-                                    ?>
-                                    </h5>
-                                    <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気：
-                                    <?php 
-                                       $weather = $result_race[$count]["WEATHER"];
-                                       getWeather($weather);
-                                    ?></p>
-                                </a>
-                            </div> 
-                            <?php $flag = false; ?>
-                            <?php endif;?>
-                            
-                            <!-- どれにも該当しなかった場合 -->
-                            <?php if($flag && $count < 12): ?>
-                                <div class="col span-4">
-                                <a href="subpage.php?race_id=<?= $result_race[$count]["RACE_ID"] ?>">
-                                    <?php 
-                                        $output = truncateString($result_race[$count]["RNAME"], 9);
-                                    ?>
-                                    <h5 class="race_title"><?= $result_race[$count]["RACENUMBER"]?>R <?= $output?>
-                                    <?php 
-                                        if($result_hitcheck[$racecount]['RESULT_NAME'] == $result_hitcheck[$racecount]['PREDICTION_NAME']){
-                                            echo '<div id = "hit_icon_top"><img class="hit_icon" src="../img/的中.png" alt="準備中"></div>';
-                                        }
-                                    ?>
-                                    </h5>
-                                    <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気：
-                                    <?php 
-                                     $weather = $result_race[$count]["WEATHER"];
-                                     getWeather($weather);
-                                    ?></p>
-                                </a>
-                            </div>                     
-                            <?php endif; $count++;$racecount++;?>
+        </div>
+    </div>
 
-                        <?php endfor?>           
-                    </div>
-                <?php endfor; ?>   
-            </div>
-            <div id = "side_var">
-                <div class="side_centense">
-                    <h4>タイトル</h4>
-                    <p>最新情報、人気記事、特集コンテンツ。カテゴリー別に検索してみてください。新着アップデートやお得な情報も随時更新中。質問やご意見はお気軽にお知らせください。</p>
+
+    <!-- Technology -->
+    <div class = "contents">
+    <h3 class="cp_h3title">Technology</h3>
+        <div id = "technology">
+            <img src="../img/deep.png">
+            <div id = "explain" class="wrap">
+                <p class="typing">
+                    ディープラーニングは、人間の神経回路を模倣した仕組み。多層のニューラルネットが複雑な非線形パターンを学習し、活性化関数と誤差逆伝播法で重みを調整しています。この構造は生物学的な神経系統に類似し、高度な情報処理を可能にしています。
+                </p>
                 </div>
-                <div class="side_centense">
-                    <h4>人気馬ランキング</h4>
-                    <p>1位　イクイノックス</p>
-                    <p>2位　キタサンブラック</p>
-                    <p>3位　ジャスティンパレス</p>
+        </div>
+    </div>
+
+
+    <!-- Diary -->
+    <div class = "contents">
+        <h3 class="cp_h3title">Diary</h3>
+        <div class="cp_timeline03">
+            <div class="timeline_group">
+                <span class="time_year">2023</span>
+                <div class="timeline_item">
+                    <div class="time">
+                        <span class="time_day">1</span>
+                        <span class="time_month">Oct</span>
+                    </div>
+                    <div class="desc">
+                        <p class="flag">企画</p>
+                        近年注目されているAIにフォーカスを当て、競馬予想AIサイトの企画を発案
+                    </div>
                 </div>
-                <img src="../img/side.jpg" class="koukoku">
-                <img src="../img/side2.jpg" class="koukoku">
-                <img src="../img/side3.jpg" class="koukoku">
-            <div>
+                <div class="timeline_item">
+                    <div class="time">
+                        <span class="time_day">10</span>
+                        <span class="time_month">Oct</span>
+                    </div>
+                    <div class="desc">
+                        <p class="flag">要件定義</p>
+                        競馬予想AIの予想を公開するにあたって、必要な機能等の洗い出し
+                    </div>
+                </div>
+                <div class="timeline_item">
+                    <div class="time">
+                        <span class="time_day">30</span>
+                        <span class="time_month">Oct</span>
+                    </div>
+                    <div class="desc">
+                        <p class="flag">開発開始</p>
+                        制作メンバーを結成し、開発作業に取り組む
+                    </div>
+                </div>
             </div>
-        </section>
-    </main>
+            <div class="timeline_group">
+                <span class="time_year">20xx</span>
+                <div class="timeline_item">
+                    <div class="time">
+                        <span class="time_day">12</span>
+                        <span class="time_month">Nov</span>
+                    </div>
+                    <div class="desc">
+                        <p class="flag">初代モデル完成</p>
+                        第1モデルが完成。的中率は30%、回収率は80%前後
+                    </div>
+                </div>
+                <div class="timeline_item">
+                    <div class="time">
+                        <span class="time_day">day</span>
+                        <span class="time_month">now</span>
+                    </div>
+                    <div class="desc">
+                        <p class="flag">開発状況</p>
+                        開発は終えることなく、日々アップデートし続けている
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- question -->
+    <div class = "contents">
+        <h3 class="cp_h3title">Question</h3>
+
+        <div class="cp_qa">
+            <div class="cp_actab">
+                <input id="cp_tabfour031" type="checkbox" name="tabs">
+                <label for="cp_tabfour031">このサイトは無料で利用できますか？</label>
+                <div class="cp_actab-content">
+                <p>はい。現時点では全サービス無料で利用可能です。</p>
+                <p>今後、利用者の増加や的中率の増加がみられる場合有料化する可能性もあります。</p>
+                </div>
+            </div>
+            <div class="cp_actab">
+                <input id="cp_tabfour032" type="checkbox" name="tabs">
+                <label for="cp_tabfour032">保証や返金対応はありますか？</label>
+                <div class="cp_actab-content">
+                <p>当サイトではAIの予想を公開しているだけですので、外れた際の返金や保証等の対応はしておりません。自己責任でお願いします。</p>
+                </div>
+            </div>
+            <div class="cp_actab">
+                <input id="cp_tabfour033" type="checkbox" name="tabs">
+                <label for="cp_tabfour033">AIの予想はいつ公開されますか？</label>
+                <div class="cp_actab-content">
+                <p>発走時間の約30分前に公開されます。</p>
+                <p>発走60分前に公開される馬体重を予測するためのデータとして利用しているので、その関係上公開の時間は余裕をもって30分前としています。</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+<div class = 'top-mainimg'>
+    <div class="mainimg">
+        <h3>AI Information</h3>
+        <p>The main language we used is python. </p>
+        <p>Python version is 3.12</p>
+    </div>
+</div>
+
+</main>
 
     <!-- footerの読み込み -->
-    <?php require_once("./component/footer.php") ?>
-
+    <?php require_once("./component/footer.php")?>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://rawgit.com/kimmobrunfeldt/progressbar.js/master/dist/progressbar.min.js"></script>
