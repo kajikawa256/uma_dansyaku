@@ -43,6 +43,7 @@ CREATE TABLE `race` (
   `GRADE` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
   `LIMIT` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
   `HANDICAP` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `RACE_TYPE` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL,
   UNIQUE KEY `RACE_ID` (`RACE_ID`)
 );
 
@@ -65,7 +66,8 @@ CREATE TABLE `result_horse` (
   `HORSE_WEIGHT` int NOT NULL,
   `WEIGHT_GAIN_LOSS` int NOT NULL,
   `ODDS` float NOT NULL,
-  `POPULAR` int NOT NULL
+  `POPULAR` int NOT NULL,
+  `TIME` float NOT NULL
 );
 
 -- 予想情報
@@ -85,5 +87,12 @@ CREATE TABLE `hit_detail` (
   `HORSEFRAME` varchar(8) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `BETBACK` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `POPULAR` varchar(4) COLLATE utf8mb4_unicode_ci NOT NULL
+);
+
+-- 獲得賞金
+CREATE TABLE `prize_money` (
+  `RACE_ID` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `RANKING` int(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `PRIZE` int(10) COLLATE utf8mb4_unicode_ci NOT NULL
 );
 
