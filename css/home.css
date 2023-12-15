@@ -2,6 +2,10 @@ main {
 	margin: 0;
 }
 
+::-webkit-scrollbar{
+	display: none;
+}
+
 /* 各コンテンツ */
 .contents{
 	margin-top: 5em;
