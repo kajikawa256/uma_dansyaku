@@ -4,7 +4,23 @@ $hit = ROUND($result_hitcount[0]["hitcount"] / $result_racecount[0]["racecount"]
 $race_money = $result_racecount[0]["racecount"] * 100;
 $collect = ROUND(intval($result_collect[0]['collect']) / $race_money * 100,1);
 $count = 0;
+$racecount = 0;
 $flag = true;
+
+/*
+    「RNAME」の文字数を削減
+*/
+
+function truncateString($inputString, $maxLength = 10) {
+    if (mb_strlen($inputString) > $maxLength) {
+        $truncatedString = mb_substr($inputString, 0, $maxLength - 1) . '...';
+        return $truncatedString;
+    } else {
+        return $inputString;
+    }
+}
+
+
 
 if(strcmp($_GET["racedate"],"")){
     $position = 680;
@@ -60,7 +76,7 @@ if($icon !== ''){
     <link rel="icon" type="image/png" href="../img/favicon.png">
 
     <!-- ローディング画面 -->
-    <link rel="stylesheet" type="text/css" href="../css/4-1-2.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../css/4-1-2.css"> -->
 </head>
 <body>
 
@@ -142,7 +158,16 @@ if($icon !== ''){
                             <?php if(strcmp($result_race[$count]["PLACE"],$_GET["raceplace"]) == 0) : ?>
                             <div class="col span-4">
                             <a href="subpage.php?race_id=<?= $result_race[$count]["RACE_ID"] ?>">
-                                    <h5 class="race_title"><?= $result_race[$count]["RACENUMBER"]?>R <?= $result_race[$count]["RNAME"]?></h5>
+                                <?php 
+                                    $output = truncateString($result_race[$count]["RNAME"], 9);
+                                ?>
+                                    <h5 class="race_title"><?= $result_race[$count]["RACENUMBER"]?>R <?= $output?>
+                                    <?php 
+                                        if($result_hitcheck[$racecount]['RESULT_NAME'] == $result_hitcheck[$racecount]['PREDICTION_NAME']){
+                                            echo '<div id = "hit_icon_top"><img class="hit_icon" src="../img/的中.png" alt="準備中"></div>';
+                                        }
+                                    ?>
+                                    </h5>
                                     <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気 : 
                                     <?php 
                                         $weather = $result_race[$count]["WEATHER"];
@@ -157,7 +182,16 @@ if($icon !== ''){
                             <?php if(strcmp($_GET["raceplace"],"") == 0): ?>
                                 <div class="col span-4">
                                 <a href="subpage.php?race_id=<?= $result_race[$count]["RACE_ID"] ?>">
-                                    <h5 class="race_title"><?= $result_race[$count]["RACENUMBER"]?>R  <?= $result_race[$count]["RNAME"]?></h5>
+                                    <?php 
+                                        $output = truncateString($result_race[$count]["RNAME"], 9);
+                                    ?>
+                                    <h5 class="race_title"><?= $result_race[$count]["RACENUMBER"]?>R  <?= $output?>
+                                    <?php 
+                                        if($result_hitcheck[$racecount]['RESULT_NAME'] == $result_hitcheck[$racecount]['PREDICTION_NAME']){
+                                            echo '<div id = "hit_icon_top"><img class="hit_icon" src="../img/的中.png" alt="準備中"></div>';
+                                        }
+                                    ?>
+                                    </h5>
                                     <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気：
                                     <?php 
                                        $weather = $result_race[$count]["WEATHER"];
@@ -172,7 +206,16 @@ if($icon !== ''){
                             <?php if($flag && $count < 12): ?>
                                 <div class="col span-4">
                                 <a href="subpage.php?race_id=<?= $result_race[$count]["RACE_ID"] ?>">
-                                    <h5 class="race_title"><?= $result_race[$count]["RACENUMBER"]?>R <?= $result_race[$count]["RNAME"]?></h5>
+                                    <?php 
+                                        $output = truncateString($result_race[$count]["RNAME"], 9);
+                                    ?>
+                                    <h5 class="race_title"><?= $result_race[$count]["RACENUMBER"]?>R <?= $output?>
+                                    <?php 
+                                        if($result_hitcheck[$racecount]['RESULT_NAME'] == $result_hitcheck[$racecount]['PREDICTION_NAME']){
+                                            echo '<div id = "hit_icon_top"><img class="hit_icon" src="../img/的中.png" alt="準備中"></div>';
+                                        }
+                                    ?>
+                                    </h5>
                                     <p><?= $result_race[$count]["TIME"] ?>発走  <?= $result_race[$count]["GROUND"] ?> <?= $result_race[$count]["DISTANCE"] ?>m  天気：
                                     <?php 
                                      $weather = $result_race[$count]["WEATHER"];
@@ -180,11 +223,10 @@ if($icon !== ''){
                                     ?></p>
                                 </a>
                             </div>                     
-                            <?php endif; $count++;?>
+                            <?php endif; $count++;$racecount++;?>
 
-                        <?php endfor ?>           
+                        <?php endfor?>           
                     </div>
-
                 <?php endfor; ?>   
             </div>
             <div id = "side_var">

@@ -254,6 +254,20 @@ function getWeather($weather){
         return $bgclass;
     }
 
+    /*
+        「芝」or「ダート」or「障害」で背景色を切り替える関数
+    */
+    function getBgRaceNumber($ground){
+        $bgground = '';
+        if($ground == 'ダート'){
+            $bgground = 'BgGroundBrown';
+        }elseif($ground == '芝'){
+            $bgground = 'BgGroundGreen';
+        }elseif($ground == '障害'){
+            $bgground = 'BgGroundOrange';
+        }
+        return $bgground;
+    }
 
 ?>
 <!doctype html>
@@ -297,24 +311,26 @@ function getWeather($weather){
                                 <div class = 'race_detail'>
                                     <?php foreach($result_race_detail as $race_detail) :?>
                                         <h1>
-                                        <?= $race_detail['RACEDATE']?>のAI予想結果
+                                            <?= $race_detail['RACEDATE']?>のAI予想結果
                                         </h1>
                                         <div class = 'race_infomation'>
                                             <h3>
-                                            <?= $race_detail['RACENUMBER']?>R
-                                            <?= $race_detail['RNAME']?>
+                                                <?php
+                                                $bgRaceNumber = getBgRaceNumber($race_detail['GROUND']);
+                                                echo '<span id = "' . $bgRaceNumber . '">' . $race_detail["RACENUMBER"] . 'R</span>&nbsp;';
+                                                echo  $race_detail['RNAME'];
+                                                ?>
                                             </h3>
                                             <p>
-                                            <?=$race_detail['PLACE'] ?> /
-                                            <?=$race_detail['TIME'] ?>発走 /
-                                            天気：<?php        
-                                                      $weather = $race_detail['WEATHER'];
-                                                      getWeather($weather);
-                                                    ?> /
-                                            <?= $race_detail['GROUND']?><?= $race_detail['DISTANCE']?>m (<?= $race_detail['SPIN']?>) /
-                                            頭数：<?= $race_detail['HORSE_TOTAL']?>頭 /
-                                            馬場：<?= $race_detail['SITUATION']?> 
-
+                                                <?=$race_detail['PLACE'] ?> /
+                                                <?=$race_detail['TIME'] ?>発走 /
+                                                天気：<?php        
+                                                        $weather = $race_detail['WEATHER'];
+                                                        getWeather($weather);
+                                                        ?> /
+                                                <?= $race_detail['GROUND']?><?= $race_detail['DISTANCE']?>m (<?= $race_detail['SPIN']?>) /
+                                                頭数：<?= $race_detail['HORSE_TOTAL']?>頭 /
+                                                馬場：<?= $race_detail['SITUATION']?> 
                                             </p>
                                         </div>
                                     <?php endforeach ?>
@@ -389,7 +405,12 @@ function getWeather($weather){
                                                     echo '<td class = "r result_odds" id = "' . $bgPrediction . '"><span id = "' . $bgOdds . '">' . $result_race['ODDS'] . '</span></td>';
                                                     echo '<td class = "r result_popular" id = "' . $bgPopular . '">' . $result_race['POPULAR'] . '人気</td>';
                                                     echo '<td class = "r result_ranking" id = "' . $bgPrediction . '">' . $result_race['PREDICTION_RANKING'] . '着</td>';
-                                                    echo '<td class = "r prediction_ranking" id = "' . $bgResult . '">' . $result_race['RESULT_RANKING'] . '着</td>';
+                                                    if(strcmp($result_race['RESULT_RANKING'],'失格') == 0 or strcmp($result_race['RESULT_RANKING'],'取消') == 0 or strcmp($result_race['RESULT_RANKING'],'除外') == 0 or strcmp($result_race['RESULT_RANKING'],'中止') == 0){
+                                                        echo '<td class = "r prediction_ranking" id = "' . $bgResult . '">' . $result_race['RESULT_RANKING'] . '</td>';
+                                                    }else{
+                                                        echo '<td class = "r prediction_ranking" id = "' . $bgResult . '">' . $result_race['RESULT_RANKING'] . '着</td>';
+                                                    }
+                                                  
                                                 ?>
                                             </tr>   
                                         <?php endforeach ?>
