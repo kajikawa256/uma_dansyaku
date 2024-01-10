@@ -470,7 +470,7 @@ function getWeather($weather){
                                                         $output = "取消";
                                                     }elseif(strcmp($result_race['RESULT_RANKING'],'除外') == 0){
                                                         $output = "除外";
-                                                    }elseif(strcmp($result_race['RESULT_RANKING'],'中止') == 0){
+                                                    }elseif(strcmp($result_race['RESULT_RANKING'],'中止') == 0 or strcmp($result_race['RESULT_RANKING'],'未定') == 0){
                                                         $output = "中止";
                                                     }elseif(strcmp($result_race['RESULT_RANKING'],'未定') == 0){
                                                         $output = "---";
@@ -629,27 +629,10 @@ function getWeather($weather){
                         </div>
                     </div>
                 </div>
-                <img src="../img/umamusume.jpg" alt="準備中" width = 300px height = 200px margin-left = 20px>
             </div>
             
         </div>
     </main>
-    <!-- <footer>
-        <div class="container">
-            
-            <div class="row">
-                <div class="col span-4">
-                  
-                </div>
-                <div class="col span-4">
-                    
-                </div>
-                <div class="col span-4">
-        
-                </div>
-            </div>
-        </div>
-    </footer> -->
     <div class="copyright">
         <div class="container">
             <div class="row">
