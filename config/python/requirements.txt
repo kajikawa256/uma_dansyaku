@@ -6,15 +6,15 @@ jupyterlab
 
 # 分析系
 pandas
-numpy
+# numpy
 # scipy
 # xlrd
 # XlsxWriter
 # python-math
-scikit-learn
+# scikit-learn
 
 # 画像系
-matplotlib
+# matplotlib
 # japanize-matplotlib
 # Pillow
 # opencv-python
@@ -35,12 +35,9 @@ selenium
 # PyMySQL
 # tweepy
 
-# AI系
-lightgbm
-
 # データベース系
 mysql-connector-python
-sqlalchemy
+mysqlclient
 
 # スケジューラー
 python-crontab
@@ -48,3 +45,6 @@ croniter
 
 #インストールツール
 wget
+
+# デジタルデータの暗号化や署名、認証を行うためのフリーソフトウェア
+gnupg
