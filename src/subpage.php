@@ -470,7 +470,7 @@ function getWeather($weather){
                                                         $output = "取消";
                                                     }elseif(strcmp($result_race['RESULT_RANKING'],'除外') == 0){
                                                         $output = "除外";
-                                                    }elseif(strcmp($result_race['RESULT_RANKING'],'中止') == 0 or strcmp($result_race['RESULT_RANKING'],'未定') == 0){
+                                                    }elseif(strcmp($result_race['RESULT_RANKING'],'中止') == 0 ){
                                                         $output = "中止";
                                                     }elseif(strcmp($result_race['RESULT_RANKING'],'未定') == 0){
                                                         $output = "---";
