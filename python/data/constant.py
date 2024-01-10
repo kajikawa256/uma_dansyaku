@@ -2,9 +2,12 @@
 -----------------------以下データベース-----------------------
 '''
 #データベース接続情報
-USER = "uma_python"
-PASSWORD = "cog_dwxpyt"
-HOST = "umadan-db.cg4rvknxvwgf.us-east-2.rds.amazonaws.com" #その時のIPアドレス（AWS上では多分変わる）
+# USER = "uma_python"
+# PASSWORD = "cog_dwxpyt"
+# HOST = "umadan-db.cg4rvknxvwgf.us-east-2.rds.amazonaws.com" #その時のIPアドレス（AWS上では多分変わる）
+USER = "root"
+PASSWORD = "root"
+HOST = "localhost" #その時のIPアドレス（AWS上では多分変わる）
 DB = "umadan"
 PORT = "3306"
 

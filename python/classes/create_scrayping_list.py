@@ -180,7 +180,7 @@ class Main():
 
       # カラムをデータに分解
       datas = colomu.text.split()
-          
+
       if colomu == colomuns[1]:
         # 1着の馬は着差が空白になり、indexが１つ少なくなるので空白を挿入
         datas.insert(8,"")

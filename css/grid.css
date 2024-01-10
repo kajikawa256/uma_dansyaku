@@ -211,7 +211,8 @@ h4,
 h5,
 h6 {
   margin-top: 0;
-  margin-bottom: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   font-weight: 300;
   letter-spacing: 0.1em;
 }
@@ -220,6 +221,10 @@ h1 {
   font-size: 3.5rem;
   line-height: 1.2;
   letter-spacing: -.1rem;
+}
+
+#date{
+  font-size: 2.5em;
 }
 
 h2 {
@@ -257,7 +262,7 @@ h2:after {
 h3 {
   font-size: 3.0rem;
   line-height: 1.3;
-  letter-spacing: 0.3rem;
+  letter-spacing: 0rem;
 }
 
 h4 {
@@ -347,6 +352,10 @@ h6 {
 
   p {
     font-size: 1.3rem;
+  }
+  
+  .question{
+    font-size: 1.3em;
   }
 
   
@@ -538,9 +547,15 @@ table {
 
 th,
 td {
-  padding: 12px 15px;
+  /* padding: 12px 15px; */
   text-align: left;
   border-bottom: 1px solid #E1E1E1;
+}
+@media screen and (max-width: 768px) {
+  th,
+  td {
+    padding: 12px 15px;
+  }
 }
 
 th:first-child,
@@ -566,6 +581,18 @@ textarea,
 select,
 fieldset {
   margin-bottom: 1.5rem;
+}
+
+pre,
+blockquote,
+dl,
+figure,
+table,
+p,
+ul,
+ol,
+form {
+  margin-bottom: 1rem;
 }
 
 pre,

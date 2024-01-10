@@ -1,5 +1,6 @@
 <?php
 include('../php/index_call.php');
+$ua = $_SERVER['HTTP_USER_AGENT'];
 $hit = ROUND($result_hitcount[0]["hitcount"] / $result_racecount[0]["racecount"] * 100,1);
 $race_money = $result_racecount[0]["racecount"] * 100;
 $collect = ROUND(intval($result_collect[0]['collect']) / $race_money * 100,1);
@@ -87,6 +88,14 @@ if($icon !== ''){
     <!-- headerの読み込み -->
     <?php require_once("./component/header.php")?>
 
+    <?php if ((strpos($ua, 'Android') !== false) && (strpos($ua, 'Mobile') !== false) || (strpos($ua, 'iPhone') !== false) || (strpos($ua, 'Windows Phone') !== false)) : ?>
+        <div class = 'top-mainimg'>
+        <div class="mainimg">
+            <p>中央競馬レース予想</p>
+            <p>全10開催場</p>
+        </div>
+    </div>
+    <?php else: ?>
     <div class = 'top-mainimg'>
         <div class="mainimg">
             <h3>Let's try predicting horse racing using the uma_dansyaku!</h3>
@@ -94,15 +103,17 @@ if($icon !== ''){
             <p>競馬初心者や競馬予想の参考が欲しい人におすすめ!</p>
         </div>
     </div>
+    <?php endif; ?>
     <main>
         <section id ="main">
             <div class="container" id = ''>
                 <div class = 'misosiru'>
                     <?php
-                            $ua = $_SERVER['HTTP_USER_AGENT'];
-                            if ((strpos($ua, 'Android') !== false) && (strpos($ua, 'Mobile') !== false) || (strpos($ua, 'iPhone') !== false) || (strpos($ua, 'Windows Phone') !== false)) {$msg = "";}else{$msg = "（全10開催場）";}?>
-                    <h2 id=race class="catch">中央競馬レース予想<?= $msg;?></h2>
+                    if ((strpos($ua, 'Android') !== false) && (strpos($ua, 'Mobile') !== false) || (strpos($ua, 'iPhone') !== false) || (strpos($ua, 'Windows Phone') !== false)): ?>
+                    <?php else: ?>
+                    <h2 id=race class="catch">中央競馬レース予想(全10開催場)</h2>
                     <div class = 'race_head'>
+                    <?php endif;?>
                         <form action="race_list.php" id = "myform" method = "GET">
                             <div id = "select_tab">
                             <label class="selectbox-001">
@@ -110,7 +121,7 @@ if($icon !== ''){
                                     <?php foreach($result_race_date as $x) :?>
 
                                         <!-- 日付のプルダウンを表示 選択した日付をデフォルトとして表示 -->
-                                        <?php if(strcmp($x["RACEDATE"],$_GET["racedate"])) {
+                                        <?php if(strcmp($x["RACEDATE"],$result_race[0]["RACEDATE"])) {
                                             echo("<option value = ". $x["RACEDATE"] .">". $x["RACEDATE"] . "</option>");
                                         } else {
                                             echo("<option value ='". $x["RACEDATE"] ."'selected>". $x["RACEDATE"] . "</option>");
@@ -126,7 +137,7 @@ if($icon !== ''){
                                     <select id = 'pulldown_raceplace' name = 'raceplace' onchange = "submit(this.form)" >
                                         <?php foreach($result_race_place as $x) :?>
                                             <!-- 開催場所のプルダウンを表示 選択した開催場所をデフォルトとして表示 -->
-                                            <?php if(strcmp($x["PLACE"],$_GET["raceplace"])) {
+                                            <?php if(strcmp($x["PLACE"],$result_race[0]["PLACE"]) != 0) {
                                                 echo("<option value = ". $x["PLACE"] .">". $x["PLACE"] . "</option>");
                                             } else {
                                                 echo("<option value ='". $x["PLACE"] ."'selected>". $x["PLACE"] . "</option>");
@@ -163,8 +174,10 @@ if($icon !== ''){
                                 ?>
                                     <h5 class="race_title"><?= $result_race[$count]["RACENUMBER"]?>R <?= $output?>
                                     <?php 
-                                        if($result_hitcheck[$racecount]['RESULT_NAME'] == $result_hitcheck[$racecount]['PREDICTION_NAME']){
-                                            echo '<div id = "hit_icon_top"><img class="hit_icon" src="../img/的中.png" alt="準備中"></div>';
+                                        if(strcmp($result_hitcheck[0]['RESULT_NAME'],"") != 0){
+                                            if($result_hitcheck[$racecount]['RESULT_NAME'] == $result_hitcheck[$racecount]['PREDICTION_NAME']){
+                                                echo '<div id = "hit_icon_top"><img class="hit_icon" src="../img/的中.png" alt="準備中"></div>';
+                                            }
                                         }
                                     ?>
                                     </h5>
@@ -186,9 +199,11 @@ if($icon !== ''){
                                         $output = truncateString($result_race[$count]["RNAME"], 9);
                                     ?>
                                     <h5 class="race_title"><?= $result_race[$count]["RACENUMBER"]?>R  <?= $output?>
-                                    <?php 
-                                        if($result_hitcheck[$racecount]['RESULT_NAME'] == $result_hitcheck[$racecount]['PREDICTION_NAME']){
-                                            echo '<div id = "hit_icon_top"><img class="hit_icon" src="../img/的中.png" alt="準備中"></div>';
+                                    <?php
+                                        if(strcmp($result_hitcheck[0]['RESULT_NAME'],"") != 0){
+                                            if($result_hitcheck[$racecount]['RESULT_NAME'] == $result_hitcheck[$racecount]['PREDICTION_NAME']){
+                                                echo '<div id = "hit_icon_top"><img class="hit_icon" src="../img/的中.png" alt="準備中"></div>';
+                                            }
                                         }
                                     ?>
                                     </h5>
@@ -211,8 +226,10 @@ if($icon !== ''){
                                     ?>
                                     <h5 class="race_title"><?= $result_race[$count]["RACENUMBER"]?>R <?= $output?>
                                     <?php 
-                                        if($result_hitcheck[$racecount]['RESULT_NAME'] == $result_hitcheck[$racecount]['PREDICTION_NAME']){
-                                            echo '<div id = "hit_icon_top"><img class="hit_icon" src="../img/的中.png" alt="準備中"></div>';
+                                        if(strcmp($result_hitcheck[0]['RESULT_NAME'],"") != 0){
+                                            if($result_hitcheck[$racecount]['RESULT_NAME'] == $result_hitcheck[$racecount]['PREDICTION_NAME']){
+                                                echo '<div id = "hit_icon_top"><img class="hit_icon" src="../img/的中.png" alt="準備中"></div>';
+                                            }
                                         }
                                     ?>
                                     </h5>

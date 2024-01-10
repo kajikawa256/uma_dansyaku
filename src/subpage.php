@@ -1,6 +1,7 @@
 <?php 
 //db.phpに接続
 include('../php/db.php');
+$ua = $_SERVER['HTTP_USER_AGENT'];
 
 try{
     //データベース接続
@@ -15,12 +16,12 @@ if (isset($_GET['race_id'])) {
 
     //文字列の確認
     if(mb_strlen($race_id) !== $Length){
-        header("Location: index.php");
+        header("Location: race_result.php");
     }
-    
+
     // 数字以外の文字を排除
     if (!ctype_digit($race_id)) {
-        header("Location: index.php");
+        header("Location: race_result.php");
         exit();
     }
 
@@ -30,7 +31,7 @@ if (isset($_GET['race_id'])) {
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 } else {
-    header("Location: index.php"); 
+    header("Location: race_result.php"); 
     exit();
 }
 
@@ -86,7 +87,7 @@ if (isset($_GET['race_id'])) {
  /*
     race_idを参照して、レース情報を表示するデータ
 */
-    $sql_race = "SELECT 
+    $sql_race = "SELECT
                     RACEDATE,
                     RNAME,
                     RACENUMBER,
@@ -134,7 +135,7 @@ if (isset($_GET['race_id'])) {
     $db = null;
 }
 
-/* 
+/*
     渡された馬枠の数字によって色を変えて
     cssのidをreturnする
 */
@@ -269,6 +270,8 @@ function getWeather($weather){
         return $bgground;
     }
 
+    // var_dump($result_race_result);
+    // var_dump();
 ?>
 <!doctype html>
 <html lang="ja">
@@ -283,7 +286,7 @@ function getWeather($weather){
     <script src="../js/style.js"></script>
 
     <!-- Favicon -->
-   <link rel="icon" type="image/png" href="../img/favicon.png"> 
+   <link rel="icon" type="image/png" href="../img/favicon.png">
 
 </head>
 
@@ -293,11 +296,12 @@ function getWeather($weather){
 
     <div class = 'top-mainimg'>
         <div class="mainimg">
-            <h3>Let's try predicting horse racing using the uma_dansyaku!</h3>
-            <p>開発者4人で力を合わせ競馬予想AIシステムを作りました!</p>
-            <p>競馬初心者や競馬予想の参考が欲しい人におすすめ!</p>
+        <h1 id="date">
+            <?= $result_race_detail[0]['RACEDATE']?>のAI予想結果
+        </h1>
         </div>
     </div>
+
     <main>
         <article>
             <div class = 'background'>
@@ -306,13 +310,11 @@ function getWeather($weather){
                         <div class="col span-12">
                             <div class="breadcrumb">
                                 <ul>
-                                    <li><a href="index.php">ホーム</a> > サブページ</li>
+                                    <li><a href="race_list.php">競馬予想</a> > 詳細ページ</li>
                                 </ul>
                                 <div class = 'race_detail'>
                                     <?php foreach($result_race_detail as $race_detail) :?>
-                                        <h1>
-                                            <?= $race_detail['RACEDATE']?>のAI予想結果
-                                        </h1>
+
                                         <div class = 'race_infomation'>
                                             <h3>
                                                 <?php
@@ -324,7 +326,7 @@ function getWeather($weather){
                                             <p>
                                                 <?=$race_detail['PLACE'] ?> /
                                                 <?=$race_detail['TIME'] ?>発走 /
-                                                天気：<?php        
+                                                天気：<?php
                                                         $weather = $race_detail['WEATHER'];
                                                         getWeather($weather);
                                                         ?> /
@@ -336,9 +338,11 @@ function getWeather($weather){
                                     <?php endforeach ?>
                                 </div>
                             </div>
-                            <?php 
+                            <?php
                             $ua = $_SERVER['HTTP_USER_AGENT'];
                             if ((strpos($ua, 'Android') !== false) && (strpos($ua, 'Mobile') !== false) || (strpos($ua, 'iPhone') !== false) || (strpos($ua, 'Windows Phone') !== false)) : ?>
+
+                            <!-- スマホの場合 -->
                                 <div class = 'result'>
                                     <table>
                                         <tr>
@@ -349,7 +353,7 @@ function getWeather($weather){
                                             <th class = 'r result_popular c'>人気</th>
                                             <th class = 'r result_ranking c'>AI予想</th>
                                             <th class = 'r prediction_ranking c'>確定着順</th>
-                                        </tr>                                
+                                        </tr>
                                         <?php foreach($result_race_result as $result_race) : ?>
                                             <tr>
                                                 <td class = 'r result_horseframe'><?= $result_race['HORSEFRAME']?></td>
@@ -361,31 +365,63 @@ function getWeather($weather){
                                                     $bgclass = getColorJudge($result_race['HORSENUMBER'],$result_detail_judge);
                                                     echo '<td class = "r result_horsenumber bg-all" id = "' . $bgclass . '">' . $result_race['HORSENUMBER'] . '</td>';
                                                 ?>
-                                                <td class = 'r result_hname'><?= $result_race['HNAME']?></td>              
+                                                <td class = 'r result_hname'><?= $result_race['HNAME']?></td>
                                                 <?php
-                                                    echo '<td class = "r result_odds" id = "' . $bgPrediction . '"><span id = "' . $bgOdds . '">' . $result_race['ODDS'] . '</span></td>';
-                                                    echo '<td class = "r result_popular" id = "' . $bgPopular . '">' . $result_race['POPULAR'] . '</td>';
+                                                    // オッズ
+                                                    if(strcmp($result_race['ODDS'],"0")){
+                                                        if(false === strpos($result_race['ODDS'],".")){
+                                                            $result_race['ODDS'] = $result_race['ODDS'] . ".0";
+                                                        }
+                                                        echo '<td class = "r result_odds" id = "' . $bgPrediction . '"><span id = "' . $bgOdds . '">' . $result_race['ODDS'] . '</span></td>';
+                                                    }else{
+                                                        echo '<td class = "r result_odds" id = "' . $bgPrediction . '"> - </td>';
+                                                    }
+                                                    // 人気
+                                                    if(strcmp($result_race['POPULAR'],"0")){
+                                                        echo '<td class = "r result_popular" id = "' . $bgPopular . '">' . $result_race['POPULAR'] . '</td>';
+                                                    }else{
+                                                        echo '<td class = "r result_popular" id = "' . $bgPopular . '"> - </td>';
+                                                    }
+                                                    // 予想着順
                                                     echo '<td class = "r result_ranking" id = "' . $bgPrediction . '">' . $result_race['PREDICTION_RANKING'] . '</td>';
-                                                    echo '<td class = "r prediction_ranking" id = "' . $bgResult . '">' . $result_race['RESULT_RANKING'] . '</td>';
+                                                    $output = "";
+                                                    // 確定着順
+                                                    if(strcmp($result_race['RESULT_RANKING'],'失格') == 0){
+                                                        $output = "失格";
+                                                    }elseif(strcmp($result_race['RESULT_RANKING'],'取消') == 0){
+                                                        $output = "取消";
+                                                    }elseif(strcmp($result_race['RESULT_RANKING'],'除外') == 0){
+                                                        $output = "除外";
+                                                    }elseif(strcmp($result_race['RESULT_RANKING'],'中止') == 0){
+                                                        $output = "中止";
+                                                    }elseif(strcmp($result_race['RESULT_RANKING'],'未定') == 0){
+                                                        $output = "-";
+                                                    }else{
+                                                        $output = $result_race['RESULT_RANKING'] . "";
+                                                    }
+                                                    echo '<td class = "r prediction_ranking" id = "' . $bgResult . '">' . $output . '</td>';
                                                 ?>
-                                            </tr>   
+                                            </tr>
                                         <?php endforeach ?>
                                     </table>
                                 </div>
+
                             <?php else : ?>
+
+                            <!-- PCの場合 -->
                                 <div class = 'result'>
                                     <table>
                                         <tr>
                                             <th class = 'r result_horsenumber c'>馬枠</th>
                                             <th class = 'r result_horsenumber c'>馬番</th>
                                             <th class = 'r result_hname c'>馬名</th>
-                                            <th class = 'r result_horse_weight c'>馬体重<br>(kg)</th>
+                                            <th class = 'r result_horse_weight c' id = "pc_only">馬体重<br>(kg)</th>
                                             <th class = 'r result_jockey c'>騎手</th>
-                                            <th class = 'r result_odds c'>オッズ</th>
+                                            <th class = 'r result_odds c' id = "odds">オッズ</th>
                                             <th class = 'r result_popular c'>人気</th>
                                             <th class = 'r result_ranking c'>AI<br>予想</th>
                                             <th class = 'r prediction_ranking c'>確定<br>着順</th>
-                                        </tr>                                
+                                        </tr>
                                         <?php foreach($result_race_result as $result_race) : ?>
                                             <tr>
                                                 <td class = 'r result_horseframe'><?= $result_race['HORSEFRAME']?></td>
@@ -398,21 +434,52 @@ function getWeather($weather){
                                                     $bgclass = getColorJudge($result_race['HORSENUMBER'],$result_detail_judge);
                                                     echo '<td class = "r result_horsenumber bg-all" ><span class = "bg-all" id = "' . $bgclass . '">' . $result_race['HORSENUMBER'] . '</span></td>';
                                                 ?>
-                                                <td class = 'r result_hname'><?= $result_race['HNAME']?></td>              
-                                                <?php echo '<td class = "r result_horse_weight">' . $result_race["HORSE_WEIGHT"] . '(' . $horse_GainLoss .  ')</td>'  ?>
-                                                <td class = 'r result_jockey'><?= $result_race['JOCKEY']?></td>
+                                                <td class = 'r result_hname'><?= $result_race['HNAME']?></td>
+
                                                 <?php
-                                                    echo '<td class = "r result_odds" id = "' . $bgPrediction . '"><span id = "' . $bgOdds . '">' . $result_race['ODDS'] . '</span></td>';
-                                                    echo '<td class = "r result_popular" id = "' . $bgPopular . '">' . $result_race['POPULAR'] . '人気</td>';
-                                                    echo '<td class = "r result_ranking" id = "' . $bgPrediction . '">' . $result_race['PREDICTION_RANKING'] . '着</td>';
-                                                    if(strcmp($result_race['RESULT_RANKING'],'失格') == 0 or strcmp($result_race['RESULT_RANKING'],'取消') == 0 or strcmp($result_race['RESULT_RANKING'],'除外') == 0 or strcmp($result_race['RESULT_RANKING'],'中止') == 0){
-                                                        echo '<td class = "r prediction_ranking" id = "' . $bgResult . '">' . $result_race['RESULT_RANKING'] . '</td>';
+                                                    // 馬体重
+                                                    if(strcmp($result_race['HORSE_WEIGHT'],"0")){
+                                                        echo '<td class = "r result_horse_weight" id = "pc_only">' . $result_race["HORSE_WEIGHT"] . '(' . $horse_GainLoss .  ')</td>';
                                                     }else{
-                                                        echo '<td class = "r prediction_ranking" id = "' . $bgResult . '">' . $result_race['RESULT_RANKING'] . '着</td>';
+                                                        echo '<td class = "r result_horse_weight" id = "pc_only"> ---  </td>';
                                                     }
-                                                  
+                                                    // 騎手
+                                                    echo "<td class = 'r result_jockey'>" . $result_race['JOCKEY']. "</td>";
+                                                    // オッズ
+                                                    if(strcmp($result_race['ODDS'],"0")){
+                                                        if(false === strpos($result_race['ODDS'],".")){
+                                                            $result_race['ODDS'] = $result_race['ODDS'] . ".0";
+                                                        }
+                                                        echo '<td class = "r result_odds" id = "' . $bgPrediction . '"><span id = "' . $bgOdds . '">' . $result_race['ODDS'] . '</span></td>';
+                                                    }else{
+                                                        echo '<td class = "r result_odds" id = "' . $bgPrediction . '"> --- </td>';
+                                                    }
+                                                    // 人気
+                                                    if(strcmp($result_race['POPULAR'],"0")){
+                                                        echo '<td class = "r result_popular" id = "' . $bgPopular . '">' . $result_race['POPULAR'] . '人気</td>';
+                                                    }else{
+                                                        echo '<td class = "r result_popular" id = "' . $bgPopular . '"> --- </td>';
+                                                    }
+                                                    // 予想着順
+                                                    echo '<td class = "r result_ranking" id = "' . $bgPrediction . '">' . $result_race['PREDICTION_RANKING'] . '着</td>';
+                                                    $output = "";
+                                                    // 確定着順
+                                                    if(strcmp($result_race['RESULT_RANKING'],'失格') == 0){
+                                                        $output = "失格";
+                                                    }elseif(strcmp($result_race['RESULT_RANKING'],'取消') == 0){
+                                                        $output = "取消";
+                                                    }elseif(strcmp($result_race['RESULT_RANKING'],'除外') == 0){
+                                                        $output = "除外";
+                                                    }elseif(strcmp($result_race['RESULT_RANKING'],'中止') == 0){
+                                                        $output = "中止";
+                                                    }elseif(strcmp($result_race['RESULT_RANKING'],'未定') == 0){
+                                                        $output = "---";
+                                                    }else{
+                                                        $output = $result_race['RESULT_RANKING'] . "着";
+                                                    }
+                                                    echo '<td class = "r prediction_ranking" id = "' . $bgResult . '">' . $output . '</td>';
                                                 ?>
-                                            </tr>   
+                                            </tr>
                                         <?php endforeach ?>
                                     </table>
                                 </div>
@@ -427,7 +494,7 @@ function getWeather($weather){
                         <div class = 'top_hit_detail'>
                             <div class = 'hit_detail'>
                                 <div class = 'summarize_element'>
-                                
+
                                 <table>
                                     <tr>
                                         <th class = 'K kinds C'>式別</th>

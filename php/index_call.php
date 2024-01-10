@@ -4,6 +4,7 @@ include('db.php');
 include('functions.php');
 $sql_race="";
 
+
 if (isset($_GET['selectedValue'])) {
     $selectedValue = $_GET['selectedValue'];
 }else{
@@ -185,13 +186,9 @@ try{
     
     $sql_hitcheck = getHitCheck($race_filter,$racedate_filter);
     $result_hitcheck = getElement($db,$sql_hitcheck);
+
     if(empty($result_hitcheck)){
-        $place = getPlace($racedate_filter);
-        $place = getElement($db,$place);
-        $place = $place[0]['PLACE'];
-        $race_filter = "'$place'";
-        $sql_hitcheck = getHitCheck($race_filter,$racedate_filter);
-        $result_hitcheck = getElement($db,$sql_hitcheck);
+        $result_hitcheck[0]['RESULT_NAME'] = "";
     }
     $stmt = null;
 

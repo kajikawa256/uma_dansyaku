@@ -20,14 +20,14 @@ SHOW GRANTS FOR 'umadan'@'localhost';
 /*---------------テーブル作成----------------------*/
 
 -- 的中
-CREATE TABLE `hit` (
+CREATE TABLE `HIT` (
   `RACEDATE` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `COLLECT_PR` int DEFAULT '0',
   `HIT_PR` int DEFAULT '0'
 ) ;
 
 -- レース
-CREATE TABLE `race` (
+CREATE TABLE `RACE` (
   `RACE_ID` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `RNAME` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `RACENUMBER` int NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE `race` (
 );
 
 -- 結果情報
-CREATE TABLE `result_horse` (
+CREATE TABLE `RESULT_HORSE` (
   `RACE_ID` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `RANKING` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
   `HORSEFRAME` int NOT NULL,
@@ -71,7 +71,7 @@ CREATE TABLE `result_horse` (
 );
 
 -- 予想情報
-CREATE TABLE `prediction_horse` (
+CREATE TABLE `PREDICTION_HORSE` (
   `RACE_ID` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
   `HNAME` varchar(9) COLLATE utf8mb4_unicode_ci NOT NULL,
   `HORSENUMBER` int NOT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE `prediction_horse` (
 );
 
 -- 払戻し詳細
-CREATE TABLE `hit_detail` (
+CREATE TABLE `HIT_DETAIL` (
   `RACE_ID` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
   `KINDS` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL,
   `HORSENUMBER` varchar(8) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -90,7 +90,7 @@ CREATE TABLE `hit_detail` (
 );
 
 -- 獲得賞金
-CREATE TABLE `prize_money` (
+CREATE TABLE `PRIZE_MONEY` (
   `RACE_ID` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
   `RANKING` int(1) COLLATE utf8mb4_unicode_ci NOT NULL,
   `PRIZE` int(10) COLLATE utf8mb4_unicode_ci NOT NULL

@@ -355,10 +355,21 @@ footer h5 {
 #myform{
     display: flex;
 }
+@media screen and (max-width: 768px) {
+    #myform{
+        justify-content:center
+    }
+}
 
 #select_tab{
     text-align: center;
     margin-right: 20px;
+}
+@media screen and (max-width: 768px) {
+    #select_tab{
+        font-size:1.5em;
+        margin: auto;
+    }
 }
 
 .selectbox-001 {
@@ -511,7 +522,12 @@ footer h5 {
 .result td, .result th {
     border: 1px solid #dddddd;
     text-align: center;
-    padding: 8px;
+    /* padding: 8px; */
+}
+@media screen and (max-width: 768px) {
+    .result td, .result th {
+        padding: 8px;
+    }
 }
 
 .result th {
@@ -534,7 +550,10 @@ footer h5 {
 /* 各クラスの細かい設定 */
 @media screen and (max-width: 768px) {
     .result .result_hname {
-        width: 50%;
+        width: 40%;
+    }
+    .result .result_odds{
+        width: 15%;
     }
     #contents{
         width: 90%;

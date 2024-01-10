@@ -69,13 +69,14 @@ $ua = $_SERVER['HTTP_USER_AGENT'];
         <div class="box-design6">
 
             <?php if ((strpos($ua, 'Android') !== false) && (strpos($ua, 'Mobile') !== false) || (strpos($ua, 'iPhone') !== false) || (strpos($ua, 'Windows Phone') !== false)) : ?>
-                    <p>当サイト「ウマ男爵」は競馬初心者の方から玄人の方まで幅広いユーザを対象としたWebサイトです。</p>
-                    <p>弊社の競馬予想AIは、中央競馬(JRA)のレースを対象に過去の競馬データ、馬の成績、騎手の実績などを含む多岐にわたるデータを分析し、洗練されたアルゴリズムを活用して予測を行います。</p>
-                    <p>我々は"回収率100%越え"を目標に、AIの開発を進めています。</p>
+                    <p>「ウマ男爵」は競馬初心者の方から玄人の方まで幅広いユーザを対象としたWebサイトです。</p>
+                    <p>競馬で遊んでみたいけど賭け方が分からない！という方や、最近なかなか勝てなくて...といった方にお勧めのサイトです。</p>
             <?php else: ?>
-                    <div class="fadein fadein-left blue"><p>当サイト「ウマ男爵」は競馬初心者の方から玄人の方まで幅広いユーザを対象としたWebサイトです。</p></div>
-                    <div class="fadein fadein-left blue"><p>弊社の競馬予想AIは、中央競馬(JRA)のレースを対象に過去の競馬データ、馬の成績、騎手の実績などを含む多岐にわたるデータを分析し、洗練されたアルゴリズムを活用して予測を行います。</p></div>
-                    <div class="fadein fadein-left blue"><p>我々は"回収率100%越え"を目標に、AIの開発を進めています。</p></div>
+                    <div class="fadein fadein-left blue">
+                        <p>当サイト「ウマ男爵」は競馬初心者の方から玄人の方まで幅広いユーザを対象としたWebサイトです。</p>
+                        <p>競馬で遊んでみたいけど賭け方が分からない！という方や、最近なかなか勝てなくて...といった方にお勧めのサイトです。</p>
+                        <p>私たちは"回収率100%越え"を目標に、AIの開発、サイトのアップデートを日々行っています。</p>
+                    </div>
             <?php endif; ?>
 
             <div id = "next_button">
@@ -101,6 +102,8 @@ $ua = $_SERVER['HTTP_USER_AGENT'];
 
 
     <!-- Diary -->
+    <?php if ((strpos($ua, 'Android') !== false) && (strpos($ua, 'Mobile') !== false) || (strpos($ua, 'iPhone') !== false) || (strpos($ua, 'Windows Phone') !== false)) : ?>
+    <?php else: ?>
     <div class = "contents">
         <h3 class="cp_h3title">Diary</h3>
         <div class="cp_timeline03">
@@ -162,6 +165,7 @@ $ua = $_SERVER['HTTP_USER_AGENT'];
             </div>
         </div>
     </div>
+    <?php endif; ?>
 
 
     <!-- question -->
@@ -171,7 +175,7 @@ $ua = $_SERVER['HTTP_USER_AGENT'];
         <div class="cp_qa">
             <div class="cp_actab">
                 <input id="cp_tabfour031" type="checkbox" name="tabs">
-                <label for="cp_tabfour031">このサイトは無料で利用できますか？</label>
+                <label for="cp_tabfour031" class="question">このサイトは無料で利用できますか？</label>
                 <div class="cp_actab-content">
                 <p>はい。現時点では全サービス無料で利用可能です。</p>
                 <p>今後、利用者の増加や的中率の増加がみられる場合有料化する可能性もあります。</p>
@@ -179,14 +183,15 @@ $ua = $_SERVER['HTTP_USER_AGENT'];
             </div>
             <div class="cp_actab">
                 <input id="cp_tabfour032" type="checkbox" name="tabs">
-                <label for="cp_tabfour032">保証や返金対応はありますか？</label>
+                <label for="cp_tabfour032" class="question">保証や返金対応はありますか？</label>
                 <div class="cp_actab-content">
-                <p>当サイトではAIの予想を公開しているだけですので、外れた際の返金や保証等の対応はしておりません。自己責任でお願いします。</p>
+                <p>当サイトではAIの予想を公開しているだけですので、外れた際の返金や保証等の対応はしておりません。
+                    <br>自己責任でお願いします。</p>
                 </div>
             </div>
             <div class="cp_actab">
                 <input id="cp_tabfour033" type="checkbox" name="tabs">
-                <label for="cp_tabfour033">AIの予想はいつ公開されますか？</label>
+                <label for="cp_tabfour033" class="question">AIの予想はいつ公開されますか？</label>
                 <div class="cp_actab-content">
                 <p>発走時間の約30分前に公開されます。</p>
                 <p>発走60分前に公開される馬体重を予測するためのデータとして利用しているので、その関係上公開の時間は余裕をもって30分前としています。</p>

@@ -27,3 +27,5 @@ for race_id in tqdm(raceIdList):
         # 各テーブルに対応したデータをinsertする
         insert_instans.insert_plan(soup,race_id)
 
+# データを取り終われば予測を開始
+import prediction

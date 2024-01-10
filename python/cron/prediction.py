@@ -25,7 +25,7 @@ engine = sa.create_engine(
 # race_idのリストを基にスクレイピングを行う
 for race_id in tqdm(raceIdList):
     # result_horseテーブルを取得しデータフレームに変換、データの整形
-    sql_query = f"select * from result_horse where race_id = {race_id};"
+    sql_query = f"select * from RESULT_HORSE where race_id = {race_id};"
     result_horse_df = pd.read_sql(sql=sql_query, con=engine)
     result_horse_df = result_horse_df.drop('RANKING', axis=1)
     result_horse_df["JOCKEY"] = result_horse_df["JOCKEY"].str.replace("▲","").str.replace("△","").str.replace("☆","").str.replace("★","").str.replace("▲","").str.replace("◇","")
@@ -34,7 +34,7 @@ for race_id in tqdm(raceIdList):
     result_horse_df = result_horse_df.rename(columns={'HNAME':'馬名','HORSEFRAME': '枠番','HORSENUMBER': '馬番','GENDER': '性','RACE_ID': 'raceId','HORSE_ID': 'horseId','AGE':'年齢','WEIGHT':'斤量','JOCKEY_ID':'jockeyId','ODDS':'単勝','POPULAR':'人気','TORAINER_ID':'trainerId','BASE':'拠点','HORSE_WEIGHT':'馬体重','WEIGHT_GAIN_LOSS':'体重増減'})
 
     # raceテーブルを取得しデータフレームに変換、データの整形
-    sql_query = f"select * from race where race_id = {race_id};"
+    sql_query = f"select * from RACE where race_id = {race_id};"
     race_df = pd.read_sql(sql=sql_query, con=engine)
     race_df = race_df.drop('HORSE_TOTAL', axis=1)
     race_df = race_df.drop('TIME', axis=1)

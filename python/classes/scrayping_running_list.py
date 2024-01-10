@@ -27,6 +27,7 @@ class Main():
       command_executor = os.environ["SELENIUM_URL"],
       options = self.chrome_options
     )
+    # driver = webdriver.Chrome(options=self.chrome_options)
 
     driver.implicitly_wait(5)
 
@@ -80,11 +81,14 @@ class Main():
 
       record[16] =  0 if record[16] == "-.-" else float(record[16])
       record[17] =  0 if record[17] == "**" else int(record[17])
+      record.append(0)
 
       # 全リストを結合
       result_list.extend(record)
 
+
     # driverを終了
     driver.quit()
+
 
     return result_list

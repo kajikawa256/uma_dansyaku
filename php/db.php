@@ -2,14 +2,14 @@
 function db_connect()
 {
 
-  $host = 'umadan-db.cg4rvknxvwgf.us-east-2.rds.amazonaws.com';
-  $dbname = 'umadan';
-  $username = 'uma_php';
-  $password = 'cog_dpd';
-  // $host = 'localhost';
+  // $host = 'umadan-db.cg4rvknxvwgf.us-east-2.rds.amazonaws.com';
   // $dbname = 'umadan';
-  // $username = 'root';
-  // $password = 'root';
+  // $username = 'uma_php';
+  // $password = 'cog_dpd';
+  $host = 'localhost';
+  $dbname = 'umadan';
+  $username = 'root';
+  $password = 'root';
 
 
   try {
