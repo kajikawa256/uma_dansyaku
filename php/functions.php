@@ -194,6 +194,9 @@ function getCollect($racedate_filter){
     return $sql;
 }
 
+/*
+    的中しているか判定する
+*/
 
 function getHitCheck($race_filter,$racedate_filter){
     $sql = "SELECT R.HNAME AS RESULT_NAME, P.HNAME AS PREDICTION_NAME
@@ -210,4 +213,18 @@ function getHitCheck($race_filter,$racedate_filter){
             AND P.RANKING = 1;";
     return $sql;
 }
+
+/*
+    人気ランキング
+*/
+function getStrongRanking(){
+    $sql = "SELECT HNAME, COUNT(*) AS COUNT
+            FROM RESULT_HORSE
+            WHERE RANKING = '1'
+            GROUP BY HNAME
+            ORDER BY COUNT DESC 
+            LIMIT 3";
+    return $sql;
+}
+
 ?>

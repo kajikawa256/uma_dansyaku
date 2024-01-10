@@ -296,6 +296,34 @@ footer h5 {
     margin-bottom: 5%;
     margin-right: 0;
 }
+
+.side_centense p {
+    padding-bottom: 10px;
+    font-size: 1.2em;
+    color: #000;
+}
+
+.side_centense a {
+    color: #000;
+}
+
+.side_centense span {
+    color: #000;
+}
+
+.ranking_icon {
+    vertical-align: bottom;
+    width: 45px;
+    height: 35px;
+}
+
+@media screen and (max-width: 768px){
+    .ranking_icon {
+        vertical-align: bottom;
+        width: 30px;
+        height: 20px;
+    }
+}
 #race_data{
     /* margin: auto; */
     width: 70%;
@@ -358,7 +386,7 @@ footer h5 {
 
 #select_tab{
     text-align: center;
-    margin-right: 20px;
+    margin: 0 15px;
 }
 
 .selectbox-001 {
@@ -456,6 +484,7 @@ footer h5 {
 
 .weather_icon{
     vertical-align: bottom;
+    
 }
 
 .row .col.span-4 {
@@ -550,7 +579,8 @@ footer h5 {
 }
 
 .race_head {
-    margin: 0 auto;
+    margin: 0;
+    
 }
 /*
 .race_head span {

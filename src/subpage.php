@@ -405,7 +405,7 @@ function getWeather($weather){
                                                     echo '<td class = "r result_odds" id = "' . $bgPrediction . '"><span id = "' . $bgOdds . '">' . $result_race['ODDS'] . '</span></td>';
                                                     echo '<td class = "r result_popular" id = "' . $bgPopular . '">' . $result_race['POPULAR'] . '人気</td>';
                                                     echo '<td class = "r result_ranking" id = "' . $bgPrediction . '">' . $result_race['PREDICTION_RANKING'] . '着</td>';
-                                                    if(strcmp($result_race['RESULT_RANKING'],'失格') == 0 or strcmp($result_race['RESULT_RANKING'],'取消') == 0 or strcmp($result_race['RESULT_RANKING'],'除外') == 0 or strcmp($result_race['RESULT_RANKING'],'中止') == 0){
+                                                    if(strcmp($result_race['RESULT_RANKING'],'失格') == 0 or strcmp($result_race['RESULT_RANKING'],'取消') == 0 or strcmp($result_race['RESULT_RANKING'],'除外') == 0 or strcmp($result_race['RESULT_RANKING'],'中止') == 0 or strcmp($result_race['RESULT_RANKING'],'未定') == 0){
                                                         echo '<td class = "r prediction_ranking" id = "' . $bgResult . '">' . $result_race['RESULT_RANKING'] . '</td>';
                                                     }else{
                                                         echo '<td class = "r prediction_ranking" id = "' . $bgResult . '">' . $result_race['RESULT_RANKING'] . '着</td>';
@@ -562,27 +562,10 @@ function getWeather($weather){
                         </div>
                     </div>
                 </div>
-                <img src="../img/umamusume.jpg" alt="準備中" width = 300px height = 200px margin-left = 20px>
             </div>
             
         </div>
     </main>
-    <!-- <footer>
-        <div class="container">
-            
-            <div class="row">
-                <div class="col span-4">
-                  
-                </div>
-                <div class="col span-4">
-                    
-                </div>
-                <div class="col span-4">
-        
-                </div>
-            </div>
-        </div>
-    </footer> -->
     <div class="copyright">
         <div class="container">
             <div class="row">

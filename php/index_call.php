@@ -192,8 +192,19 @@ try{
         $race_filter = "'$place'";
         $sql_hitcheck = getHitCheck($race_filter,$racedate_filter);
         $result_hitcheck = getElement($db,$sql_hitcheck);
+        if(empty($result_hitcheck)){
+            $result_hitcheck = 'null';
+        }
     }
+
     $stmt = null;
+
+    /*
+        人気ランキング(一位の回数をカウント)
+    */
+
+    $sql_StrongRanking = getStrongRanking();
+    $result_StrongRanking = getElement($db,$sql_StrongRanking);
 
 }catch(PDOException $poe) {
     echo $sql_race;
