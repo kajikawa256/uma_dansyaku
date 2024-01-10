@@ -1,0 +1,2 @@
+* 12 * * * /usr/bin/python3 /python/main.py
+* 8 * * * /usr/bin/python3 /python/setting_cron.py 
