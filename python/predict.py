@@ -1,2 +1,2 @@
-# import cron.just_before 
-import cron.prediction
+#毎日19時にレース結果の確定情報を挿入
+import cron.just_before

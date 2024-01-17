@@ -61,6 +61,8 @@ class Main():
       weather = ""
       situation = ""
 
+       
+
     title = self.soup.find("div",class_="RaceName").text.replace("\n","")                                      # レースタイトル
     horse_num = RaceData02[-2].replace("頭","")                                                                # 頭数
     race_place = RaceData02[1]                                                                                 # 開催場

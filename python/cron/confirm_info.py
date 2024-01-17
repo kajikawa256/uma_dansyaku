@@ -23,6 +23,7 @@ for race_id in tqdm(raceIdList):
         # 古いデータを削除
         db_instans.delete(con.TABLE[con.RACE],race_id)
         db_instans.delete(con.TABLE[con.RESULT_HORSE],race_id)
+        db_instans.delete(con.TABLE[con.PREDICTION_HORSE],race_id)
 
         # 各テーブルに対応したデータをinsertする
         insert_instans.insert_plan(soup,race_id)

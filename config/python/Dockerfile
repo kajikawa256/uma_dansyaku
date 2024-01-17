@@ -7,7 +7,11 @@ ENV LANGUAGE=en_US:en_US
 
 # pipのアップグレードとjupyterlabのインストール
 RUN apt-get update && \
-  apt-get install -y cron && \
+  apt-get install -y \
+  cron \
+  vim \
+  rsyslog \
+  systemctl && \
   pip install --upgrade pip
 
 # 作業フォルダに移動
@@ -23,7 +27,9 @@ COPY ../../python/* .
 # cronのフォルダに移動
 WORKDIR /etc/cron.d
 
-#cronに設定するファイルを配置
-COPY ./python/schedule.tab schedule.tab
-RUN crontab /etc/cron.d/schedule.tab && \
-	service cron start
+# cronに設定するファイルを配置&実行
+COPY ./python/schedule.tab /etc/cron.d
+RUN crontab /etc/cron.d/schedule.tab
+
+# rsyslogの実行
+RUN systemctl start rsyslog

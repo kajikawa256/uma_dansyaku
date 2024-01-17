@@ -1,4 +1,3 @@
-# レース発走20分後に実行して確定した結果、払い戻し、天気を更新する
 from tqdm import tqdm
 import time
 import component.create_raceID as cr

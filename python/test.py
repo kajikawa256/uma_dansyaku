@@ -15,5 +15,8 @@ url = f"https://race.netkeiba.com/race/result.html?race_id={race_id}"
 # URLを基にスクレイピング
 soup = sc.get_soup(url)
 
-create_list_instans = create_list.Main()
-create_list_instans.test(soup,race_id)
+if "出馬表" in soup.text:
+  print("s")
+
+# create_list_instans = create_list.Main()
+# create_list_instans.test(soup,race_id)

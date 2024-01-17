@@ -190,15 +190,7 @@ try{
     if(empty($result_hitcheck)){
         $result_hitcheck[0]['RESULT_NAME'] = "";
     }
-
     $stmt = null;
-
-    /*
-        人気ランキング(一位の回数をカウント)
-    */
-
-    $sql_StrongRanking = getStrongRanking();
-    $result_StrongRanking = getElement($db,$sql_StrongRanking);
 
 }catch(PDOException $poe) {
     echo $sql_race;

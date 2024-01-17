@@ -49,7 +49,7 @@ function getWeather($weather){
    }
 
 if($icon !== ''){
-    echo ('<img class="weather_icon" src="../img/' . $icon . '" alt="準備中" width="25px" height="25px">');
+    echo ('<img class="weather_icon" src="../img/' . $icon . '" alt="準備中" width="30px" height="30px">');
 }
 
 }
@@ -201,7 +201,6 @@ if($icon !== ''){
                                     <h5 class="race_title"><?= $result_race[$count]["RACENUMBER"]?>R  <?= $output?>
                                     <?php
                                         if(strcmp($result_hitcheck[0]['RESULT_NAME'],"") != 0){
-
                                             if($result_hitcheck[$racecount]['RESULT_NAME'] == $result_hitcheck[$racecount]['PREDICTION_NAME']){
                                                 echo '<div id = "hit_icon_top"><img class="hit_icon" src="../img/的中.png" alt="準備中"></div>';
                                             }
@@ -249,25 +248,25 @@ if($icon !== ''){
             </div>
             <div id = "side_var">
                 <div class="side_centense">
-                    <h4>参考サイト</h4>
-                    <p><a href="https://race.netkeiba.com/race/shutuba.html?race_id=202309010101">netkeiba</a></p>
-                    <h4>回収率</h4>
-                    <p>テキスト</p>
-                    <h4>的中率</h4>
-                    <p>テキスト</p>
+                    <h4>タイトル</h4>
+                    <p>最新情報、人気記事、特集コンテンツ。カテゴリー別に検索してみてください。新着アップデートやお得な情報も随時更新中。質問やご意見はお気軽にお知らせください。</p>
                 </div>
                 <div class="side_centense">
                     <h4>人気馬ランキング</h4>
-                    <p><img class="ranking_icon" src="../img/RankingNo.1.png" alt="準備中"> <?= $result_StrongRanking[0]['HNAME'] ?></p>
-                    <p><img class="ranking_icon" src="../img/RankingNo.2.png" alt="準備中"> <?= $result_StrongRanking[1]['HNAME'] ?></p>
-                    <p><img class="ranking_icon" src="../img/RankingNo.3.png" alt="準備中"> <?= $result_StrongRanking[2]['HNAME'] ?></p>
+                    <p>1位　イクイノックス</p>
+                    <p>2位　キタサンブラック</p>
+                    <p>3位　ジャスティンパレス</p>
                 </div>
+                <img src="../img/side.jpg" class="koukoku">
+                <img src="../img/side2.jpg" class="koukoku">
+                <img src="../img/side3.jpg" class="koukoku">
             <div>
             </div>
         </section>
     </main>
 
-  
+    <!-- footerの読み込み -->
+    <?php require_once("./component/footer.php") ?>
 
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
