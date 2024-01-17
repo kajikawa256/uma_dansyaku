@@ -185,6 +185,7 @@ $ua = $_SERVER['HTTP_USER_AGENT'];
                 <input id="cp_tabfour032" type="checkbox" name="tabs">
                 <label for="cp_tabfour032" class="question">保証や返金対応はありますか？</label>
                 <div class="cp_actab-content">
+                <p>いいえ、ございません。</p>
                 <p>当サイトではAIの予想を公開しているだけですので、外れた際の返金や保証等の対応はしておりません。
                     <br>自己責任でお願いします。</p>
                 </div>
@@ -193,8 +194,8 @@ $ua = $_SERVER['HTTP_USER_AGENT'];
                 <input id="cp_tabfour033" type="checkbox" name="tabs">
                 <label for="cp_tabfour033" class="question">AIの予想はいつ公開されますか？</label>
                 <div class="cp_actab-content">
-                <p>発走時間の約30分前に公開されます。</p>
-                <p>発走60分前に公開される馬体重を予測するためのデータとして利用しているので、その関係上公開の時間は余裕をもって30分前としています。</p>
+                <p>レース前日の12時ごろに公開されます。</p>
+                <p>詳しくは２段階に分けて予測を行います。レース前日の12時ごろに最低限の情報のみで予測したAI予想を公開します。馬体重は発走時間の30分ほど前に公開されるので、馬体重やその他各データを加味したAI予想は発走時間の30分前に公開されます。</p>
                 </div>
             </div>
         </div>
