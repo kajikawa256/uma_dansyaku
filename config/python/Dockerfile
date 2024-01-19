@@ -11,7 +11,8 @@ RUN apt-get update && \
   cron \
   vim \
   rsyslog \
-  systemctl && \
+  systemctl \
+  tzdata && \
   pip install --upgrade pip
 
 # 作業フォルダに移動
@@ -31,5 +32,12 @@ WORKDIR /etc/cron.d
 COPY ./python/schedule.tab /etc/cron.d
 RUN crontab /etc/cron.d/schedule.tab
 
-# rsyslogの実行
-RUN systemctl start rsyslog
+# /etc/localtimeを/usr/share/zoneinfo/Asia/Tokyoに変更
+RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+
+WORKDIR /
+
+# systemctlでサービスの実行
+RUN systemctl start \
+  rsyslog \
+  cron

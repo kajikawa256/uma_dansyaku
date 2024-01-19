@@ -4,6 +4,6 @@ MAILTO=root
 HOME=/
 CRON_TZ=Asia/Tokyo
 
-* 8 * * * cd / & /usr/bin/python3 /python/setting_cron.py 
-* 12 * * * cd / & /usr/bin/python3 /python/main.py
+* 8 * * * cd / & /usr/bin/python3 /python/setting_cron.py
+* 18 * * * cd / & /usr/bin/python3 /python/main.py
 * 19 * * * cd / & /use/bin/python3 /python/predict.py

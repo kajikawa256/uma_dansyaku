@@ -4,6 +4,8 @@ services:
 
   selenium:
     image: selenium/standalone-chrome:4.1.4-20220427
+    container_name:
+      'selenium'
     ports:
       - 4444:4444
     volumes:
@@ -17,13 +19,6 @@ services:
     build:
       context: .
       dockerfile: ./php/Dockerfile
-    volumes:
-      - ../src:/var/www/html/src
-      - ../css:/var/www/html/css
-      - ../img:/var/www/html/img
-      - ../js:/var/www/html/js
-      - ../php:/var/www/html/php
-      - ../video:/var/www/html/video
     ports:
       - 80:80
     depends_on:

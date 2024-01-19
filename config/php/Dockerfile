@@ -7,9 +7,7 @@ ENV LANGUAGE=en_US:en
 RUN apt-get update && apt-get install -y libonig-dev && \
   docker-php-ext-install pdo_mysql mbstring
 
-#phpディレクトリをつくり、phpフォルダに全てのphpファイルをcopy
-COPY ../php /var/www/html/php/
-#COPY ../video /var/www/html/video/
+# srcフォルダを/var/www/html直下にコピー
+COPY ../src /var/www/html/
 
-# Apacheの設定ファイルをコピー
-COPY ./php/httpd.conf /etc/apache2/httpd.conf
+COPY ../php /php

@@ -41,6 +41,7 @@ lightgbm
 # データベース系
 mysql-connector-python
 sqlalchemy
+mysqlclient
 
 # スケジューラー
 python-crontab
