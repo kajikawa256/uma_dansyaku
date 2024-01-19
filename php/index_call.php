@@ -194,11 +194,25 @@ try{
     $stmt = null;
 
     /*
-        人気ランキング(一位の回数をカウント)
+        最強馬ランキング(一位の回数をカウント)
     */
 
     $sql_StrongRanking = getStrongRanking();
     $result_StrongRanking = getElement($db,$sql_StrongRanking);
+
+    /*
+        人気ランキング(一番人気の回数をカウント)
+    */
+    $sql_PopularRanking = getPopularRanking();
+    $result_PopularRanking = getElement($db,$sql_PopularRanking);
+
+    /*
+        直近のG1レース(最新の日付から5レース取得)
+    */
+
+    $sql_G1Race = getG1Race();
+    $result_G1Race = getElement($db,$sql_G1Race);
+
 
 }catch(PDOException $poe) {
     echo $sql_race;
