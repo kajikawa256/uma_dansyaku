@@ -240,8 +240,7 @@ h2:before {
   bottom: -14px;
   left: 1em;
   width: 0;
-  height: 0;
-  content: '';
+  height: 0;  content: '';
   border-width: 14px 12px 0 12px;
   border-style: solid;
   border-color: #d8d8d8 transparent transparent transparent;
@@ -277,6 +276,86 @@ h5 {
   letter-spacing: -.05rem;
 }
 
+/*
+  サイドバー（pc）
+*/
+
+#side_var{
+  padding-left: 3%;
+  /* padding-right: 3%; */
+  width: 30%;
+}
+
+.ranking_title h3 {
+  font-size: 1em;
+}
+
+
+#side_var h3 {
+  font-size: 1.7em;
+  margin-bottom:5%;
+  border-bottom:solid 1px #000;
+}
+
+
+.description {
+  background: #e2e1e100;
+  border-left: 5px dotted rgba(0,0,0,.1);
+  box-shadow: 0 0 0 5px #d7d7d7e0;
+  padding: 1em;
+  margin-top: 1em;
+  margin-bottom: 3em;
+}
+
+.description p {
+  font-size: 1em;
+}
+
+.description h3 {
+  font-size: 3.0rem;
+}
+
+.probability {
+  background: #e2e1e100;
+  border-left: 5px dotted rgba(0,0,0,.1);
+  box-shadow: 0 0 0 5px #d7d7d7e0;
+  padding: 1em;
+  margin-top: 1em;
+  margin-bottom: 3em;
+}
+.probability h4{
+  font-size: 1.7em;
+}
+
+
+.probability p {
+  text-align: left;
+  font-size: 1.5em;
+}
+
+.font-size-probability {
+  font-size: 1.3em;
+  color: red;
+}
+
+
+.Rate { 
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.Rate p {
+  margin: 10px;
+  font-size: 1.6em;
+}
+
+.under-bar {
+  background: linear-gradient(transparent 60%,skyblue 60%);
+}
+
+
+
 .side_centense{
   background: #e2e1e100;
   border-left: 5px dotted rgba(0,0,0,.1);
@@ -287,15 +366,113 @@ h5 {
 }
 
 .side_centense h4{
-  font-size: 1.5em;
+  font-size: 1.7em;
+  margin: 5px;
   margin-bottom:5%;
   border-bottom:solid 1px #000;
 }
 
 .side_centense p{
+  display: flex;
   margin: 0;
   padding: 0;
+  text-align: center;
 }
+
+.side_centense a {
+  text-align: center;
+}
+
+.side_centense #swing2 {
+  margin-top: 10px;
+  margin-left: 20px;
+  float: left;
+}
+
+.horseranking {
+  padding-left: 10px;
+}
+
+.No {
+  display: flex;
+  align-items: center;
+  margin: 5%;
+  margin-left: 0;
+}
+
+.No a {
+  color: #0000EE;
+ text-decoration: underline;
+}
+.atena {
+  width: 100%;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.atena a {
+  margin: 20px 0;
+}
+
+.atena p {
+  text-align: center;
+  justify-content: center;
+}
+
+.netkeiba {
+  align-items: center;
+  justify-content: center;
+}
+
+.netkeiba a {
+  margin: 20px 0;
+}
+.netkeiba p {
+  text-align: center;
+  justify-content: center;
+}
+
+.g1race {
+  background: #e2e1e100;
+  border-left: 5px dotted rgba(0,0,0,.1);
+  box-shadow: 0 0 0 5px #d7d7d7e0;
+  padding: 0.8em;
+  margin-top: 1em;
+  margin-bottom: 3em;
+}
+
+.g1race a {
+  color: #0000EE;
+  text-decoration: underline;
+}
+
+/*
+  サイドバー（スマホ）
+*/
+
+@media screen and (max-width: 768px){
+  #side_var h3 {
+    font-size: 2em;
+  }
+  .description h4{
+    font-size: 2em;
+  }
+
+  .description p {
+    font-size: 1.3em;
+  }
+
+  .side_centense h4 {
+    font-size: 2.5em;
+  }
+
+  .horseranking {
+    font-size: 1.6em;
+  }
+}
+
+
 
 .race_title {
   display: flex;
@@ -344,10 +521,15 @@ h6 {
   }
 }
 
-@media (max-width: 550px) {
+@media (max-width: 768px) {
   h5 {
     font-size: 1.9rem;
     font-weight: bold;
+  }
+
+
+  h3 {
+    font-size: 2.0em;
   }
 
   p {
@@ -637,3 +819,4 @@ hr {
   border-width: 0;
   border-top: 1px solid #ccc;
 }
+

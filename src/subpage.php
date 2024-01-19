@@ -35,6 +35,17 @@ if (isset($_GET['race_id'])) {
     exit();
 }
 
+function getElement($db,$race_id,$sql){
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(":race_id", $race_id);
+    $stmt->execute();
+    $result = [];
+    while($rows = $stmt->fetch(PDO::FETCH_ASSOC)){
+        $result[]= $rows;
+    }
+    return $result;
+}
+
 
 
 
@@ -59,14 +70,7 @@ if (isset($_GET['race_id'])) {
                         WHERE R.RACE_ID = :race_id
                         AND R.HNAME = P.HNAME
                         ORDER BY R.HORSENUMBER ASC";
-
-    $stmt = $db->prepare($sql_race_result);
-    $stmt->bindParam(":race_id", $race_id);
-    $stmt->execute();
-    $result_race_result = [];
-    while($rows = $stmt->fetch(PDO::FETCH_ASSOC)){
-        $result_race_result[] = $rows;
-    }
+    $result_race_result = getElement($db, $race_id, $sql_race_result);
     $stmt = null;
 
 /*
@@ -74,17 +78,10 @@ if (isset($_GET['race_id'])) {
 */
 
     $sql_hit_detail = "SELECT * FROM HIT_DETAIL WHERE RACE_ID = :race_id";
-    $stmt = $db->prepare($sql_hit_detail);
-    $stmt->bindParam(":race_id", $race_id);
-    $stmt->execute();
-
-    $result_hit_detail = [];
-    while($rows = $stmt->fetch(PDO::FETCH_ASSOC)){
-        $result_hit_detail[] = $rows;
-    }
+    $result_hit_detail = getElement($db, $race_id, $sql_hit_detail);
     $stmt = null;
 
- /*
+/*
     race_idを参照して、レース情報を表示するデータ
 */
     $sql_race = "SELECT
@@ -101,17 +98,10 @@ if (isset($_GET['race_id'])) {
                     SITUATION
     FROM RACE
     WHERE RACE_ID = :race_id";
-    $stmt = $db->prepare($sql_race);
-    $stmt->bindParam(":race_id", $race_id);
-    $stmt->execute();
-
-    $result_race_detail = [];
-    while($rows = $stmt->fetch(PDO::FETCH_ASSOC)){
-       $result_race_detail[] = $rows;
-    }
+    $result_race_detail = getElement($db, $race_id, $sql_race);
     $stmt = null;
 
- /*
+/*
     race_idを参照して、レース詳細の色を識別するデータ
 */
 
@@ -120,14 +110,25 @@ if (isset($_GET['race_id'])) {
                             HORSEFRAME
     FROM RESULT_HORSE
     WHERE RACE_ID = :race_id";
-    $stmt = $db->prepare($sql_horsenumber_judge);
-    $stmt->bindParam(":race_id", $race_id);
-    $stmt->execute();
+    $result_detail_judge = getElement($db, $race_id, $sql_horsenumber_judge);
+    $stmt = null;
 
-    $result_detail_judge = [];
-    while($rows = $stmt->fetch(PDO::FETCH_ASSOC)){
-       $result_detail_judge[] = $rows;
+    /*
+        的中しているかを判断する
+    */
+    $sql_hitjudge = "SELECT R.HNAME AS resultNo1Horse, P.HNAME AS predictionNo1Horse
+                     FROM RESULT_HORSE R
+                     JOIN PREDICTION_HORSE P
+                     ON R.RACE_ID = P.RACE_ID
+                     WHERE R.RACE_ID = :race_id
+                     AND R.RANKING = '1'
+                     AND P.RANKING = '1';";
+    $result_hitjudge = getElement($db, $race_id, $sql_hitjudge);
+    if(empty($result_hitjudge)){
+        $result_hitjudge[0]['resultNo1Horse'] = "";
     }
+    var_dump($result_hitjudge[0]['resultNo1Horse']);
+    
 }catch (Exception $e){
     exit("DBエラー :" . $e->getMessage());
 }finally{
@@ -279,7 +280,7 @@ function getWeather($weather){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ウマ男爵</title>
+    <title>ウマ男爵 - レース詳細</title>
     <link rel="stylesheet" media="all" href="../css/ress.min.css" />
     <link rel="stylesheet" media="all" href="../css/style.css" />
     <script src="../js/jquery-3.6.0.min.js"></script>
@@ -307,43 +308,66 @@ function getWeather($weather){
             <div class = 'background'>
                 <div class="container_result">
                     <div class="row">
-                        <div class="col span-12">
+                        <div class="col span-12">     
                             <div class="breadcrumb">
                                 <ul>
                                     <li><a href="race_list.php">競馬予想</a> > 詳細ページ</li>
                                 </ul>
                                 <div class = 'race_detail'>
                                     <?php foreach($result_race_detail as $race_detail) :?>
-
                                         <div class = 'race_infomation'>
-                                            <h3>
-                                                <?php
-                                                $bgRaceNumber = getBgRaceNumber($race_detail['GROUND']);
-                                                echo '<span id = "' . $bgRaceNumber . '">' . $race_detail["RACENUMBER"] . 'R</span>&nbsp;';
-                                                echo  $race_detail['RNAME'];
-                                                ?>
-                                            </h3>
-                                            <p>
-                                                <?=$race_detail['PLACE'] ?> /
-                                                <?=$race_detail['TIME'] ?>発走 /
-                                                天気：<?php
-                                                        $weather = $race_detail['WEATHER'];
-                                                        getWeather($weather);
-                                                        ?> /
-                                                <?= $race_detail['GROUND']?><?= $race_detail['DISTANCE']?>m (<?= $race_detail['SPIN']?>) /
-                                                頭数：<?= $race_detail['HORSE_TOTAL']?>頭 /
-                                                馬場：<?= $race_detail['SITUATION']?> 
-                                            </p>
+                                            <!-- <div class = 'race_infomation'> -->
+                                                <h3>
+                                                    <div class = 'race_name-top'>
+                                                        <div class = 'race_name-top-left'>
+                                                            <?php
+                                                                $bgRaceNumber = getBgRaceNumber($race_detail['GROUND']);
+                                                                echo '<span id = "' . $bgRaceNumber . '">' . $race_detail["RACENUMBER"] . 'R</span>&nbsp;';
+                                                                echo  $race_detail['RNAME'];
+                                                            ?>
+                                                        </div>
+                                                        <div class = 'race_name-top-right'>
+                                                            <?php
+                                                                if(strcmp($result_hitjudge[0]['resultNo1Horse'],"") != 0){
+                                                                    if($result_hitjudge[0]['resultNo1Horse'] == $result_hitjudge[0]['predictionNo1Horse']){
+                                                                        
+                                                                        echo '<img class="hit_icon-subpage" src="../img/的中.png" alt="準備中">';
+                                                                        
+                                                                    }
+                                                                }
+                                                            ?>
+                                                        </div>
+                                                    </div>
+                                                </h3>
+                                                <p>
+                                                    <?=$race_detail['PLACE'] ?> /
+                                                    <?=$race_detail['TIME'] ?>発走 /
+                                                    天気：<?php
+                                                            $weather = $race_detail['WEATHER'];
+                                                            getWeather($weather);
+                                                            ?> /
+                                                    <?= $race_detail['GROUND']?><?= $race_detail['DISTANCE']?>m (<?= $race_detail['SPIN']?>) /
+                                                    頭数：<?= $race_detail['HORSE_TOTAL']?>頭 /
+                                                    馬場：<?= $race_detail['SITUATION']?> 
+                                                </p>
+                                            <!-- </div> -->
                                         </div>
                                     <?php endforeach ?>
                                 </div>
                             </div>
+                            
+                           
+                        
+                            
                             <?php
                             $ua = $_SERVER['HTTP_USER_AGENT'];
                             if ((strpos($ua, 'Android') !== false) && (strpos($ua, 'Mobile') !== false) || (strpos($ua, 'iPhone') !== false) || (strpos($ua, 'Windows Phone') !== false)) : ?>
 
                             <!-- スマホの場合 -->
                                 <div class = 'result'>
+                                    <div class = "table-title">
+                                        <h3 class="cp_h3title">出馬表</h3>
+                                    </div>
                                     <table>
                                         <tr>
                                             <th class = 'r result_horsenumber c'>馬枠</th>
@@ -405,11 +429,13 @@ function getWeather($weather){
                                         <?php endforeach ?>
                                     </table>
                                 </div>
-
                             <?php else : ?>
 
                             <!-- PCの場合 -->
                                 <div class = 'result'>
+                                    <div class = "horse-title">
+                                        <h3 class="cp_h3title">出馬表</h3>
+                                    </div>
                                     <table>
                                         <tr>
                                             <th class = 'r result_horsenumber c'>馬枠</th>
@@ -488,19 +514,21 @@ function getWeather($weather){
                     </div>
                 </div>
             </article>
+            <div class = "betback-title">
+                <h3 class="cp_h3title">払戻し表</h3>
+            </div>
             <div class = "container_summarize">
                 <div class = "row">
                     <div class = "col span-12">
                         <div class = 'top_hit_detail'>
                             <div class = 'hit_detail'>
                                 <div class = 'summarize_element'>
-
                                 <table>
                                     <tr>
                                         <th class = 'K kinds C'>式別</th>
                                         <th class = 'K horsenumber horsenumber_title C'>番号</th>
                                         <th class = 'K betback C'>払戻し</th>
-                                        <th class = 'K popular_betback C'>人気</th><br>  
+                                        <th class = 'K popular_betback C'>人気</th> 
                                     </tr>
                                     <?php foreach($result_hit_detail as $hit_detail) : ?>   
                                     <tr>
@@ -634,33 +662,9 @@ function getWeather($weather){
             
         </div>
     </main>
-    <!-- <footer>
-        <div class="container">
-            
-            <div class="row">
-                <div class="col span-4">
-                  
-                </div>
-                <div class="col span-4">
-                    
-                </div>
-                <div class="col span-4">
-        
-                </div>
-            </div>
-        </div>
-    </footer> -->
-    <div class="copyright">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <hr>
-                    Copyright © <a href="https://popo-design.net" target="_blank">popodesign. </a>
 
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- フッターの読み込み -->
+    <?php require_once("./component/footer.php")?>
     <p id="pagetop"><a href="#">TOP</a></p>
     <!--自作のJS-->
     <script src="../js/4-1-2.js"></script>

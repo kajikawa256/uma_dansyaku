@@ -14,7 +14,7 @@ $ua = $_SERVER['HTTP_USER_AGENT'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ウマ男爵</title>
+    <title>ウマ男爵 - ホームページ</title>
     <link rel="stylesheet" media="all" href="../css/ress.min.css" />
     <link rel="stylesheet" media="all" href="../css/style.css" />
     <link rel="stylesheet" media="all" href="../css/home.css" />
@@ -96,7 +96,7 @@ $ua = $_SERVER['HTTP_USER_AGENT'];
                 <p class="typing">
                     ディープラーニングは、人間の神経回路を模倣した仕組み。多層のニューラルネットが複雑な非線形パターンを学習し、活性化関数と誤差逆伝播法で重みを調整しています。この構造は生物学的な神経系統に類似し、高度な情報処理を可能にしています。
                 </p>
-                </div>
+            </div>
         </div>
     </div>
 
@@ -167,11 +167,9 @@ $ua = $_SERVER['HTTP_USER_AGENT'];
     </div>
     <?php endif; ?>
 
-
     <!-- question -->
     <div class = "contents">
         <h3 class="cp_h3title">Question</h3>
-
         <div class="cp_qa">
             <div class="cp_actab">
                 <input id="cp_tabfour031" type="checkbox" name="tabs">
@@ -201,8 +199,6 @@ $ua = $_SERVER['HTTP_USER_AGENT'];
         </div>
 
     </div>
-
-
 </div>
 
 <div class = 'top-mainimg'>
@@ -215,8 +211,10 @@ $ua = $_SERVER['HTTP_USER_AGENT'];
 
 </main>
 
-    <!-- footerの読み込み -->
-    <?php require_once("./component/footer.php")?>
+<!-- フッターの読み込み -->
+<?php require_once("./component/footer.php")?>
+
+   
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://rawgit.com/kimmobrunfeldt/progressbar.js/master/dist/progressbar.min.js"></script>

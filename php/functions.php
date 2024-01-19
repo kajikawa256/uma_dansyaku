@@ -92,18 +92,14 @@ function getPlacePulldown(){
  //初回接続時の最新日付レース数をカウント
  function getRacecountFirst(){
     $sql = "SELECT RACEDATE, COUNT(*) as racecount
-            FROM RACE
-             WHERE RACEDATE = (
-                SELECT MAX(RACEDATE) FROM RACE
-            );";
+            FROM RACE;";
     return $sql;
  }
 
  //日付に基づいたレース数をカウント
  function getRacecount($racedate_filter){
     $sql = "SELECT RACEDATE, COUNT(*) as racecount
-                FROM RACE
-                WHERE RACEDATE = $racedate_filter;"; 
+                FROM RACE;"; 
     return $sql;
  }
 
@@ -115,10 +111,7 @@ function getPlacePulldown(){
             ON RACE.RACE_ID = RESULT.RACE_ID
             JOIN PREDICTION_HORSE PREDICTION
             ON RACE.RACE_ID = PREDICTION.RACE_ID
-            WHERE RACEDATE = (
-                SELECT MAX(RACEDATE) FROM RACE
-            )
-            AND RESULT.HORSENUMBER = PREDICTION.HORSENUMBER
+            WHERE RESULT.HORSENUMBER = PREDICTION.HORSENUMBER
             AND RESULT.RANKING = '1' AND PREDICTION.RANKING = '1';";
     return $sql;
  }
@@ -131,8 +124,7 @@ function getPlacePulldown(){
             ON RACE.RACE_ID = RESULT.RACE_ID
             JOIN PREDICTION_HORSE PREDICTION
             ON RACE.RACE_ID = PREDICTION.RACE_ID
-            WHERE RACEDATE = $racedate_filter
-            AND RESULT.HORSENUMBER = PREDICTION.HORSENUMBER
+            WHERE RESULT.HORSENUMBER = PREDICTION.HORSENUMBER
             AND RESULT.RANKING = '1' AND PREDICTION.RANKING = '1';";
     return $sql;
 }
@@ -164,10 +156,7 @@ function getCollectFirst(){
             ON RACE.RACE_ID = PREDICTION.RACE_ID
             JOIN HIT_DETAIL HIT
             ON RACE.RACE_ID = HIT.  RACE_ID
-            WHERE RACEDATE = (
-                SELECT MAX(RACEDATE) FROM RACE
-            )
-            AND RESULT.HORSENUMBER = PREDICTION.HORSENUMBER
+            WHERE RESULT.HORSENUMBER = PREDICTION.HORSENUMBER
             AND PREDICTION.HORSENUMBER = HIT.HORSENUMBER 
             AND HIT.HORSENUMBER NOT LIKE '%-%' AND HIT.HORSENUMBER NOT LIKE '%>%'
             AND RESULT.RANKING = '1' AND PREDICTION.RANKING = '1'
@@ -185,8 +174,7 @@ function getCollect($racedate_filter){
             ON RACE.RACE_ID = PREDICTION.RACE_ID
             JOIN HIT_DETAIL HIT
             ON RACE.RACE_ID = HIT.RACE_ID
-            WHERE RACEDATE = $racedate_filter
-            AND RESULT.HORSENUMBER = PREDICTION.HORSENUMBER
+            WHERE RESULT.HORSENUMBER = PREDICTION.HORSENUMBER
             AND PREDICTION.HORSENUMBER = HIT.HORSENUMBER
             AND HIT.HORSENUMBER NOT LIKE '%-%' AND HIT.HORSENUMBER NOT LIKE '%>%'
             AND RESULT.RANKING = '1' AND PREDICTION.RANKING = '1'
@@ -208,6 +196,42 @@ function getHitCheck($race_filter,$racedate_filter){
             )
             AND R.RANKING = '1'
             AND P.RANKING = 1;";
+    return $sql;
+}
+
+/*
+    最強馬ランキング
+*/
+function getStrongRanking(){
+    $sql = "SELECT HORSE_ID, HNAME, COUNT(*) AS COUNT
+            FROM RESULT_HORSE
+            WHERE RANKING = '1'
+            GROUP BY HNAME
+            ORDER BY COUNT DESC 
+            LIMIT 3";
+    return $sql;
+}
+
+/*
+    人気馬ランキング
+*/
+
+function getPopularRanking(){
+    $sql = "SELECT HORSE_ID, HNAME, COUNT(*) AS COUNT
+            FROM RESULT_HORSE
+            WHERE POPULAR = 1
+            GROUP BY HNAME
+            ORDER BY COUNT DESC
+            LIMIT 3";
+    return $sql;
+}
+
+function getG1Race(){
+    $sql = "SELECT RACE_ID, RNAME, SUBSTR(RACEDATE, INSTR(RACEDATE, '年')+1) AS YEAR
+            FROM RACE
+            WHERE RACE_TYPE = 'G1'
+            ORDER BY RACEDATE DESC
+            LIMIT 5";
     return $sql;
 }
 ?>
