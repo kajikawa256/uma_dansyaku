@@ -11,7 +11,7 @@ raceIdList = cr.update_race_id()        # 結果確定していないレースID
 db_instans = db.Main()                  # dbインスタンス
 cron_instans = cron.CrontabControl()    # cronインスタンス
 
-command_first = 'python ./cron/confirm_info.py >> ../data/output.txt'
+command_first = 'cd / && python python/do_cron.py >> /python_cron.log'
 # command_second = 'python ./cron/just_before.py >> ../data/output.txt'
 schedule = 'm h * * *'
 

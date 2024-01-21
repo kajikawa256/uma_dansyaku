@@ -7,10 +7,12 @@ import classes.create_scrayping_list as create_list
 import classes.db_operation_class as db
 import classes.crontab as cron
 import data.constant as con
+import classes.predict as predict
 
 raceIdList = cr.update_race_id()        # 結果確定していないレースIDの取得
 insert_instans = create_list.Main()     # インスタンスの作成
 db_instans = db.Main()                  # インスタンスの作成
+predict_instans = predict.Main()
 
 for race_id in tqdm(raceIdList):
     # URLを作成
@@ -27,6 +29,4 @@ for race_id in tqdm(raceIdList):
 
         # 各テーブルに対応したデータをinsertする
         insert_instans.insert_plan(soup,race_id)
-
-# データを取り終われば予測を開始
-import prediction
+        predict_instans.predict(race_id)
