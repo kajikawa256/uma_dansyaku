@@ -36,13 +36,29 @@ body {
 
 .container_summarize {
   margin: auto;
-  max-width: 800px;
-  width: 90%;
-  padding: 0 3.5rem;
+  max-width: 1100px;
+  width: 100%;
+  padding: 0;
   position: relative;
   /* margin-left: 80px; */
 }
 
+@media screen and (min-width: 768px) {
+  .container_summarize {
+    margin: 0;
+  }
+}
+
+.summarize_element {
+  width: 70%;
+}
+
+@media screen and (max-width: 768px) {
+  .summarize_element {
+    width: 100%;
+    margin: auto;
+  }
+}
 
 
 
@@ -55,9 +71,10 @@ body {
   padding: 0;
   width: 100%;
 }
+
 @media screen and (max-width: 768px) {
   .container {
-    margin: auto ;
+    margin: auto;
     width: 100%;
     padding: 0;
     position: relative;
@@ -223,7 +240,7 @@ h1 {
   letter-spacing: -.1rem;
 }
 
-#date{
+#date {
   font-size: 2.5em;
 }
 
@@ -240,7 +257,8 @@ h2:before {
   bottom: -14px;
   left: 1em;
   width: 0;
-  height: 0;  content: '';
+  height: 0;
+  content: '';
   border-width: 14px 12px 0 12px;
   border-style: solid;
   border-color: #d8d8d8 transparent transparent transparent;
@@ -280,7 +298,7 @@ h5 {
   サイドバー（pc）
 */
 
-#side_var{
+#side_var {
   padding-left: 3%;
   /* padding-right: 3%; */
   width: 30%;
@@ -293,14 +311,15 @@ h5 {
 
 #side_var h3 {
   font-size: 1.7em;
-  margin-bottom:5%;
-  border-bottom:solid 1px #000;
+  margin-bottom: 5%;
+  border-bottom: solid 1px #000;
+  font-weight: bold;
 }
 
 
 .description {
   background: #e2e1e100;
-  border-left: 5px dotted rgba(0,0,0,.1);
+  border-left: 5px dotted rgba(0, 0, 0, .1);
   box-shadow: 0 0 0 5px #d7d7d7e0;
   padding: 1em;
   margin-top: 1em;
@@ -317,13 +336,14 @@ h5 {
 
 .probability {
   background: #e2e1e100;
-  border-left: 5px dotted rgba(0,0,0,.1);
+  border-left: 5px dotted rgba(0, 0, 0, .1);
   box-shadow: 0 0 0 5px #d7d7d7e0;
   padding: 1em;
   margin-top: 1em;
   margin-bottom: 3em;
 }
-.probability h4{
+
+.probability h4 {
   font-size: 1.7em;
 }
 
@@ -334,12 +354,12 @@ h5 {
 }
 
 .font-size-probability {
-  font-size: 1.3em;
+  font-size: 1.2em;
   color: red;
 }
 
 
-.Rate { 
+.Rate {
   display: flex;
   justify-content: space-between;
   text-align: center;
@@ -351,28 +371,28 @@ h5 {
 }
 
 .under-bar {
-  background: linear-gradient(transparent 60%,skyblue 60%);
+  background: linear-gradient(transparent 60%, skyblue 60%);
 }
 
 
 
-.side_centense{
+.side_centense {
   background: #e2e1e100;
-  border-left: 5px dotted rgba(0,0,0,.1);
+  border-left: 5px dotted rgba(0, 0, 0, .1);
   box-shadow: 0 0 0 5px #d7d7d7e0;
   padding: 1em;
   margin-top: 1em;
   margin-bottom: 3em;
 }
 
-.side_centense h4{
+.side_centense h4 {
   font-size: 1.7em;
   margin: 5px;
-  margin-bottom:5%;
-  border-bottom:solid 1px #000;
+  margin-bottom: 5%;
+  border-bottom: solid 1px #000;
 }
 
-.side_centense p{
+.side_centense p {
   display: flex;
   margin: 0;
   padding: 0;
@@ -402,8 +422,9 @@ h5 {
 
 .No a {
   color: #0000EE;
- text-decoration: underline;
+  text-decoration: underline;
 }
+
 .atena {
   width: 100%;
   margin: auto;
@@ -428,6 +449,7 @@ h5 {
 .netkeiba a {
   margin: 20px 0;
 }
+
 .netkeiba p {
   text-align: center;
   justify-content: center;
@@ -435,7 +457,7 @@ h5 {
 
 .g1race {
   background: #e2e1e100;
-  border-left: 5px dotted rgba(0,0,0,.1);
+  border-left: 5px dotted rgba(0, 0, 0, .1);
   box-shadow: 0 0 0 5px #d7d7d7e0;
   padding: 0.8em;
   margin-top: 1em;
@@ -445,22 +467,25 @@ h5 {
 .g1race a {
   color: #0000EE;
   text-decoration: underline;
+  /* font-size: 1.3em; */
 }
 
 /*
   サイドバー（スマホ）
 */
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 768px) {
   #side_var h3 {
     font-size: 2em;
+    font-weight: bold;
   }
-  .description h4{
+
+  .description h4 {
     font-size: 2em;
   }
 
   .description p {
-    font-size: 1.3em;
+    font-size: 1.4em;
   }
 
   .side_centense h4 {
@@ -469,6 +494,11 @@ h5 {
 
   .horseranking {
     font-size: 1.6em;
+    font-weight: bold;
+  }
+
+  .g1race a {
+    font-size: 1.3em;
   }
 }
 
@@ -476,11 +506,16 @@ h5 {
 
 .race_title {
   display: flex;
-  padding: 0.4em 0.5em;/*文字の上下 左右の余白*/
-  color: #494949;/*文字色*/
-  background: #f4f4f4;/*背景色*/
-  border-left: solid 5px skyblue;/*左線*/
-  border-bottom: solid 3px #d7d7d7;/*下線*/
+  padding: 0.4em 0.5em;
+  /*文字の上下 左右の余白*/
+  color: #494949;
+  /*文字色*/
+  background: #f4f4f4;
+  /*背景色*/
+  border-left: solid 5px skyblue;
+  /*左線*/
+  border-bottom: solid 3px #d7d7d7;
+  /*下線*/
   height: 5rem;
   justify-content: space-between;
 }
@@ -504,7 +539,8 @@ h6 {
 
   h3 {
     font-size: 3.2rem;
-  } 
+  }
+
   h4 {
     font-size: 3.0rem;
   }
@@ -516,6 +552,7 @@ h6 {
   h6 {
     font-size: 1.5rem;
   }
+
   p {
     margin-top: 0;
   }
@@ -535,12 +572,12 @@ h6 {
   p {
     font-size: 1.3rem;
   }
-  
-  .question{
+
+  .question {
     font-size: 1.3em;
   }
 
-  
+
 }
 
 
@@ -704,6 +741,12 @@ li {
   margin-bottom: 1rem;
 }
 
+@media screen and (max-width: 768px) {
+  li {
+    font-size: 1.4em;
+  }
+}
+
 
 /* コード
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -733,7 +776,9 @@ td {
   text-align: left;
   border-bottom: 1px solid #E1E1E1;
 }
+
 @media screen and (max-width: 768px) {
+
   th,
   td {
     padding: 12px 15px;
@@ -819,4 +864,3 @@ hr {
   border-width: 0;
   border-top: 1px solid #ccc;
 }
-
