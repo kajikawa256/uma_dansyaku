@@ -14,7 +14,7 @@ $ua = $_SERVER['HTTP_USER_AGENT'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ウマ男爵 - ホームページ</title>
+    <title>ウマ男爵 - 競馬予想AI</title>
     <link rel="stylesheet" media="all" href="./css/ress.min.css" />
     <link rel="stylesheet" media="all" href="./css/style.css" />
     <link rel="stylesheet" media="all" href="./css/home.css" />
@@ -70,7 +70,7 @@ $ua = $_SERVER['HTTP_USER_AGENT'];
             <div class="box-design6">
 
                 <?php if ((strpos($ua, 'Android') !== false) && (strpos($ua, 'Mobile') !== false) || (strpos($ua, 'iPhone') !== false) || (strpos($ua, 'Windows Phone') !== false)): ?>
-                    <p>「ウマ男爵」は競馬初心者の方から玄人の方まで幅広いユーザを対象としたWebサイトです。</p>
+                    <p>当サイト「ウマ男爵」は競馬初心者の方から玄人の方まで幅広いユーザを対象としたWebサイトです。</p>
                     <p>競馬で遊んでみたいという方や、最近なかなか勝てなくて...といった方にお勧めのサイトです。</p>
                 <?php else: ?>
                     <div class="fadein fadein-left blue">
@@ -196,7 +196,7 @@ $ua = $_SERVER['HTTP_USER_AGENT'];
                     <label for="cp_tabfour033" class="question">AIの予想はいつ公開されますか？</label>
                     <div class="cp_actab-content">
                         <p>レース前日の18時ごろに公開されます。</p>
-                        <p>詳しくは２段階に分けて予測を行います。レース前日の18時ごろに最低限の情報のみで予測したAI予想を公開します。馬体重は発走時間の30分ほど前に公開されるので、馬体重やその他各データを加味したAI予想は発走時間の30分前に更新されます。
+                        <p>詳しくは2段階に分けて予測を行います。レース前日の18時ごろに最低限の情報のみで予測したAI予想を公開します。馬体重は発走時間の30分ほど前に公開されるので、馬体重やその他各データを加味したAI予想は発走時間の30分前に更新されます。
                         </p>
                     </div>
                 </div>

@@ -1,6 +1,8 @@
 <?php
 //db.phpに接続
-include('/php/db.php');
+// include('/php/db.php');
+include('../php/db.php');
+
 $ua = $_SERVER['HTTP_USER_AGENT'];
 
 try {
