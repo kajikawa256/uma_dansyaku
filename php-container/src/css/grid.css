@@ -518,6 +518,7 @@ h5 {
   /*下線*/
   height: 5rem;
   justify-content: space-between;
+  font-weight: bold;
 }
 
 h6 {

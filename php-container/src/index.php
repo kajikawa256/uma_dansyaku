@@ -3,10 +3,6 @@
 session_start();
 $ua = $_SERVER['HTTP_USER_AGENT'];
 ?>
-<!-- ページの自動スクロール -->
-<script>
-    window.onload = function () { $(window).scrollTop(<?php echo $position; ?>); }
-</script>
 
 <!doctype html>
 <html lang="ja">
@@ -20,9 +16,7 @@ $ua = $_SERVER['HTTP_USER_AGENT'];
     <link rel="stylesheet" media="all" href="./css/home.css" />
     <script src="./js/jquery-3.6.0.min.js"></script>
     <script src="./js/style.js"></script>
-    <script src="./js/index_get.js"></script>
     <script src="./js/feedin.js"></script>
-    <script src="./js/text.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <!-- Favicon -->

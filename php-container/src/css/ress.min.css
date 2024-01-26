@@ -350,7 +350,7 @@ a.btn_03 {
   text-decoration: none;
   width: 250px;
   margin: auto;
-  padding: 1rem 4rem;
+  padding: 1rem 3rem;
   font-weight: bold;
   border: 2px solid #1893e0;
   color: #1893e0;
@@ -626,22 +626,12 @@ a.btn_03:hover {
   background-color: #f2f2f2;
 }
 
-.summarize_element .kinds {
+.summarize_element .kinds,
+.summarize_element .horsenumber,
+.summarize_element .betback,
+.summarize_element .popular_betback {
   width: 8%;
 }
-
-.summarize_element .horsenumber {
-  width: 6%;
-}
-
-.summarize_element .betback {
-  width: 7%;
-}
-
-.summarize_element .popular_betback {
-  width: 10%;
-}
-
 
 
 @media screen and (max-width: 768px) {

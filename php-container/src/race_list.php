@@ -1,5 +1,4 @@
 <?php
-// include('/php/index_call.php');
 include('../php/index_call.php');
 $ua = $_SERVER['HTTP_USER_AGENT'];
 $hit = ROUND($result_hitcount[0]["hitcount"] / $result_racecount[0]["racecount"] * 100, 1);
@@ -71,8 +70,8 @@ function getWeather($weather)
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ウマ男爵 - 予想一覧</title>
-    <link rel="stylesheet" media="all" href="./css/ress.min.css" />
-    <link rel="stylesheet" media="all" href="./css/style.css" />
+    <link rel="stylesheet" media="all" href="css/ress.min.css" />
+    <link rel="stylesheet" media="all" href="css/style.css" />
     <script src="./js/jquery-3.6.0.min.js"></script>
     <script src="./js/style.js"></script>
     <script src="./js/index_get.js"></script>
@@ -291,6 +290,7 @@ function getWeather($weather)
                                     <?= $hit ?>
                                 </span>%</p>
                         </div>
+                        <p style="font-size: 15px">※上記の回収率、的中率は「単勝」での計算結果です</p>
                     </div>
 
                     <div class="side_centense">
