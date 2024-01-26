@@ -1,0 +1,777 @@
+/*
+ * ress.css • v1.2.2
+ * MIT License
+ * github.com/filipelinhares/ress
+ */
+html {
+  box-sizing: border-box;
+  overflow-y: scroll;
+  -webkit-text-size-adjust: 100%
+}
+
+*,
+:after,
+:before {
+  background-repeat: no-repeat;
+  box-sizing: inherit
+}
+
+:after,
+:before {
+  text-decoration: inherit;
+  vertical-align: inherit
+}
+
+* {
+  padding: 0;
+  font-size: 1em;
+  font-weight: bold;
+  font-family: monospace, monospace;
+  margin: 0
+}
+
+audio:not([controls]) {
+  display: none;
+  height: 0
+}
+
+hr {
+  overflow: visible
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+header,
+main,
+menu,
+nav,
+section,
+.summarize_element,
+.top_hit_detail,
+summary {
+  display: block
+}
+
+summary {
+  display: list-item
+}
+
+small {
+  font-size: 80%
+}
+
+[hidden],
+template {
+  display: none
+}
+
+abbr[title] {
+  border-bottom: 1px dotted;
+  text-decoration: none
+}
+
+a {
+  background-color: transparent;
+  -webkit-text-decoration-skip: objects
+}
+
+a:active,
+a:hover {
+  outline-width: 0
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace
+}
+
+b,
+strong {
+  font-weight: bolder
+}
+
+dfn {
+  font-style: italic
+}
+
+mark {
+  background-color: #ff0;
+  color: #000
+}
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline
+}
+
+sub {
+  bottom: -.25em
+}
+
+sup {
+  top: -.5em
+}
+
+input {
+  border-radius: 0
+}
+
+[role=button],
+[type=button],
+[type=reset],
+[type=submit],
+button {
+  cursor: pointer
+}
+
+[disabled] {
+  cursor: default
+}
+
+[type=number] {
+  width: auto
+}
+
+[type=search] {
+  -webkit-appearance: textfield
+}
+
+[type=search]::-webkit-search-cancel-button,
+[type=search]::-webkit-search-decoration {
+  -webkit-appearance: none
+}
+
+textarea {
+  overflow: auto;
+  resize: vertical
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font: inherit
+}
+
+optgroup {
+  font-weight: 700
+}
+
+button {
+  overflow: visible
+}
+
+[type=button]::-moz-focus-inner,
+[type=reset]::-moz-focus-inner,
+[type=submit]::-moz-focus-inner,
+button::-moz-focus-inner {
+  border-style: 0;
+  padding: 0
+}
+
+[type=button]::-moz-focus-inner,
+[type=reset]::-moz-focus-inner,
+[type=submit]::-moz-focus-inner,
+button:-moz-focusring {
+  outline: 1px dotted ButtonText
+}
+
+[type=reset],
+[type=submit],
+button,
+html [type=button] {
+  -webkit-appearance: button
+}
+
+button,
+select {
+  text-transform: none
+}
+
+button,
+input,
+select,
+textarea {
+  background-color: transparent;
+  border-style: none;
+  color: inherit
+}
+
+select {
+  -moz-appearance: none;
+  -webkit-appearance: none
+}
+
+select::-ms-expand {
+  display: none
+}
+
+select::-ms-value {
+  color: currentColor
+}
+
+legend {
+  border: 0;
+  color: inherit;
+  display: table;
+  max-width: 100%;
+  white-space: normal
+}
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit
+}
+
+[type=search] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px
+}
+
+img {
+  border-style: none
+}
+
+progress {
+  vertical-align: baseline
+}
+
+svg:not(:root) {
+  overflow: hidden
+}
+
+audio,
+canvas,
+progress,
+video {
+  display: inline-block
+}
+
+@media screen {
+  [hidden~=screen] {
+    display: inherit
+  }
+
+  [hidden~=screen]:not(:active):not(:focus):not(:target) {
+    position: absolute !important;
+    clip: rect(0 0 0 0) !important
+  }
+}
+
+[aria-busy=true] {
+  cursor: progress
+}
+
+[aria-controls] {
+  cursor: pointer
+}
+
+[aria-disabled] {
+  cursor: default
+}
+
+::-moz-selection {
+  background-color: #b3d4fc;
+  color: #000;
+  text-shadow: none
+}
+
+::selection {
+  background-color: #b3d4fc;
+  color: #000;
+  text-shadow: none
+}
+
+/*
+  hit_detailのsidevar
+*/
+
+.hit_detail {
+  display: flex;
+  max-width: 1100px;
+}
+
+.hit_detail-sidevar {
+  display: flex;
+  flex-flow: column;
+  width: 30%;
+}
+
+
+
+/* .hit_detail-sidevar h3 {
+  font-size: 1.4em;
+  margin-bottom: 5%;
+  border-bottom: solid 1px #000;
+} */
+
+.hit_detail-ranking {
+  background: #e2e1e100;
+  border-left: 5px dotted rgba(0, 0, 0, .1);
+  box-shadow: 0 0 0 5px #d7d7d7e0;
+  padding: 1em;
+  margin-bottom: 1.5em;
+  margin-left: 20px;
+
+}
+
+.hit_detail-ranking a {
+  color: #0000EE;
+  text-decoration: underline;
+  font-size: 1.5em;
+}
+
+.hit_detail-ranking p {
+  font-size: 1.5em;
+}
+
+.hit_detail-ranking h3 {
+  font-size: 1.3em;
+  margin-bottom: 5%;
+  border-bottom: solid 1px #000;
+  font-weight: bold;
+}
+
+a.btn_03 {
+  display: flex;
+  align-items: center;
+  /* 垂直方向の中央揃え */
+  justify-content: center;
+  /* 水平方向の中央揃え */
+  text-decoration: none;
+  width: 250px;
+  margin: auto;
+  padding: 1rem 4rem;
+  font-weight: bold;
+  border: 2px solid #1893e0;
+  color: #1893e0;
+  transition: 0.5s;
+  font-size: 1.2em;
+}
+
+a.btn_03:hover {
+  color: #fff;
+  background: #1893e0;
+}
+
+.single,
+.triple {
+  font-weight: normal;
+}
+
+.betback-Emphasis {
+  font-size: 1.5em;
+  color: red;
+}
+
+@media screen and (max-width: 768px) {
+  .hit_detail {
+    display: flex;
+    flex-flow: column;
+    max-width: 1100px;
+    margin: auto;
+  }
+
+  .hit_detail-sidevar {
+    display: flex;
+    flex-flow: column;
+    width: 90%;
+    margin: auto;
+  }
+
+  .hit_detail-ranking {
+    margin-left: 0;
+    margin-top: 1rem;
+  }
+
+  .hit_detail-ranking h3 {
+    font-size: 2em;
+  }
+
+  .hit_detail-ranking p {
+    font-size: 1.8em;
+  }
+
+
+}
+
+/* .top_hit_detail {
+  display: flex;
+  width: 100%;
+  padding:0 100px;
+  box-sizing: border-box;
+  max-width: 1000px;
+  margin: auto auto;
+  align-items: center;
+  text-align: center;
+} */
+
+/*
+#null {
+  border-bottom: 1px solid black;
+  margin: 0;
+  padding: 0;
+  width: 750px;
+}
+.summarize_element {
+  box-sizing: border-box;
+  display: flex;
+  text-align: center;
+  width: 750px;
+  height: 45px;
+  margin: 0;
+  padding: 0;
+}
+
+.summarize_element p {
+  box-sizing: border-box;
+}
+
+.K {
+  flex: 1;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.C {
+  background-color: #d3d3d3;
+}
+
+.kinds {
+  border: 1px solid black;
+  border-top: none;
+  margin: 0;
+  padding:1.5%;
+  width: auto;
+
+}
+
+.horsenumber {
+  box-sizing: border-box;
+  border: 1px solid black;
+  border-top: none;
+  border-left: none;
+  margin: 0;
+  padding:1.5%;
+  color:white;
+}
+
+.horsenumber_title {
+  color:black
+}
+
+.betback {
+  border: 1px solid black;
+  border-top: none;
+  border-left: none;
+  margin:0;
+  padding:1.5%;
+}
+.popular_betback {
+  border: 1px solid black;
+  border-top: none;
+  border-left: none;
+  margin: 0;
+  padding:1.5%;
+}
+*/
+
+.race_-top {
+  display: flex;
+}
+
+.race_detail {
+  text-align: center;
+  width: 100%;
+}
+
+.race_detail h1 {
+  text-align: left;
+  padding: 2.5% 0;
+}
+
+@media screen and (max-width: 768px) {
+  .race_detail h1 {
+    font-size: 2.5rem;
+    text-align: left;
+    padding: 2.5% 0;
+  }
+}
+
+.race_detail h4 {
+  margin-bottom: 1.5em;
+}
+
+.RaceNumberTitle {
+  padding: 5px;
+  border: 2px solid #dddd;
+  border-radius: 10px;
+
+}
+
+
+
+
+
+
+
+.race_infomation {
+  padding: 0.4em 0.5em;
+  /*文字の上下 左右の余白*/
+  color: #494949;
+  /*文字色*/
+  background: #f4f4f4;
+  /*背景色*/
+  border-left: solid 5px #494949;
+  /*左線*/
+  border-bottom: solid 3px #d7d7d7;
+  /*下線*/
+  text-align: left;
+  margin-top: 2em;
+  margin-bottom: 3.5em;
+  /* justify-content: space-between; */
+  width: 100%;
+  height: 13rem;
+}
+
+.race_name-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.race_name-top-right {
+  margin-right: 10px;
+  height: 100%;
+}
+
+.hit-photo {
+  padding: 20px 0;
+  margin-right: 20px;
+}
+
+.hit_icon-subpage {
+  width: 100px;
+  height: 50px;
+}
+
+@media screen and (max-width:768px) {
+  .race_infomation {
+    height: 11rem;
+  }
+
+  .hit_icon-subpage {
+    align-items: right;
+    width: 50px;
+    height: 25px;
+  }
+
+  .race_infomation h3 {
+    font-size: 2.;
+  }
+}
+
+.race_infomation p {
+  padding: 0;
+  margin: 0;
+}
+
+.race_infomation span {
+  padding: 4px;
+  border-radius: 10px;
+  margin: 0;
+}
+
+#BgGroundBrown {
+  background-color: #a0522d;
+  color: white;
+}
+
+#BgGroundGreen {
+  background-color: #006400;
+  color: white;
+}
+
+#BgGroundOrange {
+  background-color: #ffa500;
+  color: white;
+}
+
+
+.summarize_element table {
+  border-collapse: collapse;
+  width: 100%;
+  align-items: center;
+}
+
+
+
+.summarize_element th,
+.summarize_element td {
+  border: 1px solid #dddddd;
+  padding: 6px 0;
+  text-align: center;
+}
+
+.summarize_element th {
+  background-color: #f2f2f2;
+}
+
+.summarize_element .kinds {
+  width: 8%;
+}
+
+.summarize_element .horsenumber {
+  width: 6%;
+}
+
+.summarize_element .betback {
+  width: 7%;
+}
+
+.summarize_element .popular_betback {
+  width: 10%;
+}
+
+
+
+@media screen and (max-width: 768px) {
+  .summarize_element .horsenumber {
+    width: 30%;
+  }
+
+  .summarize_element th,
+  .summarize_element td {
+    border: 1px solid #dddddd;
+    padding: 7px 0;
+    text-align: center;
+    font-size: 1.2em;
+  }
+
+}
+
+/* @media screen and (min-width: 768px) {
+  .summarize_element .kinds {
+    padding: 8px;
+  }
+} */
+
+
+
+
+/* .summarize_element p {
+  margin: 0;
+}
+
+.K {
+  margin-right: 10px;
+} */
+
+
+
+
+.colored-number {
+  background-color: red;
+}
+
+.num {
+  color: black;
+}
+
+.C {
+  font-weight: bold;
+}
+
+
+/*
+      馬番の色識別
+*/
+
+
+.bg-all {
+  color: white;
+  padding: 0.3em 0.3em;
+  border: 1px solid #ddd;
+  width: 1.5em;
+}
+
+#bg-white {
+  background-color: white;
+  color: black;
+  margin: 1% 2%;
+  padding: 5px 6px;
+  border: 1px solid #ddd;
+}
+
+#bg-black {
+  background-color: black;
+  margin: 1% 2%;
+  padding: 5px 6px;
+}
+
+#bg-red {
+  background-color: red;
+  margin: 1% 2%;
+  padding: 5px 6px;
+  border: 1px solid #ddd;
+}
+
+#bg-blue {
+  background-color: blue;
+  margin: 1% 2%;
+  padding: 5px 6px;
+}
+
+#bg-yellow {
+  background-color: yellow;
+  margin: 1% 2%;
+  padding: 5px 6px;
+  color: black;
+}
+
+#bg-green {
+  background-color: green;
+  margin: 1% 2%;
+  padding: 5px 6px;
+}
+
+#bg-orange {
+  background-color: orange;
+  margin: 1% 2%;
+  padding: 5px 6px;
+  color: black;
+}
+
+#bg-pink {
+  background-color: pink;
+  margin: 1% 2%;
+  padding: 5px 6px;
+  color: black;
+  width: 1.5em;
+}
+
+#bg-ranking-yellow {
+  /* background-color: #ffff00(230,105,212,0.3); */
+  background-color: rgba(255, 255, 0, 0.3);
+}
+
+#bg-ranking-blue {
+  background-color: #e6e6fa;
+}
+
+#bg-ranking-red {
+  background-color: rgba(255, 160, 122, 0.5);
+}
+
+#bgodds {
+  color: red;
+}

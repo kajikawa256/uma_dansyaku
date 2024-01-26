@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+
+  selenium:
+    image: selenium/standalone-chrome:4.1.4-20220427
+    container_name:
+      'selenium'
+    ports:
+      - 4444:4444
+    volumes:
+      - /dev/shm:/dev/shm
+    networks:
+      - python-network
+    restart:
+      on-failure:3
+
+  php:
+    container_name:
+      'php'
+    build:
+      context: .
+      dockerfile: ./php-container/Dockerfile
+    ports:
+      - 80:80
+    depends_on:
+      - python
+    restart:
+      always
+
+  python:
+    container_name:
+      'python'
+    build:
+      context: .
+      dockerfile: ./python-container/Dockerfile
+    ports:
+      - 8888:8888
+    tty:
+      true
+    environment:
+      SELENIUM_URL: http://selenium:4444/wd/hub
+    volumes:
+      - ../python:/python
+    depends_on:
+      - selenium
+    networks:
+      - python-network
+    restart:
+      on-failure:3
+
+networks:
+  python-network:
+    driver: bridge
