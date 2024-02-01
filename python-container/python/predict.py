@@ -1,0 +1,2 @@
+#毎日19時にレース結果の確定情報を挿入
+import cron.just_before
